@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.List
@@ -21,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -29,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
+import com.example.fleet.data.Models.Notification
 import com.example.fleet.data.Models.PollOption
 
 /*
@@ -58,10 +57,8 @@ abstract class BaseCard () {
 /*
 Simple event card with icon, title and text
 */
-class SimpleEventCard (
-    private val iconResId: ImageVector,
-    private val title: String,
-    private val text: String,
+class SimpleNotificationCard (
+    private val notification: Notification
 ): BaseCard(){
     @Composable
     override fun Content() {
@@ -74,8 +71,8 @@ class SimpleEventCard (
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(
-                    imageVector = iconResId,
-                    contentDescription = "$iconResId icon",
+                    imageVector = notification.iconResId,
+                    contentDescription = "${notification.iconResId} icon",
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(8.dp)
@@ -83,7 +80,7 @@ class SimpleEventCard (
                 )
                 // Title text field
                 Text(
-                    text = title,
+                    text = notification.title,
                     modifier = Modifier
                         .weight(4f)
                         .padding(8.dp),
@@ -91,7 +88,7 @@ class SimpleEventCard (
                 )
             }
             // Body text field
-            Text(text = text,
+            Text(text = notification.text,
                 modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.bodyMedium)
         }
@@ -101,11 +98,8 @@ class SimpleEventCard (
 /*
 Event card with icon, title, text and image
  */
-class ImageEventCard (
-    private val iconResId: ImageVector,
-    private val title: String,
-    private val text: String,
-    private val imageResId: Int
+class ImageNotificationCard (
+    private val notification: Notification
 ): BaseCard(){
     @Composable
     override fun Content() {
@@ -118,8 +112,8 @@ class ImageEventCard (
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(
-                    imageVector = iconResId,
-                    contentDescription = "$iconResId icon",
+                    imageVector = notification.iconResId,
+                    contentDescription = "${notification.iconResId} icon",
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(8.dp)
@@ -127,7 +121,7 @@ class ImageEventCard (
                 )
                 // Title text field
                 Text(
-                    text = title,
+                    text = notification.title,
                     modifier = Modifier
                         .weight(4f)
                         .padding(8.dp),
@@ -135,12 +129,12 @@ class ImageEventCard (
                 )
             }
             // Body text field
-            Text(text = text,
+            Text(text = notification.text,
                 modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.bodyMedium
             )
-            Image(painter = painterResource(imageResId),
-                contentDescription = "Lukina ikona",
+            Image(painter = painterResource(notification.imageResId ?: R.drawable.lukinaikona),
+                contentDescription = "L icon",
                 modifier = Modifier
                     .size(200.dp)
                     .align(alignment = Alignment.CenterHorizontally)
@@ -153,7 +147,7 @@ class ImageEventCard (
 Poll card with title, text and checkbox
 TODO implement voting results
 TODO Change opinion
-
+TODO make poll model
  */
 class PollCard (
     private val question: String,
@@ -220,18 +214,31 @@ class PollCard (
     }
 }
 
+class TaskCard (
+    private val question: String,
+    private val options: List<PollOption>,
+): BaseCard(){
+    @Composable
+    override fun Content() {
+        //TODO make task card
+    }
+
+}
+
+
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewSimpleEventCard() {
-    SimpleEventCard(iconResId = Icons.Default.Build, text = "Netko previše sere",title = "Pukla je cijev").Create()
+    //SimpleNotificationCard(iconResId = Icons.Default.Build, text = "Netko previše sere",title = "Pukla je cijev").Create()
 }
 @Preview(showBackground = true)
 @Composable
 fun PreviewImageEventCard() {
-    ImageEventCard(iconResId = Icons.Default.Build, text = "Netko previše sere",title = "Pukla je cijev", imageResId = R.drawable.lukinaikona).Create()
+    //ImageNotificationCard(iconResId = Icons.Default.Build, text = "Netko previše sere",title = "Pukla je cijev", imageResId = R.drawable.lukinaikona).Create()
 }
 @Preview(showBackground = true)
 @Composable
 fun PreviewPollCard() {
-    PollCard(question = "Hoćemo li počastiti novog stanara?", options = listOf(PollOption("Da", 1), PollOption("Ne", 0),PollOption("Možda", 0),PollOption("Nikada", 0),PollOption("Vidi pokemon", 0)))
+    //PollCard(question = "Hoćemo li počastiti novog stanara?", options = listOf(PollOption("Da", 1), PollOption("Ne", 0),PollOption("Možda", 0),PollOption("Nikada", 0),PollOption("Vidi pokemon", 0)))
 }

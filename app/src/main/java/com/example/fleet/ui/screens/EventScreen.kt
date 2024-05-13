@@ -13,18 +13,18 @@ import com.example.fleet.R
 import com.example.fleet.data.Models.PollOption
 import com.example.fleet.ui.elements.BaseCard
 import com.example.fleet.ui.elements.BottomBar
-import com.example.fleet.ui.elements.ImageEventCard
+import com.example.fleet.ui.elements.ImageNotificationCard
 import com.example.fleet.ui.elements.PollCard
-import com.example.fleet.ui.elements.SimpleEventCard
+import com.example.fleet.ui.elements.SimpleNotificationCard
 
 
 
 class EventScreen(
     private val bottomBar: @Composable () -> Unit = {},
     private val cards: List<BaseCard> = listOf(
-        SimpleEventCard(iconResId = Icons.Default.AccountBox, title = "Novi stanar",text = "Pozdravite novog stanara Rodiona Romanoviča Raskoljinkova..."),
+        SimpleNotificationCard(iconResId = Icons.Default.AccountBox, title = "Novi stanar",text = "Pozdravite novog stanara Rodiona Romanoviča Raskoljinkova..."),
         PollCard(question = "Hoćemo li počastiti novog stanara?", options = listOf(PollOption("Da", 1), PollOption("Ne", 0),PollOption("Možda", 0),PollOption("Nikada", 0),PollOption("Vidi pokemon", 0))),
-        ImageEventCard(iconResId = Icons.Default.Build, text = "Danas je pukla cijev odvodnje na 3. katu. Molim stanare da budu strpljivi, te da imaju razumijevanja. Stvari će ubrzo biti popravljene",title = "Pukla je cijev", imageResId = R.drawable.lukinaikona))
+        ImageNotificationCard(iconResId = Icons.Default.Build, text = "Danas je pukla cijev odvodnje na 3. katu. Molim stanare da budu strpljivi, te da imaju razumijevanja. Stvari će ubrzo biti popravljene",title = "Pukla je cijev", imageResId = R.drawable.lukinaikona))
 )
     :BaseScreen()
 {

@@ -2,7 +2,6 @@ package com.example.fleet.ui.elements
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,16 +18,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
 import com.example.fleet.data.Models.Chat
-import com.example.fleet.ui.screens.ChatScreen
 
 class ChatBar (
-    id: Int,
-    tenants: List<Int>,
-    messages: List<Int> = emptyList(),
-    title: String? = null,
+    private val chat: Chat = Chat(
+        id = 1,
+        tenants = listOf(1, 2, 3),
+        messages = listOf(),
+        title = "Pokemoni",
+        profileImageResId = R.drawable.lukinaikona
+    ),
     private val modifier: Modifier = Modifier,
-    private val imageResourceId: Int? = null
-): Chat(id, tenants, messages, title){
+){
 
     @Composable
     fun Create(){
@@ -42,7 +42,7 @@ class ChatBar (
                 verticalAlignment = Alignment.CenterVertically,
             ){
                 Image(painter = painterResource(
-                    imageResourceId ?: R.drawable.lukinaikona),
+                    chat.profileImageResId ?: R.drawable.lukinaikona),
                     contentDescription = null,
                     modifier = modifier.size(64.dp)
                         .weight(1f)
@@ -52,15 +52,15 @@ class ChatBar (
                     modifier = modifier.weight(4f)
                         .padding(8.dp)
                 ){
-                    Text(text = title ?: "", style = MaterialTheme.typography.titleLarge, modifier = modifier.padding(4.dp).align(Alignment.Start))
-                    Text(text = getLastMessage(), style = MaterialTheme.typography.bodyMedium,modifier = modifier.padding(4.dp).align(Alignment.CenterHorizontally))
+                    Text(text = chat.title ?: "No title", style = MaterialTheme.typography.titleLarge, modifier = modifier.padding(0.dp).align(Alignment.Start))
+                    Text(text = getLastMessage(), style = MaterialTheme.typography.bodyMedium,modifier = modifier.padding(0.dp).align(Alignment.Start))
                 }
             }
         }
     }
 
     fun getLastMessage(): String{
-        return "Pokemoni"
+        return "This should be last message"
     }
 }
 
@@ -68,9 +68,6 @@ class ChatBar (
 @Composable
 fun ChatScreenPreview() {
     ChatBar(
-        id = 1,
-        tenants = listOf(1, 2, 3),
-        title = "Pokemoni",
-        imageResourceId = R.drawable.lukinaikona
+
     ).Create()
 }
