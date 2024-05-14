@@ -1,4 +1,4 @@
-package com.example.fleet.ui.theme
+package com.example.fleet.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

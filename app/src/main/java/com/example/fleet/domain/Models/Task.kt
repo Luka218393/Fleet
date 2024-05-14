@@ -1,4 +1,4 @@
-package com.example.fleet.data.Models
+package com.example.fleet.domain.Models
 
 import java.util.Date
 
@@ -15,5 +15,4 @@ data class Task(
     val createdAt: Date,
     var completedAt: Date?,
     var deletedAt: Date?
-
 )

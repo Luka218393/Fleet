@@ -1,4 +1,4 @@
-package com.example.fleet.ui.elements
+package com.example.fleet.presentation.ui.elements
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

@@ -1,4 +1,4 @@
-package com.example.fleet.data.Models
+package com.example.fleet.domain.Models
 
 data class Tenant(
     val id: Int,
@@ -8,7 +8,7 @@ data class Tenant(
     val phone: String,
     var email: String,
     var gender: String,
-    var profileImage: String,
+    var profileImageRes: Int,
     val birthday: String,
     val createdAt: String,
     var profession: String,

@@ -1,4 +1,4 @@
-package com.example.fleet.ui.elements
+package com.example.fleet.presentation.ui.elements
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
-import com.example.fleet.data.Models.Chat
+import com.example.fleet.domain.Models.Chat
 
 class ChatBar (
     private val chat: Chat = Chat(

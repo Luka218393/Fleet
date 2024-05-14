@@ -1,4 +1,6 @@
-package com.example.fleet.data.Models
+package com.example.fleet.domain.Models
+
+import com.example.fleet.domain.Enums.ChatType
 
 data class Chat (
     val id: Int,
@@ -7,5 +9,5 @@ data class Chat (
     var title: String? = null,
     var profileImageResId: Int? = null,
     var isPrivate: Boolean = true,
-    var isDiscussion: Boolean = false,
+    var chatType: ChatType,
 )
