@@ -22,7 +22,7 @@ import com.example.fleet.presentation.ui.elements.SimpleNotificationCard
 class NotificationScreen(
     private val bottomBar: @Composable () -> Unit = {},
     private val cards: List<BaseCard> = listOf(
-        SimpleNotificationCard(notification = Notification(
+        /*SimpleNotificationCard(notification = Notification(
             id = 1,
             iconResId = Icons.Default.AccountBox,
             title = "New tenant",
@@ -42,7 +42,7 @@ class NotificationScreen(
             text = "Say hello to our new tenant Rodion Romanovich Raskolinkov...",
             imageResId = R.drawable.lukinaikona
         )
-        )
+        )*/
     ))
     : BaseScreen()
 {

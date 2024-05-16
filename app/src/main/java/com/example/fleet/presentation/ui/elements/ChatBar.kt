@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
+import com.example.fleet.domain.Enums.ChatType
 import com.example.fleet.domain.Models.Chat
 
 class ChatBar (
@@ -25,7 +26,8 @@ class ChatBar (
         tenants = listOf(1, 2, 3),
         messages = listOf(),
         title = "Pokemoni",
-        profileImageResId = R.drawable.lukinaikona
+        profileImageResId = R.drawable.lukinaikona,
+        chatType = ChatType.DISCUSSION
     ),
     private val modifier: Modifier = Modifier,
 ){
