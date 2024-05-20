@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "poll_options",
-    foreignKeys = [
+    /*foreignKeys = [
         ForeignKey(
             entity = Poll::class,
             parentColumns = ["id"],
@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
-    ]
+    ]*/
 )
 data class PollOption (
     @PrimaryKey (autoGenerate = true)
@@ -22,5 +22,5 @@ data class PollOption (
     val value: String = "",
     var votes: Int = 0,
     //Foreign key
-    val pollId: Int = 0
+    //val pollId: Int = 0
 )

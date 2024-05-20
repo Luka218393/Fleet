@@ -37,7 +37,5 @@ class ChatScreen (
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {
-    ChatScreen(
-        bottomBar = { BottomBar(modifier = Modifier) }
-    ).Create()
+    ChatScreen().Create(bottomBar = { BottomBar(modifier = Modifier) })
 }

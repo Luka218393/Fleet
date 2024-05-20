@@ -13,6 +13,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -47,9 +50,13 @@ abstract class BaseCard () {
             modifier = modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
-
+            colors =  CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            )
             ) {
             Content()
+
         }
     }
 }
@@ -58,7 +65,7 @@ abstract class BaseCard () {
 Simple event card with icon, title and text
 */
 class SimpleNotificationCard (
-    private val notification: Notification
+    private val notification: Notification/*TODO make ui actually pretty*/
 ): BaseCard(){
     @Composable
     override fun Content() {
@@ -73,7 +80,7 @@ class SimpleNotificationCard (
                 Icon(
                     imageVector = notification.iconResId,
                     contentDescription = "${notification.iconResId} icon",
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(1f)
@@ -103,6 +110,12 @@ class ImageNotificationCard (
 ): BaseCard(){
     @Composable
     override fun Content() {
+
+        if (notification.imageResId == null) {
+            SimpleNotificationCard(notification).Create()//TODO Make this smarter
+            return
+        }
+
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
@@ -114,7 +127,7 @@ class ImageNotificationCard (
                 Icon(
                     imageVector = notification.iconResId,
                     contentDescription = "${notification.iconResId} icon",
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(1f)

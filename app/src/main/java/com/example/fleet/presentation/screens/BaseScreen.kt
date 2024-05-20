@@ -12,10 +12,9 @@ abstract class BaseScreen(
 ){
 
     @Composable
-    fun Create() {
+    fun Create(bottomBar: @Composable () -> Unit) {
         Scaffold(
-            // TODO Ovaj bottom bar radi probleme sa view modelom ?
-            //bottomBar = bottomBar
+            bottomBar = bottomBar
         ) { padding ->
             Box(modifier = Modifier.padding(padding)) {
                 Content()

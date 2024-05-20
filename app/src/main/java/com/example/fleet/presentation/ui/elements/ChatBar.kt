@@ -23,8 +23,6 @@ import com.example.fleet.domain.Models.Chat
 class ChatBar (
     private val chat: Chat = Chat(
         id = 1,
-        tenants = listOf(1, 2, 3),
-        messages = listOf(),
         title = "Pokemoni",
         profileImageResId = R.drawable.lukinaikona,
         chatType = ChatType.DISCUSSION
