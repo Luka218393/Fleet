@@ -3,7 +3,6 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.fleet.data.daos.Tenants
 import java.time.LocalDate
 import java.util.Date
 
@@ -11,7 +10,7 @@ import java.util.Date
     tableName = "messages",
     foreignKeys = [
         ForeignKey(
-            entity = Tenants::class,
+            entity = Tenant::class,
             parentColumns = ["id"],
             childColumns = ["senderId"],
             onDelete = ForeignKey.CASCADE,

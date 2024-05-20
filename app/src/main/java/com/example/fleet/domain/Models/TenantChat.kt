@@ -2,6 +2,7 @@ package com.example.fleet.domain.Models
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "tenant_chat",
     foreignKeys = [
@@ -23,5 +24,7 @@ import androidx.room.ForeignKey
 )
 data class TenantChat(
     val tenantId: String,
-    val chatId: String
+    val chatId: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0
 )
