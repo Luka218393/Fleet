@@ -6,14 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.fleet.data.daos.notificationCards
 import com.example.fleet.presentation.ui.elements.BaseCard
 import com.example.fleet.presentation.ui.elements.BottomBar
 
 
 class NotificationScreen(
     private val modifier: Modifier = Modifier,
-    private val cards: List<BaseCard> = notificationCards)
+    private val cards: List<BaseCard> = com.example.fleet.data.daos.cards
+)
     : BaseScreen()
 {
     @Composable

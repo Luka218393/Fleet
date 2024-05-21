@@ -21,6 +21,5 @@ data class PollOption (
     val id: Int = 0,
     val value: String = "",
     var votes: Int = 0,
-    //Foreign key
-    //val pollId: Int = 0
+    val pollId: Int = 0
 )

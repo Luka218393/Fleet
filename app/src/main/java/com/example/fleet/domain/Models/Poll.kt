@@ -22,6 +22,6 @@ data class Poll (
     val title: String,
     val question: String,
     val pollType: PollType,
-    val voteEndDate: Date,
+    val voteEndDate: LocalDate = LocalDate.now(),
     val isPublic: Boolean = true,
 )

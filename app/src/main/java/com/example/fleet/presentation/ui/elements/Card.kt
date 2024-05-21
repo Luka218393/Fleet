@@ -27,13 +27,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
 import com.example.fleet.domain.Models.Notification
+import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 
 /*
 Base class for event cards and poll cards
 Other cards must inherit from it
 */
-abstract class BaseCard () {
+abstract class BaseCard{
 
     //Content of the card
     @Composable
@@ -49,8 +50,9 @@ abstract class BaseCard () {
             colors =  CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            )
+                )
             ) {
+
             Content()
 
         }
@@ -58,17 +60,18 @@ abstract class BaseCard () {
 }
 
 /*
-Simple event card with icon, title and text
+    Card that can display notification and all their additional content
 */
 class NotificationCard (
     private val notification: Notification/*TODO make ui actually pretty*/,
     private val modifier: Modifier = Modifier
 ): BaseCard(){
     @Composable
-    override fun Content() {
+    override fun Content () {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
+            //Title
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround,
@@ -91,17 +94,21 @@ class NotificationCard (
                     style = MaterialTheme.typography.titleLarge
                 )
             }
+
             // Body text field
             Text(text = notification.text,
                 modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.bodyMedium
             )
 
+            //Additional content
             AdditionalContent(notification, modifier)
 
         }
     }
 
+    //Additional content of the card
+    //Currently can only display image
     @Composable
     fun AdditionalContent(
         notification: Notification,
@@ -114,22 +121,13 @@ class NotificationCard (
             if (notification.imageResId != null) {
                 Image(painter = painterResource(notification.imageResId ?: R.drawable.lukinaikona),
                     contentDescription = "Picture of the event",
-                    modifier = modifier
-                        .size(200.dp)
+                    modifier = modifier.size(200.dp)
                 )
                 return
             }
-
-
         }
-
     }
 }
-
-/*
-Event card with icon, title, text and image
- */
-
 
 /*
 Poll card with title, text and checkbox
@@ -138,12 +136,14 @@ TODO Change opinion
 TODO make poll model
  */
 class PollCard (
-    private val question: String,
+    private val poll: Poll,
     private val options: List<PollOption>,
 ): BaseCard(){
     @Composable
     override fun Content() {
-
+        if (options.isEmpty()) {
+            return/*TODO make this smarter*/
+        }
         val selectedOption = remember { mutableStateOf(options[0]) }
 
         Column(
@@ -164,7 +164,7 @@ class PollCard (
                 )
                 // Question text field
                 Text(
-                    text = question,
+                    text = poll.question,
                     modifier = Modifier
                         .weight(4f)
                         .padding(8.dp),
