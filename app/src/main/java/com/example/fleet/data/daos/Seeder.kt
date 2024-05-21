@@ -8,8 +8,7 @@ import com.example.fleet.R
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.presentation.ui.elements.BaseCard
-import com.example.fleet.presentation.ui.elements.ImageNotificationCard
-import com.example.fleet.presentation.ui.elements.SimpleNotificationCard
+import com.example.fleet.presentation.ui.elements.NotificationCard
 
 data class Tenants(
 
@@ -56,4 +55,4 @@ private var notifications: List<Notification> = listOf(
     )
 )
 
-public var notificationCards: List<BaseCard> = notifications.map { notification -> ImageNotificationCard(notification) }
+public var notificationCards: List<BaseCard> = notifications.map { notification -> NotificationCard(notification) }
