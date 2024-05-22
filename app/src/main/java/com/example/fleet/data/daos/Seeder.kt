@@ -10,9 +10,9 @@ import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Tenant
-import com.example.fleet.presentation.ui.elements.BaseCard
-import com.example.fleet.presentation.ui.elements.NotificationCard
-import com.example.fleet.presentation.ui.elements.PollCard
+import com.example.fleet.presentation.ui.fragments.BaseCard
+import com.example.fleet.presentation.ui.fragments.NotificationCard
+import com.example.fleet.presentation.ui.fragments.PollCard
 
 data class Tenants(
 

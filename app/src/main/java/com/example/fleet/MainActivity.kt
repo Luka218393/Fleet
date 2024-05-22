@@ -4,17 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.example.fleet.presentation.ui.theme.FleetTheme
-import com.example.fleet.presentation.screens.NotificationScreen
-import com.example.fleet.presentation.ui.elements.BottomBar
+import com.example.fleet.presentation.activities.NotificationActivity
+import com.example.fleet.presentation.ui.fragments.BottomBar
 
 /*
 This is the starting point of the app.
@@ -38,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 }
 
 
-                NotificationScreen().Create(bottomBar = {BottomBar(modifier = Modifier)})//NotificationScreen(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)).Create(bottomBar = {BottomBar(modifier = Modifier)})
+                NotificationActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})//NotificationScreen(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)).Create(bottomBar = {BottomBar(modifier = Modifier)})
             }
         }
     }

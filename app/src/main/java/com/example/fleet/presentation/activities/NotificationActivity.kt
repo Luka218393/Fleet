@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.screens
+package com.example.fleet.presentation.activities
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -6,15 +6,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.fleet.presentation.ui.elements.BaseCard
-import com.example.fleet.presentation.ui.elements.BottomBar
+import com.example.fleet.presentation.ui.fragments.BaseCard
+import com.example.fleet.presentation.ui.fragments.BottomBar
 
 
-class NotificationScreen(
+class NotificationActivity(
     private val modifier: Modifier = Modifier,
     private val cards: List<BaseCard> = com.example.fleet.data.daos.cards
 )
-    : BaseScreen()
+    : BaseActivity()
 {
     @Composable
     override fun Content() {
@@ -35,5 +35,5 @@ class NotificationScreen(
 @Preview(showBackground = true)
 @Composable
 fun EventsScreenPreview() {
-    NotificationScreen().Create(bottomBar = {BottomBar(modifier = Modifier)})
+    NotificationActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})
 }

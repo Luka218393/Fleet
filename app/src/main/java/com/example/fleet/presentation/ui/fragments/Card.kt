@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.ui.elements
+package com.example.fleet.presentation.ui.fragments
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.screens
+package com.example.fleet.presentation.activities
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,17 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.fleet.presentation.ui.elements.BottomBar
-import com.example.fleet.presentation.ui.elements.ChatBar
+import com.example.fleet.presentation.ui.fragments.BottomBar
+import com.example.fleet.presentation.ui.fragments.ChatBar
 
-class ChatScreen (
+class ChatActivity (
     private val bottomBar: @Composable () -> Unit = {},
     private val chatBars: List<ChatBar> = listOf(
         ChatBar(),
         ChatBar(),
         ChatBar()
     )
-) : BaseScreen(){
+) : BaseActivity(){
     @Composable
     override fun Content() {
         LazyColumn(
@@ -37,5 +37,5 @@ class ChatScreen (
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {
-    ChatScreen().Create(bottomBar = { BottomBar(modifier = Modifier) })
+    ChatActivity().Create(bottomBar = { BottomBar(modifier = Modifier) })
 }
