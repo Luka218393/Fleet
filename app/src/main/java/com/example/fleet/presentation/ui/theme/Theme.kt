@@ -21,7 +21,7 @@ private val DarkColorScheme = darkColorScheme(
 
     secondary = Color(0xFFF9F23E),
     onSecondary = Black,
-    secondaryContainer = Color(0xFFB8B45D),
+    secondaryContainer = Color(0xFFDAD435),//Color(0xFFB8B45D),
     onSecondaryContainer = Black,
 
     tertiary = Color(0xff8E8E8E),
@@ -34,9 +34,9 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFFF9F23E),
-    onPrimary = Color(0xFF34113F),
+    onPrimary = Black,
     primaryContainer = Color(0xFFFAF69D),
-    onPrimaryContainer = Color(0xFF34113F),
+    onPrimaryContainer = Black,
 
     secondary = Color(0xFF34113F),
     onSecondary = White,

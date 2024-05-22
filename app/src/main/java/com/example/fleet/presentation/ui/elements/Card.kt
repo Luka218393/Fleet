@@ -16,6 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -144,7 +145,7 @@ class PollCard (
         if (options.isEmpty()) {
             return/*TODO make this smarter*/
         }
-        val selectedOption = remember { mutableStateOf(options[0]) }
+        val selectedOption = remember { mutableStateOf(options[0]) }/*TODO move this to viewModel*/
 
         Column(
             modifier = Modifier.padding(16.dp)
@@ -157,7 +158,7 @@ class PollCard (
                 Icon(
                     imageVector = Icons.Filled.List,
                     contentDescription = "Poll icon",
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier
                         .padding(8.dp)
                         .weight(1f)
@@ -188,7 +189,8 @@ class PollCard (
                     ) {
                         RadioButton(
                             selected = selectedOption.value == options[index],
-                            onClick = { selectedOption.value = options[index] }
+                            onClick = { selectedOption.value = options[index] },
+                            colors = RadioButtonDefaults.colors(MaterialTheme.colorScheme.secondary)
                         )
 
                         Text(
@@ -218,15 +220,12 @@ class TaskCard (
 @Preview(showBackground = true)
 @Composable
 fun PreviewSimpleEventCard() {
-    //SimpleNotificationCard(iconResId = Icons.Default.Build, text = "Netko previše sere",title = "Pukla je cijev").Create()
 }
 @Preview(showBackground = true)
 @Composable
 fun PreviewImageEventCard() {
-    //ImageNotificationCard(iconResId = Icons.Default.Build, text = "Netko previše sere",title = "Pukla je cijev", imageResId = R.drawable.lukinaikona).Create()
 }
 @Preview(showBackground = true)
 @Composable
 fun PreviewPollCard() {
-    //PollCard(question = "Hoćemo li počastiti novog stanara?", options = listOf(PollOption("Da", 1), PollOption("Ne", 0),PollOption("Možda", 0),PollOption("Nikada", 0),PollOption("Vidi pokemon", 0)))
 }
