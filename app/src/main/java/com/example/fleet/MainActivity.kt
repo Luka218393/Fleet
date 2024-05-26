@@ -11,6 +11,7 @@ import com.example.fleet.data.daos.chatBars
 import com.example.fleet.presentation.activities.ChatActivity
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import com.example.fleet.presentation.activities.NotificationActivity
+import com.example.fleet.presentation.activities.SettingsActivity
 import com.example.fleet.presentation.ui.fragments.BottomBar
 
 /*
@@ -24,7 +25,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             FleetTheme {
                 //NotificationActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})
-                ChatActivity(chatBars).Create(bottomBar = {BottomBar(modifier = Modifier)})
+                //ChatActivity(chatBars).Create(bottomBar = {BottomBar(modifier = Modifier)})
+                SettingsActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})
             }
         }
     }
