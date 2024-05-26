@@ -16,3 +16,16 @@ data class Settings (
     var language: Language = Language.ENGLISH,
     var showNotifications: Boolean = true
 )
+
+data class SettingsState (
+    val id: Int = 0,
+    val tenant: Tenant,
+    //var tags = List<Tag>
+    val building: Building,
+    val apartment: Apartment,
+    var theme: Theme = Theme.DEFAULT,
+    var font: FontSize = FontSize.MEDIUM,
+    var showAnimation: Boolean = true,
+    var language: Language = Language.ENGLISH,
+    var showNotifications: Boolean = true
+)

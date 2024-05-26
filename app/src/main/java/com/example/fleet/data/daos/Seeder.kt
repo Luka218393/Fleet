@@ -7,10 +7,13 @@ import androidx.compose.material.icons.filled.List
 import com.example.fleet.R
 import com.example.fleet.domain.Enums.ChatType
 import com.example.fleet.domain.Enums.PollType
+import com.example.fleet.domain.Models.Apartment
+import com.example.fleet.domain.Models.Building
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
+import com.example.fleet.domain.Models.SettingsState
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.presentation.ui.fragments.BaseCard
 import com.example.fleet.presentation.ui.fragments.ChatBar
@@ -159,4 +162,42 @@ val chats: List<Chat> = listOf(
 )
 val chatBars = chats.map { chat -> ChatBar(chat) }
 
+var buildings = listOf(
+    Building(
+        id = 1,
+        address = "1"
+    ),
+    Building(
+        id = 2,
+        address = "2"
+    ),
+    Building(
+        id = 3,
+        address = "3"
+    ),
+)
+
+var apartments = listOf(
+    Apartment(
+        id = 1,
+        buildingId = 1
+    ),
+    Apartment(
+        id = 2,
+        buildingId = 2
+    ),
+    Apartment(
+        id = 3,
+        buildingId = 1
+    )
+
+)
+
+val settingState1 = SettingsState(
+    id = 1,
+    tenant = Tenants().tenant1,
+    apartment = apartments[0],
+    building = buildings[0]
+
+)
 public var cards: List<BaseCard> = pollCards + notifications.map { notification -> NotificationCard(notification) }

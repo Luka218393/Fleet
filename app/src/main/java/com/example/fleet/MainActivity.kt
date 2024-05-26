@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.fleet.data.daos.chatBars
+import com.example.fleet.data.daos.settingState1
 import com.example.fleet.presentation.activities.ChatActivity
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import com.example.fleet.presentation.activities.NotificationActivity
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
             FleetTheme {
                 //NotificationActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})
                 //ChatActivity(chatBars).Create(bottomBar = {BottomBar(modifier = Modifier)})
-                SettingsActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})
+                SettingsActivity(settingState1).Create(bottomBar = {BottomBar(modifier = Modifier)})
             }
         }
     }
