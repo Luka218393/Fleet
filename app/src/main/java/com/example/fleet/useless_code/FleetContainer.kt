@@ -1,7 +1,6 @@
-package com.example.fleet.data.daos
+package com.example.fleet.useless_code
 
-import android.content.Context
-
+/*
 interface AppContainer {
     val pollOptionRepository: PollOptionRepository
 }
@@ -16,4 +15,4 @@ class AppDataContainer(private val context: Context) : AppContainer {
     override val pollOptionRepository: PollOptionRepository by lazy {
         OfflinePollOptionRepository(FleetDatabase.getDatabase(context).pollOptionDao())
     }
-}
+}*/

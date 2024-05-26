@@ -12,7 +12,7 @@ import com.example.fleet.presentation.ui.fragments.BottomBar
 
 class NotificationActivity(
     private val modifier: Modifier = Modifier,
-    private val cards: List<BaseCard> = com.example.fleet.data.daos.cards
+    private val cards: List<BaseCard> = com.example.fleet.data.cards
 )
     : BaseActivity()
 {

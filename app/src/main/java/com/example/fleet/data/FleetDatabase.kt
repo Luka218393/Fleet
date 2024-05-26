@@ -1,9 +1,10 @@
-package com.example.fleet.data.daos
+package com.example.fleet.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.fleet.data.daos.PollOptionDao
 import com.example.fleet.domain.Models.PollOption
 
 @Database(entities = [PollOption::class], version = 3, exportSchema = false)

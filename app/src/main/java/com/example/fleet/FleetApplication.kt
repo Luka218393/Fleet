@@ -1,8 +1,10 @@
 package com.example.fleet
-
+/*
 import android.app.Application
 import com.example.fleet.data.daos.AppContainer
 import com.example.fleet.data.daos.AppDataContainer
+import com.example.fleet.data.pollOptions
+import kotlinx.coroutines.runBlocking
 
 class FleetApplication : Application() {
 
@@ -14,5 +16,9 @@ class FleetApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppDataContainer(this)
+        runBlocking {
+            container.pollOptionRepository.insertPollOption(pollOption = pollOptions[2])
+        }
     }
 }
+*/

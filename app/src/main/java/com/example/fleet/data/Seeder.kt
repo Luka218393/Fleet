@@ -1,4 +1,4 @@
-package com.example.fleet.data.daos
+package com.example.fleet.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
@@ -64,7 +64,7 @@ private var notifications: List<Notification> = listOf(
         imageResId = R.drawable.flagicon
     )
 )
-private var pollOptions: List<PollOption> = listOf(
+var pollOptions: List<PollOption> = listOf(
     PollOption(
         id = 1,
         value = "Option 1",

@@ -62,7 +62,7 @@ fun BottomBar(modifier: Modifier) {
         }
     )     //Spacer(modifier = Modifier.height(50.dp))
 }
-
+//https://www.youtube.com/watch?v=c8XP_Ee7iqY&ab_channel=PhilippLackner TODO
 @Preview
 @Composable
 fun BottomBarPreview() {

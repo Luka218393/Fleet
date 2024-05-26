@@ -6,16 +6,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
 import com.example.fleet.domain.Models.PollOption
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PollOptionDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Upsert
     suspend fun insert(pollOption: PollOption)
-
-    @Update
-    suspend fun update(pollOption: PollOption)
 
     @Delete
     suspend fun delete(pollOption: PollOption)
