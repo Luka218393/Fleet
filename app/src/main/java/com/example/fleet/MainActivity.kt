@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.fleet.data.daos.chatBars
+import com.example.fleet.presentation.activities.ChatActivity
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import com.example.fleet.presentation.activities.NotificationActivity
 import com.example.fleet.presentation.ui.fragments.BottomBar
@@ -19,21 +21,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             FleetTheme {
-
-                //Todo Make this smarter
-                //Hides home and back buttons
-                WindowCompat.setDecorFitsSystemWindows(window, false)
-                val controller = WindowCompat.getInsetsController(window, window.decorView)
-                controller.hide(WindowInsetsCompat.Type.systemBars())
-                controller.addOnControllableInsetsChangedListener { _, typeMask ->
-                    var systemBarsVisible = typeMask and WindowInsetsCompat.Type.systemBars() != 0
-                }
-
-
-                NotificationActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})//NotificationScreen(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)).Create(bottomBar = {BottomBar(modifier = Modifier)})
+                //NotificationActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})
+                ChatActivity(chatBars).Create(bottomBar = {BottomBar(modifier = Modifier)})
             }
         }
     }

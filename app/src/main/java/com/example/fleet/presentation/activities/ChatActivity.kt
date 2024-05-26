@@ -11,12 +11,7 @@ import com.example.fleet.presentation.ui.fragments.BottomBar
 import com.example.fleet.presentation.ui.fragments.ChatBar
 
 class ChatActivity (
-    private val bottomBar: @Composable () -> Unit = {},
-    private val chatBars: List<ChatBar> = listOf(
-        ChatBar(),
-        ChatBar(),
-        ChatBar()
-    )
+    private val chatBars: List<ChatBar>
 ) : BaseActivity(){
     @Composable
     override fun Content() {
@@ -33,9 +28,9 @@ class ChatActivity (
     }
 }
 
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {
     ChatActivity().Create(bottomBar = { BottomBar(modifier = Modifier) })
-}
+}*/

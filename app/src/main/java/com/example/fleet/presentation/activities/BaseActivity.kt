@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 abstract class BaseActivity(
-    //private val bottomBar: @Composable () -> Unit ={}
 ){
 
     @Composable

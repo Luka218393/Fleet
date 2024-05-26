@@ -5,12 +5,15 @@ import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import com.example.fleet.R
+import com.example.fleet.domain.Enums.ChatType
 import com.example.fleet.domain.Enums.PollType
+import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.presentation.ui.fragments.BaseCard
+import com.example.fleet.presentation.ui.fragments.ChatBar
 import com.example.fleet.presentation.ui.fragments.NotificationCard
 import com.example.fleet.presentation.ui.fragments.PollCard
 
@@ -58,7 +61,6 @@ private var notifications: List<Notification> = listOf(
         imageResId = R.drawable.flagicon
     )
 )
-
 private var pollOptions: List<PollOption> = listOf(
     PollOption(
         id = 1,
@@ -103,7 +105,6 @@ private var pollOptions: List<PollOption> = listOf(
         pollId = 2
     ),
 )
-
 private var polls: List<Poll> = listOf(
     Poll(
         id = 1,
@@ -128,7 +129,34 @@ private var polls: List<Poll> = listOf(
     ),
 
 )
-
 var pollCards: List<PollCard> = polls.map { poll -> PollCard(poll, pollOptions.filter { it.pollId == poll.id })}
+
+val chats: List<Chat> = listOf(
+    Chat(
+        id = 1,
+        title = "Luka",
+        profileImageResId = R.drawable.lukinaikona,
+        chatType = ChatType.TENANT_TO_TENANT
+    ),
+    Chat(
+        id = 2,
+        title = "Nina",
+        profileImageResId = R.drawable.lukinaikona,
+        chatType = ChatType.TENANT_TO_TENANT
+    ),
+    Chat(
+        id = 3,
+        title = "Buy new plants to decorate building",
+        profileImageResId = R.drawable.lukinaikona,
+        chatType = ChatType.DISCUSSION
+    ),
+    Chat(
+        id = 4,
+        title = "All tenants",
+        profileImageResId = R.drawable.lukinaikona,
+        chatType = ChatType.EVERYONE
+    )
+)
+val chatBars = chats.map { chat -> ChatBar(chat) }
 
 public var cards: List<BaseCard> = pollCards + notifications.map { notification -> NotificationCard(notification) }
