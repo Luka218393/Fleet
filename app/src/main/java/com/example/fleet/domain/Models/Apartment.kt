@@ -11,9 +11,8 @@ import androidx.room.PrimaryKey
 data class Apartment (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    @ColumnInfo(index = true)
-    val buildingId: Int,
-    var entrance: String? = "Main entrance",
+    val buildingId: Int,//
+    var entrance: String? = null,
     val floor: Int = 0,
     val door: String = "1",
     val maxCapacity: Int? = null,

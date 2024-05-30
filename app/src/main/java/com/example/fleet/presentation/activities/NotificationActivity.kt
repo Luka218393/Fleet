@@ -7,8 +7,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.presentation.ui.fragments.BaseCard
-import com.example.fleet.presentation.ui.fragments.BottomBar
+import com.example.fleet.presentation.fragments.BaseCard
+import com.example.fleet.presentation.fragments.BottomBar
 
 
 class NotificationActivity(

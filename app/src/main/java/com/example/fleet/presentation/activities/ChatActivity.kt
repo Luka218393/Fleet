@@ -8,8 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.presentation.ui.fragments.BottomBar
-import com.example.fleet.presentation.ui.fragments.ChatBar
+import com.example.fleet.presentation.fragments.BottomBar
+import com.example.fleet.presentation.fragments.ChatBar
 
 class ChatActivity (
     private val chatBars: List<ChatBar>,

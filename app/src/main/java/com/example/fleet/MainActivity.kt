@@ -12,10 +12,10 @@ import com.example.fleet.domain.Navigation
 import com.example.fleet.presentation.activities.NotificationActivity
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import com.example.fleet.presentation.activities.SettingsActivity
-import com.example.fleet.presentation.ui.fragments.BottomBar
+import com.example.fleet.presentation.fragments.BottomBar
 import kotlinx.coroutines.runBlocking
 
-/*
+/**
 This is the starting point of the app.
 */
 class MainActivity : ComponentActivity() {

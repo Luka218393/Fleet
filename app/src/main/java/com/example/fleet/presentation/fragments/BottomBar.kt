@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.ui.fragments
+package com.example.fleet.presentation.fragments
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

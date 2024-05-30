@@ -2,10 +2,7 @@ package com.example.fleet.data.daos
 
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import androidx.room.Upsert
 import com.example.fleet.domain.Models.PollOption
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PollOptionDao {
     @Upsert
-    suspend fun insert(pollOption: PollOption)
+    suspend fun upsert(pollOption: PollOption)
 
     @Delete
     suspend fun delete(pollOption: PollOption)

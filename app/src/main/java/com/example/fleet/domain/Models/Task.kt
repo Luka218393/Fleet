@@ -7,7 +7,8 @@ import java.time.LocalDate
 import java.util.Date
 
 @Entity(tableName = "tasks",
-    foreignKeys = [ForeignKey(
+    foreignKeys = [
+        ForeignKey(
         entity = Tenant::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("creatorId"),
@@ -20,10 +21,9 @@ data class Task(
     var title: String,
     var description: String,
     var completed: Boolean = false,
-    val priority: Int,//TODO Enum class
+    val priority: Int = 0,//TODO Enum class
     val assignedTo: Tenant? = null,
-    //Foreign key
-    val creatorId: Int,
+    val creatorId: Int,//
     var completedAt: LocalDate? = null,
     val dueDate: LocalDate? = LocalDate.now(),
     val createdAt: LocalDate = LocalDate.now(),

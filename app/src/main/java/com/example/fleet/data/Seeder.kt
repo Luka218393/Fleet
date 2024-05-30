@@ -15,10 +15,10 @@ import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.SettingsState
 import com.example.fleet.domain.Models.Tenant
-import com.example.fleet.presentation.ui.fragments.BaseCard
-import com.example.fleet.presentation.ui.fragments.ChatBar
-import com.example.fleet.presentation.ui.fragments.NotificationCard
-import com.example.fleet.presentation.ui.fragments.PollCard
+import com.example.fleet.presentation.fragments.BaseCard
+import com.example.fleet.presentation.fragments.ChatBar
+import com.example.fleet.presentation.fragments.NotificationCard
+import com.example.fleet.presentation.fragments.PollCard
 
 data class Tenants(
 
@@ -132,7 +132,7 @@ private var polls: List<Poll> = listOf(
     ),
 
 )
-var pollCards: List<PollCard> = polls.map { poll -> PollCard(poll, pollOptions.filter { it.pollId == poll.id })}
+var pollCards: List<PollCard> = polls.map { poll -> PollCard(poll, pollOptions.filter { it.pollId == poll.id }) }
 
 val chats: List<Chat> = listOf(
     Chat(

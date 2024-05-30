@@ -8,7 +8,8 @@ import com.example.fleet.domain.Enums.Voters
 import java.time.LocalDate
 import java.util.Date
 
-@Entity(tableName = "polls",
+@Entity(
+    tableName = "polls",
     foreignKeys = [
         ForeignKey(entity = Tenant::class, parentColumns = ["id"], childColumns = ["creatorId"])
     ]
@@ -16,12 +17,11 @@ import java.util.Date
 data class Poll (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    //@ForeignKey(entity = User::class, parentColumns = ["id"], childColumns = ["creatorId"])
-    val creatorId: Int,
+    val creatorId: Int,//
     val dateCreated: LocalDate = LocalDate.now(),
     val title: String,
     val question: String,
     val pollType: PollType,
-    val voteEndDate: LocalDate = LocalDate.now(),
+    val voteEndDate: LocalDate = LocalDate.now().plusDays(5),
     val isPublic: Boolean = true,
 )

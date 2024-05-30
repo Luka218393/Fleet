@@ -15,13 +15,14 @@ import java.util.Date
             childColumns = ["senderId"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
-        )]
+        )
+    ]
 )
 data class Message (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val senderId: Int,
-    var hash: String? = null,
+    val senderId: Int,//
+    var text: String? = null,
     var sendingTime: LocalDate = LocalDate.now(),
     var profileImage: Int? = null,
     var imageUrl: String? = null,

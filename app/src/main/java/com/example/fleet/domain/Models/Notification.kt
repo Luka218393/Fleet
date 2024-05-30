@@ -1,5 +1,8 @@
 package com.example.fleet.domain.Models
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Icon
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -24,10 +27,9 @@ data class Notification (
     var title: String,
     var text: String,
     var imageResId: Int? = null,
-    var iconResId: ImageVector,
+    var iconResId: ImageVector = Icons.Default.Add,
     val createdAt: LocalDate = LocalDate.now(),
-    //ForeignKey
-    val creatorId: Int,
+    val creatorId: Int, //
     var dueTo: Date? = null,
     var visibleToEveryone: Boolean = true
 )

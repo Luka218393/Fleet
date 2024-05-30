@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 @Entity(tableName = "tenants",
-    foreignKeys = [ForeignKey(
+    foreignKeys = [
+        ForeignKey(
         entity = Apartment::class,
         parentColumns = ["id"],
         childColumns = ["apartmentId"],
@@ -19,8 +20,8 @@ data class Tenant(
     val id: Int = 0,
     var name: String,
     var age: Int? = null,
-    var apartmentId: Int,
-    val phone: String? = null,
+    var apartmentId: Int, //
+    val phoneNumber: String? = null,
     var email: String? = null,
     var gender: String? = null,
     var profileImageRes: Int? = null,
