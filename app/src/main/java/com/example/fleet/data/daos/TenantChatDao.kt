@@ -17,6 +17,6 @@ interface TenantChatDao {
     suspend fun delete(tenantChat: TenantChat)
 
     @Query("SELECT * FROM tenant_chat")
-    suspend fun getAll(): Flow<List<TenantChat>>
+    fun getAll(): Flow<List<TenantChat>>
 
 }

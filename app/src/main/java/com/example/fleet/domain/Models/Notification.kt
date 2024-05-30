@@ -27,8 +27,8 @@ data class Notification (
     var title: String,
     var text: String,
     var imageResId: Int? = null,
-    var iconResId: ImageVector = Icons.Default.Add,
-    val createdAt: LocalDate = LocalDate.now(),
+    //var iconResId: ImageVector = Icons.Default.Add, TODO ahh typeConverter for this
+    val createdAt: Date = Date(),
     val creatorId: Int, //
     var dueTo: Date? = null,
     var visibleToEveryone: Boolean = true

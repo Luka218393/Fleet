@@ -17,7 +17,7 @@ interface ChatDao {
     suspend fun delete(chat: Chat)
 
     @Query("SELECT * FROM chats")
-    suspend fun getAll(): Flow<List<Chat>>
+    fun getAll(): Flow<List<Chat>>
 
     @Query("SELECT * from chats WHERE id = :id")
     fun getById(id: Int): Flow<Chat>

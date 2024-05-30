@@ -23,7 +23,7 @@ data class Message (
     val id: Int = 0,
     val senderId: Int,//
     var text: String? = null,
-    var sendingTime: LocalDate = LocalDate.now(),
+    var sendingTime: Date = Date(),
     var profileImage: Int? = null,
     var imageUrl: String? = null,
 )

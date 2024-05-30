@@ -18,10 +18,10 @@ data class Poll (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val creatorId: Int,//
-    val dateCreated: LocalDate = LocalDate.now(),
+    val dateCreated: Date = Date(),
     val title: String,
     val question: String,
     val pollType: PollType,
-    val voteEndDate: LocalDate = LocalDate.now().plusDays(5),
+    val voteEndDate: Date = Date(),
     val isPublic: Boolean = true,
 )

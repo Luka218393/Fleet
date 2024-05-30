@@ -17,7 +17,7 @@ interface MessageDao {
     suspend fun delete(message: Message)
 
     @Query("SELECT * FROM messages")
-    suspend fun getAll(): Flow<List<Message>>
+    fun getAll(): Flow<List<Message>>
 
     @Query("SELECT * from messages WHERE id = :id")
     fun getById(id: Int): Flow<Message>

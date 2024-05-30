@@ -34,6 +34,7 @@ import com.example.fleet.domain.Enums.Theme
     ],
 )
 data class Settings (
+    @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val tenantId: Int = 0,//
     val buildingId: Int = 0,//

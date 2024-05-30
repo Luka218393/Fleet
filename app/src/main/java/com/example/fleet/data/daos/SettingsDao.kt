@@ -17,7 +17,7 @@ interface SettingsDao {
     suspend fun delete(settings: Settings)
 
     @Query("SELECT * FROM settings")
-    suspend fun getAll(): Flow<List<Settings>>
+    fun getAll(): Flow<List<Settings>>
 
     @Query("SELECT * from settings WHERE id = :id")
     fun getById(id: Int): Flow<Settings>

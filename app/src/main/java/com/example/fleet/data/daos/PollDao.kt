@@ -17,7 +17,7 @@ interface PollDao {
     suspend fun delete(poll: Poll)
 
     @Query("SELECT * FROM polls")
-    suspend fun getAll(): Flow<List<Poll>>
+    fun getAll(): Flow<List<Poll>>
 
     @Query("SELECT * from polls WHERE id = :id")
     fun getById(id: Int): Flow<Poll>

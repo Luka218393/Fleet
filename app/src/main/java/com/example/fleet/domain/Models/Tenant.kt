@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.time.LocalDate
+import java.util.Date
 
 @Entity(tableName = "tenants",
     foreignKeys = [
@@ -25,8 +26,8 @@ data class Tenant(
     var email: String? = null,
     var gender: String? = null,
     var profileImageRes: Int? = null,
-    val birthday: LocalDate? = null,
-    val createdAt: LocalDate? = LocalDate.now(),
+    val birthday: Date? = null,
+    val createdAt: Date = Date(),
     var profession: String? = null,
     var aboutMe: String? = null,
     var isOnline: Boolean = true,

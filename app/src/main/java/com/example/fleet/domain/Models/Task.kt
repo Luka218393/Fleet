@@ -22,9 +22,9 @@ data class Task(
     var description: String,
     var completed: Boolean = false,
     val priority: Int = 0,//TODO Enum class
-    val assignedTo: Tenant? = null,
+    //val assignedTo: Tenant? = null,
     val creatorId: Int,//
-    var completedAt: LocalDate? = null,
-    val dueDate: LocalDate? = LocalDate.now(),
-    val createdAt: LocalDate = LocalDate.now(),
+    var completedAt: Date? = null,
+    val dueDate: Date = Date(),
+    val createdAt: Date = Date(),
 )

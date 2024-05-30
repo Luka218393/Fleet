@@ -17,7 +17,7 @@ interface BuildingDao {
     suspend fun delete(building: Building)
 
     @Query("SELECT * FROM buildings")
-    suspend fun getAll(): Flow<List<Building>>
+    fun getAll(): Flow<List<Building>>
 
     @Query("SELECT * from buildings WHERE id = :id")
     fun getById(id: Int): Flow<Building>

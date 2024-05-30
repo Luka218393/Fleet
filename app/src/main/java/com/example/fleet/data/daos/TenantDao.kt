@@ -17,7 +17,7 @@ interface TenantDao {
     suspend fun delete(tenant: Tenant)
 
     @Query("SELECT * FROM tenants")
-    suspend fun getAll(): Flow<List<Tenant>>
+    fun getAll(): Flow<List<Tenant>>
 
     @Query("SELECT * from tenants WHERE id = :id")
     fun getById(id: Int): Flow<Tenant>

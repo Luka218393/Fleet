@@ -22,7 +22,7 @@ interface ApartmentDao {
     suspend fun delete(apartment: Apartment)
 
     @Query("SELECT * FROM apartments")
-    suspend fun getAll(): Flow<List<Apartment>>
+    fun getAll(): Flow<List<Apartment>>
 
     @Query("SELECT * from apartments WHERE id = :id")
     fun getById(id: Int): Flow<Apartment>
