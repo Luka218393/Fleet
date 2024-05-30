@@ -5,21 +5,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.core.screen.Screen
+import com.example.fleet.presentation.ui.fragments.BottomBar
 
 abstract class BaseActivity(
-){
+): Screen {
 
     @Composable
-    fun Create(bottomBar: @Composable () -> Unit) {
+    override fun Content() {
         Scaffold(
-            bottomBar = bottomBar
+            bottomBar = {BottomBar(Modifier)}
         ) { padding ->
             Box(modifier = Modifier.padding(padding)) {
-                Content()
+                InnerContent()
             }
         }
     }
 
     @Composable
-    abstract fun Content()
+    abstract fun InnerContent()
 }

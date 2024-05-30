@@ -13,14 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
+import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SettingsState
 
 class SettingsActivity (
-    private val settings: SettingsState
+    private val settings: SettingsState,
+
 ) : BaseActivity(){
     @Composable
-    override fun Content() {
+    override fun InnerContent() {
         Column (
             modifier = Modifier.fillMaxWidth()
         ) {

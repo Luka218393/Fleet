@@ -7,14 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.presentation.ui.fragments.BottomBar
 import com.example.fleet.presentation.ui.fragments.ChatBar
 
 class ChatActivity (
-    private val chatBars: List<ChatBar>
+    private val chatBars: List<ChatBar>,
 ) : BaseActivity(){
     @Composable
-    override fun Content() {
+    override fun InnerContent() {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize(),
