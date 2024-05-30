@@ -16,8 +16,8 @@ interface PollOptionDao {
     suspend fun delete(pollOption: PollOption)
 
     @Query("SELECT * from poll_options WHERE id = :id")
-    fun getPollOption(id: Int): Flow<PollOption>
+    fun getById(id: Int): Flow<PollOption>
 
     @Query("SELECT * from poll_options ORDER BY value ASC")
-    fun getAllPollOptions(): Flow<List<PollOption>>
+    fun getAll(): Flow<List<PollOption>>
 }
