@@ -20,7 +20,7 @@ class NotificationActivity(
     @Composable
     override fun InnerContent() {
         LazyColumn(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,

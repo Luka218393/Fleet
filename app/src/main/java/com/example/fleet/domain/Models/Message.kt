@@ -22,7 +22,7 @@ data class Message (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val senderId: Int,//
-    var text: String? = null,
+    var text: String = "",
     var sendingTime: Date = Date(),
     var profileImage: Int? = null,
     var imageUrl: String? = null,

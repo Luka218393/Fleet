@@ -1,14 +1,14 @@
 package com.example.fleet.useless_code
 
-
+/*
 //Todo Make this smarter
 //Hides home and back buttons
-/*WindowCompat.setDecorFitsSystemWindows(window, false)
+WindowCompat.setDecorFitsSystemWindows(window, false)
 val controller = WindowCompat.getInsetsController(window, window.decorView)
 controller.hide(WindowInsetsCompat.Type.systemBars())
 controller.addOnControllableInsetsChangedListener { _, typeMask ->
     var systemBarsVisible = typeMask and WindowInsetsCompat.Type.systemBars() != 0
-}*/
+}
 
 
 
@@ -20,7 +20,7 @@ controller.addOnControllableInsetsChangedListener { _, typeMask ->
 
 
 
-/*TODO implement this to viewModel
+TODO implement this to viewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -48,4 +48,66 @@ class MyViewModel(
             }
         }
     }
-}*/
+}
+
+
+
+
+
+//Todo what should chatscreen be Activity or fragment
+@Composable
+fun ChatScreen(
+    modifier : Modifier = Modifier,
+    chat: Chat,
+    messages: List<Message>
+){
+    for (message in messages){
+        Text(text = message.text)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
