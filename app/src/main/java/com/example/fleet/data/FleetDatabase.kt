@@ -40,13 +40,13 @@ import com.example.fleet.domain.Models.TenantChat
     Task::class,
     TenantChat::class,
     Tenant::class],
-    version = 7,
+    version = 4,
     exportSchema = false,
 )
 @TypeConverters(TypeConverte::class)
 abstract class FleetDatabase : RoomDatabase() {
 
-    abstract fun aprtmentDao(): ApartmentDao
+    abstract fun apartmentDao(): ApartmentDao
     abstract fun buildingDao(): BuildingDao
     abstract fun chatDao(): ChatDao
     abstract fun messageDao(): MessageDao
@@ -66,7 +66,9 @@ abstract class FleetDatabase : RoomDatabase() {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, FleetDatabase::class.java, "item_database")
-                    .build().also { Instance = it }
+                    //.fallbackToDestructiveMigration()
+                    .build()
+                    .also { Instance = it }
             }
         }
     }

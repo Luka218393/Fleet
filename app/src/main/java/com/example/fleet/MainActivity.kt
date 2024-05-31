@@ -3,16 +3,15 @@ package com.example.fleet
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.fleet.data.FleetDatabase
+import com.example.fleet.data.Tenants
+import com.example.fleet.data.apartments
+import com.example.fleet.data.buildings
+import com.example.fleet.data.notifications
 import com.example.fleet.data.pollOptions
-import com.example.fleet.data.settingState1
-import com.example.fleet.domain.Navigation
 import com.example.fleet.presentation.activities.NotificationActivity
 import com.example.fleet.presentation.ui.theme.FleetTheme
-import com.example.fleet.presentation.activities.SettingsActivity
-import com.example.fleet.presentation.fragments.BottomBar
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -25,12 +24,25 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FleetTheme {
-                val database = FleetDatabase.getDatabase(context = this)
-                runBlocking { database.pollOptionDao().delete(pollOptions[2]) }
+                val db = FleetDatabase.getDatabase(context = this)
+                runBlocking {
+                    for (i in buildings) {
+                        db.buildingDao().upsert(i)
+                    }
+                    for ( i in apartments){
+                        db.apartmentDao().upsert(i)
+                    }/*
+                    for (i in pollOptions) {
+                        db.pollOptionDao().upsert(i)
+                    }*/
+                    db.tenantDao().upsert(Tenants().tenant1)
+                    db.tenantDao().upsert(Tenants().tenant2)
+                    db.tenantDao().upsert(Tenants().tenant3)
+                    for (i in notifications) {
+                        db.notificationDao().upsert(i)
+                    }
+                }
 
-                //NotificationActivity().Create(bottomBar = {BottomBar(modifier = Modifier)})
-                //ChatActivity(chatBars).Create(bottomBar = {BottomBar(modifier = Modifier)})
-                //SettingsActivity(settingState1).Create(bottomBar = {BottomBar(modifier = Modifier)})
                 Navigator(NotificationActivity())
             }
         }

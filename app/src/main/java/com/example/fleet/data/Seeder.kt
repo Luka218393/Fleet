@@ -38,7 +38,7 @@ data class Tenants(
         apartmentId = 1,
     ),
     )
-private var notifications: List<Notification> = listOf(
+ var notifications: List<Notification> = listOf(
     Notification(
         id = 1,
         title = "Notification 1",
@@ -200,4 +200,5 @@ val settingState1 = SettingsState(
     building = buildings[0]
 
 )
-public var cards: List<BaseCard> = pollCards + notifications.map { notification -> NotificationCard(notification) }
+
+var cards: List<BaseCard> = pollCards + notifications.map { notification -> NotificationCard(notification) }

@@ -1,5 +1,6 @@
 package com.example.fleet.domain.Models
 
+import android.graphics.drawable.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -27,7 +28,7 @@ data class Notification (
     var title: String,
     var text: String,
     var imageResId: Int? = null,
-    //var iconResId: ImageVector = Icons.Default.Add, TODO ahh typeConverter for this
+    var iconResId: ImageVector = Icons.Default.Add, //TODO ahh typeConverter for this
     val createdAt: Date = Date(),
     val creatorId: Int, //
     var dueTo: Date? = null,
