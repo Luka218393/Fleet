@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import com.example.fleet.data.daos.ApartmentDao
 import com.example.fleet.data.daos.BuildingDao
 import com.example.fleet.data.daos.ChatDao
@@ -40,7 +41,7 @@ import com.example.fleet.domain.Models.TenantChat
     Task::class,
     TenantChat::class,
     Tenant::class],
-    version = 4,
+    version = 5,
     exportSchema = false,
 )
 @TypeConverters(TypeConverte::class)

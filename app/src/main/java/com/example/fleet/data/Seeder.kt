@@ -45,7 +45,8 @@ data class Tenants(
         text = "Lorem ipsum dolor sit amet",
         iconResId = Icons.Default.Favorite,
         creatorId = 1,
-        imageResId = R.drawable.lukinaikona
+        imageResId = R.drawable.lukinaikona,
+        buildingId = 1
     ),
 
     Notification(
@@ -54,6 +55,7 @@ data class Tenants(
         text = "Lorem ipsum dolor sit amet",
         iconResId = Icons.Default.List,
         creatorId = 1,
+        buildingId = 1
     ),
     Notification(
         id = 3,
@@ -61,7 +63,8 @@ data class Tenants(
         text = "My name is bearling Lino, i eat something nice everyday, is this what life is having expectations that i+ve built foe myself. i am letting loose, loooose, driftingall away, gonna end u somewhere anywhere letting loose",
         iconResId = Icons.Default.Face,
         creatorId = 2,
-        imageResId = R.drawable.flagicon
+        imageResId = R.drawable.flagicon,
+        buildingId = 1
     )
 )
 var pollOptions: List<PollOption> = listOf(
@@ -115,6 +118,7 @@ private var polls: List<Poll> = listOf(
         title = "First poll ever",
         question = "Why is sky blue?",
         pollType = PollType.MULTIPLE_CHOICE,
+        buildingId = 1
     ),
     Poll(
         id = 2,
@@ -122,6 +126,7 @@ private var polls: List<Poll> = listOf(
         title = "Second poll",
         question = "Is this poll better than the first one?",
         pollType = PollType.SINGLE_CHOICE,
+        buildingId = 1
     ),
     Poll(
         id = 3,
@@ -129,6 +134,7 @@ private var polls: List<Poll> = listOf(
         title = "Hidden poll",
         question = "You cant see me",
         pollType = PollType.SINGLE_CHOICE,
+        buildingId = 1
     ),
 
 )

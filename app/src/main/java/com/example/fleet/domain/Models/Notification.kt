@@ -20,15 +20,24 @@ import java.util.Date
             childColumns = ["creatorId"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
-        )]
+        ),
+        ForeignKey(
+            entity = Building::class,
+            parentColumns = ["id"],
+            childColumns = ["buildingId"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        )
+    ]
 )
 data class Notification (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val buildingId: Int,
     var title: String,
     var text: String,
     var imageResId: Int? = null,
-    var iconResId: ImageVector = Icons.Default.Add, //TODO ahh typeConverter for this
+    var iconResId: ImageVector = Icons.Default.Add,
     val createdAt: Date = Date(),
     val creatorId: Int, //
     var dueTo: Date? = null,

@@ -15,12 +15,20 @@ import java.util.Date
             childColumns = ["senderId"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Chat::class,
+            parentColumns = ["id"],
+            childColumns = ["chatId"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         )
     ]
 )
 data class Message (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val chatId: Int,//
     val senderId: Int,//
     var text: String = "",
     var sendingTime: Date = Date(),

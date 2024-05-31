@@ -18,9 +18,9 @@ data class Building (
     val numberOfApartments: Int = 1,
     val planRes: Int? = null,
     //val location: Location? = null, TODO add typeconverter for this type
-    val creationYear: Int = 1900,
+    val creationYear: Int? = null,
     val addedDate: Date = Date(),
-    val country: Countries = Countries.ENGLAND,
+    val country: Countries? = null,
     val city: String? = null,
     var tenantLeaderContact: String? = null
 )
