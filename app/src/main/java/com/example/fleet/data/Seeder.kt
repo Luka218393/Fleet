@@ -13,6 +13,7 @@ import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
+import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SettingsState
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.presentation.fragments.BaseCard
@@ -207,4 +208,11 @@ val settingState1 = SettingsState(
 
 )
 
+val settings1 = Settings(
+    id = 1,
+    tenantId = 1,
+    apartmentId = 1,
+    buildingId = 1
+
+)
 var cards: List<BaseCard> = pollCards + notifications.map { notification -> NotificationCard(notification) }

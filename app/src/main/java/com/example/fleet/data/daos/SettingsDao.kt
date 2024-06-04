@@ -21,4 +21,7 @@ interface SettingsDao {
 
     @Query("SELECT * from settings WHERE id = :id")
     fun getById(id: Int): Flow<Settings>
+
+    @Query("SELECT * from settings")
+    fun get(): Flow<Settings>
 }
