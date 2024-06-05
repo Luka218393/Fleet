@@ -15,8 +15,8 @@ class Navigation(private val appInstances: AppInstances)
     fun goTo(screen: Screens, navigator: Navigator?){
         // TODO make so that you cant push activity that you are alredy on
         when(screen){
-            Screens.CHAT_SCREEN -> navigator?.push(ChatActivity(chatBars = chatBars, this))
-            Screens.SETTINGS_SCREEN -> navigator?.push(SettingsActivity(settingState1, this))
+            Screens.CHAT_SCREEN -> navigator?.push(appInstances.chatActivity)
+            Screens.SETTINGS_SCREEN -> navigator?.push(appInstances.settingsActivity)
             Screens.NOTIFICATION_SCREEN -> navigator?.push(appInstances.notificationActivity)
         }
     }

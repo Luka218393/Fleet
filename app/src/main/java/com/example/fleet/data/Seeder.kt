@@ -112,7 +112,7 @@ var pollOptions: List<PollOption> = listOf(
         pollId = 2
     ),
 )
-private var polls: List<Poll> = listOf(
+var polls: List<Poll> = listOf(
     Poll(
         id = 1,
         creatorId = 1,

@@ -1,5 +1,6 @@
 package com.example.fleet.presentation.fragments
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -143,6 +144,7 @@ class PollCard (
     @Composable
     override fun Content() {
         if (options.isEmpty()) {
+            Log.d("PollCard", "No options")
             return/*TODO make this smarter*/
         }
         val selectedOption = remember { mutableStateOf(options[0]) }/*TODO move this to viewModel*/

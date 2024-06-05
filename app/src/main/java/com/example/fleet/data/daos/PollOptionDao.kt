@@ -20,4 +20,7 @@ interface PollOptionDao {
 
     @Query("SELECT * from poll_options ORDER BY value ASC")
     fun getAll(): Flow<List<PollOption>>
+
+    @Query("SELECT * from poll_options WHERE pollid = :id")
+    fun getByPollId(id: Int): Flow<List<PollOption>>
 }
