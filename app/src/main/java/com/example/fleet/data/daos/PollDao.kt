@@ -21,4 +21,7 @@ interface PollDao {
 
     @Query("SELECT * from polls WHERE id = :id")
     fun getById(id: Int): Flow<Poll>
+
+    @Query("SELECT * from polls WHERE buildingid = :id")
+    fun getByBuildingId(id: Int): Flow<Poll>
 }

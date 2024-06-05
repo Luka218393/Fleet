@@ -16,11 +16,12 @@ import com.example.fleet.R
 import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SettingsState
+import com.example.fleet.domain.Navigation
 
 class SettingsActivity (
     private val settings: SettingsState,
-
-) : BaseActivity(){
+    navigation: Navigation
+) : BaseActivity(navigation){
     @Composable
     override fun InnerContent() {
         Column (

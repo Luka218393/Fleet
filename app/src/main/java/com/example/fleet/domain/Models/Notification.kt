@@ -33,7 +33,7 @@ import java.util.Date
 data class Notification (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val buildingId: Int,
+    val buildingId: Int,//
     var title: String,
     var text: String,
     var imageResId: Int? = null,

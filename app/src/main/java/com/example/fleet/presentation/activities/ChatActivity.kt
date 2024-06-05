@@ -11,12 +11,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Message
+import com.example.fleet.domain.Navigation
 import com.example.fleet.presentation.fragments.BottomBar
 import com.example.fleet.presentation.fragments.ChatBar
 
 class ChatActivity (
     private val chatBars: List<ChatBar>,
-) : BaseActivity(){
+    navigation: Navigation
+) : BaseActivity(navigation){
     @Composable
     override fun InnerContent() {
         LazyColumn(

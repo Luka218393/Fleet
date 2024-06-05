@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
+import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.Task
 import kotlinx.coroutines.flow.Flow
 
@@ -21,4 +22,7 @@ interface TaskDao {
 
     @Query("SELECT * from tasks WHERE id = :id")
     fun getById(id: Int): Flow<Task>
+
+    @Query("SELECT * from tasks WHERE buildingid = :id")
+    fun getByBuildingId(id: Int): Flow<Task>
 }

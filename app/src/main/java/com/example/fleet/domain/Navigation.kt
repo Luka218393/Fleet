@@ -1,6 +1,7 @@
 package com.example.fleet.domain
 
 import cafe.adriel.voyager.navigator.Navigator
+import com.example.fleet.AppInstances
 import com.example.fleet.data.cards
 import com.example.fleet.data.chatBars
 import com.example.fleet.data.settingState1
@@ -9,15 +10,14 @@ import com.example.fleet.presentation.activities.ChatActivity
 import com.example.fleet.presentation.activities.NotificationActivity
 import com.example.fleet.presentation.activities.SettingsActivity
 
-class Navigation (
-
-){
+class Navigation(private val appInstances: AppInstances)
+{
     fun goTo(screen: Screens, navigator: Navigator?){
         // TODO make so that you cant push activity that you are alredy on
         when(screen){
-            Screens.CHAT_SCREEN -> navigator?.push(ChatActivity(chatBars = chatBars))
-            Screens.SETTINGS_SCREEN -> navigator?.push(SettingsActivity(settingState1))
-            Screens.NOTIFICATION_SCREEN -> navigator?.push(NotificationActivity(cards = cards))
+            Screens.CHAT_SCREEN -> navigator?.push(ChatActivity(chatBars = chatBars, this))
+            Screens.SETTINGS_SCREEN -> navigator?.push(SettingsActivity(settingState1, this))
+            Screens.NOTIFICATION_SCREEN -> navigator?.push(appInstances.notificationActivity)
         }
     }
 }

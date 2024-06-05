@@ -23,8 +23,10 @@ import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 
 @Composable
-fun BottomBar(modifier: Modifier) {
-    val navigator = Navigation()
+fun BottomBar(
+    modifier: Modifier,
+    navigator: Navigation
+) {
     val nav = LocalNavigator.current
     BottomAppBar(
         modifier = modifier
@@ -63,8 +65,3 @@ fun BottomBar(modifier: Modifier) {
     )     //Spacer(modifier = Modifier.height(50.dp))
 }
 //https://www.youtube.com/watch?v=c8XP_Ee7iqY&ab_channel=PhilippLackner TODO
-@Preview
-@Composable
-fun BottomBarPreview() {
-    BottomBar(Modifier)
-}
