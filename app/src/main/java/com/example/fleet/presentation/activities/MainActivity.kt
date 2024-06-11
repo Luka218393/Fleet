@@ -32,8 +32,7 @@ This is the starting point of the app.
 */
 class MainActivity : ComponentActivity() {
 
-
-    @SuppressLint("StateFlowValueCalledInComposition")
+    //Todo update kotlin and gradle version
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -46,14 +45,10 @@ class MainActivity : ComponentActivity() {
 
 
                 val appInstances = AppInstances(notificationViewModel)
-                val navigation = Navigation(appInstances)
 
                 runBlocking {
                     //seed(db)
                 }
-
-                //Text(text = mainViewModel.settings.value.buildingId.toString())
-                //Text(text = mainViewModel.tenant.collectAsState(initial = "").value.id.toString())
 
                 Navigator(appInstances.notificationActivity)
             }
