@@ -3,6 +3,9 @@ package com.example.fleet.domain.viewModels
 import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.collectAsState
@@ -54,19 +57,24 @@ class NotificationViewModel (
         runBlocking {//Todo make this smarter
 
             notifications = db.notificationDao().getByBuildingId(settings.value.buildingId)
+
             polls = db.pollDao().getByBuildingId(settings.value.buildingId)
             pollOptions = db.pollOptionDao().getAll()
             tasks = db.taskDao().getByBuildingId(settings.value.buildingId)
             pollCards = mutableListOf()
             for (poll in polls.first()){pollCards.add(PollCard(poll, pollOptions.first().filter { pollOption -> pollOption.pollId == poll.id }))}
 
-            Log.i("NotificationViewModel", notifications.first()[0].iconResId.toString())
-            notifications.first()[0].iconResId = Icons.Default.Star
-
+            //Todo learn how to update a flow
             notificationCards = mutableListOf()
             for (notification in notifications.first()){ notificationCards.add(NotificationCard(notification))}
 
             cards = pollCards + notificationCards
+        }
+    }
+
+    fun changeNotification(notification1: Notification){//Todo make this smarter
+        runBlocking {
+            db.notificationDao().upsert(notification1)
         }
     }
 }

@@ -38,7 +38,7 @@ data class Notification (
     var text: String,
     var imageResId: Int? = null,
     var iconResId: ImageVector = Icons.Default.Add,
-    val createdAt: Date = Date(),
+    var createdAt: Date = Date(),
     val creatorId: Int, //
     var dueTo: Date? = null,
     var visibleToEveryone: Boolean = true

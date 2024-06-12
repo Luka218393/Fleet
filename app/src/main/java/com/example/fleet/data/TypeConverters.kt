@@ -20,7 +20,7 @@ class TypeConverte {
     }
     @TypeConverter
     fun fromIcon(icon: ImageVector): String {
-        return Icono.entries.find { icono -> icono.name == icon.name }.toString()
+        return Icono.entries.find { icono -> icono.nomen == icon.name }.toString()
     }
 
     @TypeConverter
