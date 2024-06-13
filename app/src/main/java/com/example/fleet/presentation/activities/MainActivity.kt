@@ -15,6 +15,8 @@ import com.example.fleet.data.notifications
 import com.example.fleet.data.pollOptions
 import com.example.fleet.data.polls
 import com.example.fleet.data.settings1
+import com.example.fleet.domain.viewModels.ChatViewModel
+import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.domain.viewModels.DialogueViewModel
 import com.example.fleet.domain.viewModels.DialogueViewModelFactory
 import com.example.fleet.domain.viewModels.MainViewModel
@@ -43,8 +45,9 @@ class MainActivity : ComponentActivity() {
                 val mainViewModel = ViewModelProvider(this, MainViewModelFactory(db))[MainViewModel::class.java]
                 val notificationViewModel = ViewModelProvider(this, NotificationViewModelFactory(db, mainViewModel.settings))[NotificationViewModel::class.java]
                 val dialogueViewModel = ViewModelProvider(this, DialogueViewModelFactory(db, mainViewModel.settings))[DialogueViewModel::class.java]
+                val chatViewModel = ViewModelProvider(this, ChatViewModelFactory(db, mainViewModel.settings))[ChatViewModel::class.java]
 
-                val appInstances = AppInstances(notificationViewModel, dialogueViewModel)
+                val appInstances = AppInstances(notificationViewModel, dialogueViewModel, chatViewModel)
 
 
                 Navigator(appInstances.notificationActivity)
