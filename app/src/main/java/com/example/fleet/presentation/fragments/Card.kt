@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -31,6 +32,7 @@ import com.example.fleet.R
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
+import com.example.fleet.domain.Models.Task
 
 /*
 Base class for event cards and poll cards
@@ -48,7 +50,7 @@ abstract class BaseCard{
         Card(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
+                .padding(top = 4.dp, bottom = 4.dp, start = 4.dp, end = 4.dp),
             colors =  CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -131,7 +133,7 @@ class NotificationCard (
     }
 }
 
-/*
+/**
 Poll card with title, text and checkbox
 TODO implement voting results
 TODO Change opinion
@@ -207,27 +209,48 @@ class PollCard (
 }
 
 class TaskCard (
-    private val question: String,
-    private val options: List<PollOption>,
+    private val task: Task,
+    private val onCheckboxChange: (Boolean) -> Unit,
+    private val completed: Boolean
 ): BaseCard(){
     @Composable
     override fun Content() {
-        //TODO make task card
+        Column(){
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.List,
+                    contentDescription = "Poll icon",
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .weight(1f)
+                )
+                // Question text field
+                Text(
+                    text = task.title,
+                    modifier = Modifier
+                        .weight(4f)
+                        .padding(8.dp),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            Text(text = task.description,
+                modifier = Modifier.padding(4.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Checkbox(checked = completed, onCheckedChange = onCheckboxChange)
+        }
     }
-
 }
 
 
-
-@Preview(showBackground = true)
 @Composable
-fun PreviewSimpleEventCard() {
-}
-@Preview(showBackground = true)
-@Composable
-fun PreviewImageEventCard() {
-}
-@Preview(showBackground = true)
-@Composable
-fun PreviewPollCard() {
+@Preview
+fun TaskCardPreview(){
+    //TaskCard(tasks[0]).Content()
 }

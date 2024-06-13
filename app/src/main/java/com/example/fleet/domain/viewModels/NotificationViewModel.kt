@@ -12,6 +12,7 @@ import com.example.fleet.domain.Models.Task
 import com.example.fleet.presentation.fragments.BaseCard
 import com.example.fleet.presentation.fragments.NotificationCard
 import com.example.fleet.presentation.fragments.PollCard
+import com.example.fleet.presentation.fragments.TaskCard
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -24,8 +25,8 @@ class NotificationViewModel (
 
     var cards: List<BaseCard>
 
-    private var tasks: Flow<Task>
-
+    private var tasks: Flow<List<Task>>
+    private var taskCards: MutableList<TaskCard> = mutableListOf()
     private var notifications: Flow<List<Notification>>
     private var notificationCards: MutableList<NotificationCard> = mutableListOf()
     private var polls: Flow<List<Poll>>
@@ -34,7 +35,7 @@ class NotificationViewModel (
 
 
     init {
-        runBlocking {//Todo make this smarter
+        runBlocking {//Todo make this smarter & remove runBlocking
 
             Log.i("NotificationViewModel", "NotificationViewModel init")
 
@@ -48,11 +49,20 @@ class NotificationViewModel (
             for (poll in polls.first()){pollCards.add(PollCard(poll, pollOptions.first().filter { pollOption -> pollOption.pollId == poll.id }))}
             for (notification in notifications.first()){ notificationCards.add(NotificationCard(notification))}
 
-            cards = pollCards + notificationCards
+            /*TODO Checkbutton isn't updating*/
+            for (task in tasks.first()){
+                taskCards.add(TaskCard(
+                    task = task,
+                    completed = false,//Mutable(task.completed),
+                    onCheckboxChange = {task.completed = it; runBlocking {db.taskDao().upsert(task)}})
+                )
+            }
+            /*Todo sort by date*/
+            cards = taskCards + notificationCards + pollCards
         }
     }
 
-    fun changeNotification(notification1: Notification){//Todo make this smarter
+    fun changeNotification(notification1: Notification){//Todo make this smarter & remove runBlocking
         runBlocking {
             db.notificationDao().upsert(notification1)
         }

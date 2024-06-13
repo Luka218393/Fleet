@@ -15,6 +15,7 @@ import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SettingsState
+import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.presentation.fragments.BaseCard
 import com.example.fleet.presentation.fragments.ChatBar
@@ -216,3 +217,29 @@ val settings1 = Settings(
 
 )
 var cards: List<BaseCard> = pollCards + notifications.map { notification -> NotificationCard(notification) }
+
+
+
+val tasks = listOf(
+    Task(
+        id = 1,
+        title = "Task1",
+        buildingId = 1,
+        description = "My name is Jonnas i am carrying the wheel",
+        creatorId = 1
+    ),
+    Task(
+        id = 2,
+        title = "I am the best Task",
+        buildingId = 1,
+        description = "Can you see an irony in this",
+        creatorId = 2
+    ),
+    Task(
+        id = 3,
+        title = "Task from another Buiilding",
+        buildingId = 2,
+        description = "My name is Jonnas i am carrying the wheel",
+        creatorId = 1
+    )
+)

@@ -23,7 +23,7 @@ class MainViewModel (
             settings = MutableStateFlow(db.settingsDao().get().first())
             tenant = db.tenantDao().getById(settings.value.tenantId)
             apartment = db.tenantDao().getById(settings.value.apartmentId)
-            building = db.tenantDao().getById(settings.value.buildingId)/**/
+            building = db.tenantDao().getById(settings.value.buildingId)
         }
     }
 }

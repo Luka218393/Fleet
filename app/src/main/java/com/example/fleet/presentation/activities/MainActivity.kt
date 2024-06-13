@@ -15,6 +15,7 @@ import com.example.fleet.data.notifications
 import com.example.fleet.data.pollOptions
 import com.example.fleet.data.polls
 import com.example.fleet.data.settings1
+import com.example.fleet.data.tasks
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.domain.viewModels.DialogueViewModel
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
             FleetTheme {
                 val db = FleetDatabase.getDatabase(context = this)
 
-                //seed(db)
+                seed(db)
 
                 val mainViewModel = ViewModelProvider(this, MainViewModelFactory(db))[MainViewModel::class.java]
                 val notificationViewModel = ViewModelProvider(this, NotificationViewModelFactory(db, mainViewModel.settings))[NotificationViewModel::class.java]
@@ -79,6 +80,9 @@ fun seed(db: FleetDatabase){
         }
         for (i in pollOptions) {
             db.pollOptionDao().upsert(i)
+        }
+        for (i in tasks){
+            db.taskDao().upsert(i)
         }
         Log.i("aaa", settings.toString())
     }
