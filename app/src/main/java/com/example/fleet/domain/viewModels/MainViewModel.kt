@@ -1,28 +1,23 @@
 package com.example.fleet.domain.viewModels
 
-import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.fleet.data.FleetDatabase
-import com.example.fleet.data.settings1
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.Tenant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class MainViewModel (
     var db: FleetDatabase
 ): ViewModel() {
 
-    lateinit var settings: MutableStateFlow<Settings>
-    lateinit var tenant: Flow<Tenant>
-    lateinit var apartment: Flow<Tenant>
-    lateinit var building: Flow<Tenant>
+    var settings: MutableStateFlow<Settings>
+    var tenant: Flow<Tenant>
+    var apartment: Flow<Tenant>
+    var building: Flow<Tenant>
     init {
         runBlocking {//Todo make this smarter
             settings = MutableStateFlow(db.settingsDao().get().first())

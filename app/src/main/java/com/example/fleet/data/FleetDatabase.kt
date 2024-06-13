@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.Migration
 import com.example.fleet.data.daos.ApartmentDao
 import com.example.fleet.data.daos.BuildingDao
 import com.example.fleet.data.daos.ChatDao
@@ -41,7 +40,7 @@ import com.example.fleet.domain.Models.TenantChat
     Task::class,
     TenantChat::class,
     Tenant::class],
-    version = 6,
+    version = 8,
     exportSchema = false,
 )
 @TypeConverters(TypeConverte::class)
@@ -67,7 +66,7 @@ abstract class FleetDatabase : RoomDatabase() {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, FleetDatabase::class.java, "item_database")
-                    //.fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }
             }
