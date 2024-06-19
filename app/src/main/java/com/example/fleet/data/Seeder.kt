@@ -17,8 +17,8 @@ import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SettingsState
 import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
+import com.example.fleet.domain.Models.TenantChat
 import com.example.fleet.presentation.fragments.BaseCard
-import com.example.fleet.presentation.fragments.ChatBar
 import com.example.fleet.presentation.fragments.NotificationCard
 import com.example.fleet.presentation.fragments.PollCard
 
@@ -168,7 +168,26 @@ val chats: List<Chat> = listOf(
         chatType = ChatType.EVERYONE
     )
 )
-val chatBars = chats.map { chat -> ChatBar(chat) }
+
+val tenantChat = listOf<TenantChat>(
+    TenantChat(
+        tenantId = 1,
+        chatId = 1
+    ),
+    TenantChat(
+        tenantId = 1,
+        chatId = 2
+    ),
+    TenantChat(
+        tenantId = 2,
+        chatId = 2
+    ),
+    TenantChat(
+        tenantId = 2,
+        chatId = 1
+    )
+)
+
 
 var buildings = listOf(
     Building(

@@ -6,15 +6,19 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -28,17 +32,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.fleet.R
+import com.example.fleet.data.notifications
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Task
+import java.util.Date
 
 /*
 Base class for event cards and poll cards
 Other cards must inherit from it
 */
-abstract class BaseCard{
+abstract class BaseCard(//TODo fix empty card
+    val createdAt: Date,//ToDo make this time format properly
+    val createdBy: String//TODO make this reference tenant name
+){
 
     //Content of the card
     @Composable
@@ -54,11 +62,23 @@ abstract class BaseCard{
             colors =  CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+                ),
+            shape = RoundedCornerShape(2.dp)
             ) {
 
             Content()
 
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Absolute.SpaceAround
+            ){
+                Text(
+                    text = createdBy,
+                )
+                Text(
+                    text = createdAt.toString()
+                )
+            }
         }
     }
 }
@@ -69,44 +89,47 @@ abstract class BaseCard{
 class NotificationCard (
     private val notification: Notification/*TODO make ui actually pretty*/,
     private val modifier: Modifier = Modifier
-): BaseCard(){
+): BaseCard(notification.createdAt, notification.creatorId.toString()){
     @Composable
     override fun Content () {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Column{
+            //Additional content
+            AdditionalContent(notification, modifier)
             //Title
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
             ) {
                 Icon(
                     imageVector = notification.iconResId,
                     contentDescription = "${notification.iconResId} icon",
                     tint = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .weight(1f)
+                    modifier = modifier
+                        .size(32.dp)
                 )
+                Spacer(modifier = modifier.width(12.dp))
                 // Title text field
                 Text(
                     text = notification.title,
-                    modifier = Modifier
-                        .weight(4f)
-                        .padding(8.dp),
+                    modifier = modifier,
                     style = MaterialTheme.typography.titleLarge
                 )
             }
 
-            // Body text field
-            Text(text = notification.text,
-                modifier = Modifier.padding(4.dp),
-                style = MaterialTheme.typography.bodyMedium
+            HorizontalDivider(
+                modifier = modifier.fillMaxWidth(),
+                thickness = 0.4.dp,
+                color = MaterialTheme.colorScheme.secondary
             )
 
-            //Additional content
-            AdditionalContent(notification, modifier)
+            // Body text field
+            Text(
+                text = notification.text,
+                modifier = Modifier.padding(12.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
 
         }
     }
@@ -123,9 +146,13 @@ class NotificationCard (
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             if (notification.imageResId != null) {
-                Image(painter = painterResource(notification.imageResId ?: R.drawable.lukinaikona),
-                    contentDescription = "Picture of the event",
-                    modifier = modifier.size(200.dp)
+                Image(
+                    painter = painterResource(notification.imageResId!!),
+                    contentDescription = "Notifications picture",
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(256.dp)
+                        .padding(vertical = 12.dp)
                 )
                 return
             }
@@ -142,7 +169,7 @@ TODO make poll model
 class PollCard (
     private val poll: Poll,
     private val options: List<PollOption>,
-): BaseCard(){
+): BaseCard(poll.dateCreated, poll.creatorId.toString()){
     @Composable
     override fun Content() {
         if (options.isEmpty()) {
@@ -212,7 +239,7 @@ class TaskCard (
     private val task: Task,
     private val onCheckboxChange: (Boolean) -> Unit,
     private val completed: Boolean
-): BaseCard(){
+): BaseCard(task.createdAt, task.creatorId.toString()){
     @Composable
     override fun Content() {
         Column(){
@@ -248,6 +275,11 @@ class TaskCard (
     }
 }
 
+@Composable
+@Preview
+fun NotificationCardPreview(){
+    NotificationCard(notifications[2]).Content()
+}
 
 @Composable
 @Preview

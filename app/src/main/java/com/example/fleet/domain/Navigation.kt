@@ -2,13 +2,8 @@ package com.example.fleet.domain
 
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.fleet.AppInstances
-import com.example.fleet.data.cards
-import com.example.fleet.data.chatBars
-import com.example.fleet.data.settingState1
 import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.presentation.activities.ChatActivity
-import com.example.fleet.presentation.activities.NotificationActivity
-import com.example.fleet.presentation.activities.SettingsActivity
+
 
 class Navigation(private val appInstances: AppInstances)
 {

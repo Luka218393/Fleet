@@ -2,7 +2,6 @@ package com.example.fleet.domain.Enums
 
 import cafe.adriel.voyager.core.screen.Screen
 import com.example.fleet.data.cards
-import com.example.fleet.data.chatBars
 import com.example.fleet.data.settingState1
 import com.example.fleet.presentation.activities.ChatActivity
 import com.example.fleet.presentation.activities.MainActivity

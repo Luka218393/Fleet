@@ -1,12 +1,10 @@
 package com.example.fleet.data
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.TypeConverter
 import com.example.fleet.domain.Enums.Icono
-import java.time.LocalDate
 import java.util.Date
 
 class TypeConverte {

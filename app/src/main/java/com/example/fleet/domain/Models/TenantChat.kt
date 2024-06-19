@@ -22,6 +22,7 @@ import androidx.room.PrimaryKey
         )
     ]
 )
+/*TODO change primary key to be combination of tenantId and chatId*/
 data class TenantChat(
     val tenantId: Int,
     val chatId: Int,

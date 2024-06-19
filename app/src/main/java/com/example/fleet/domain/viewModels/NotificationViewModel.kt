@@ -59,6 +59,7 @@ class NotificationViewModel (
             }
             /*Todo sort by date*/
             cards = taskCards + notificationCards + pollCards
+            cards.sortedBy { card -> card.createdAt  }
         }
     }
 

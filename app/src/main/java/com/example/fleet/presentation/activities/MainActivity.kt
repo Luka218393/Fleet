@@ -11,11 +11,13 @@ import com.example.fleet.data.FleetDatabase
 import com.example.fleet.data.Tenants
 import com.example.fleet.data.apartments
 import com.example.fleet.data.buildings
+import com.example.fleet.data.chats
 import com.example.fleet.data.notifications
 import com.example.fleet.data.pollOptions
 import com.example.fleet.data.polls
 import com.example.fleet.data.settings1
 import com.example.fleet.data.tasks
+import com.example.fleet.data.tenantChat
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.domain.viewModels.DialogueViewModel
@@ -41,7 +43,7 @@ class MainActivity : ComponentActivity() {
             FleetTheme {
                 val db = FleetDatabase.getDatabase(context = this)
 
-                seed(db)
+                //seed(db)
 
                 val mainViewModel = ViewModelProvider(this, MainViewModelFactory(db))[MainViewModel::class.java]
                 val notificationViewModel = ViewModelProvider(this, NotificationViewModelFactory(db, mainViewModel.settings))[NotificationViewModel::class.java]
@@ -83,6 +85,12 @@ fun seed(db: FleetDatabase){
         }
         for (i in tasks){
             db.taskDao().upsert(i)
+        }
+        for (i in chats){
+            db.chatDao().upsert(i)
+        }
+        for (i in tenantChat){
+            db.tenantChatDao().upsert(i)
         }
         Log.i("aaa", settings.toString())
     }
