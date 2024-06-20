@@ -53,7 +53,6 @@ class NotificationViewModel (
             for (task in tasks.first()){
                 taskCards.add(TaskCard(
                     task = task,
-                    completed = false,//Mutable(task.completed),
                     onCheckboxChange = {task.completed = it; runBlocking {db.taskDao().upsert(task)}})
                 )
             }

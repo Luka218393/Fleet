@@ -4,8 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.fleet.domain.Enums.PollType
-import com.example.fleet.domain.Enums.Voters
-import java.time.LocalDate
 import java.util.Date
 
 @Entity(
