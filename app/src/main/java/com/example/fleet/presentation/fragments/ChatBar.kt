@@ -2,69 +2,70 @@ package com.example.fleet.presentation.fragments
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
-import com.example.fleet.domain.Enums.ChatType
+import com.example.fleet.data.chats
 import com.example.fleet.domain.Models.Chat
 
 class ChatBar (
     private val chat: Chat,
+    private val getLastMessageText: () -> String,
     private val modifier: Modifier = Modifier,
 ){
     /*TODO add color change based on discussion type -> ViewModel*/
     @Composable
     fun Create(){
-        ElevatedCard(
+        Card(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(8.dp, 4.dp)
+                .height(72.dp)
+                .padding(1.dp)
                 .clickable {/*TODO add navigation to chat*/ },
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            )
+            shape = RoundedCornerShape(2.dp)
+
+
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = modifier.fillMaxSize()
             ){
                 Image(painter = painterResource(
                     chat.profileImageResId ?: R.drawable.lukinaikona),
                     contentDescription = null,
                     modifier = modifier
-                        .size(64.dp)
-                        .weight(1f)
-                        .padding(8.dp)
+                        .size(60.dp)
+                        .weight(2f)
                 )
+                Spacer(modifier = modifier.weight(0.2f))
                 Column(
                     modifier = modifier
-                        .weight(4f)
-                        .padding(8.dp)
+                        .weight(8f),
+                    verticalArrangement = Arrangement.Center
                 ){
                     Text(text = chat.title ?: "No title", style = MaterialTheme.typography.titleLarge, modifier = modifier
-                        .padding(0.dp)
                         .align(Alignment.Start))
-                    Text(text = getLastMessage(), style = MaterialTheme.typography.bodyMedium,modifier = modifier
-                        .padding(0.dp)
+                    Text(text = getLastMessageText(), style = MaterialTheme.typography.bodyMedium,modifier = modifier
                         .align(Alignment.Start))
                 }
 
@@ -74,17 +75,12 @@ class ChatBar (
         }
     }
 
-    fun getLastMessage(): String{
-        return "This should be last message"
-    }
 }
 
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {
-    ChatBar(
-
-    ).Create()
-}*/
+    ChatBar(chats[0],{"yeaaa"}).Create()
+}

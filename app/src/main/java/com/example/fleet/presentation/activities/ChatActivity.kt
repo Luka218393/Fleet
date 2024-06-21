@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 
+//Todo Come up with a normal name for this class
 class ChatActivity (
-    //private val chatBars: List<ChatBar>,
     private val viewModel: ChatViewModel,
 
     navigation: Navigation
@@ -28,15 +28,4 @@ class ChatActivity (
             }
         }
     }
-
 }
-
-
-/*
-@Preview(showBackground = true)
-@Composable
-fun ChatScreenPreview() {
-    ChatActivity().Create(bottomBar = { BottomBar(modifier = Modifier) })
-}
-
-*/

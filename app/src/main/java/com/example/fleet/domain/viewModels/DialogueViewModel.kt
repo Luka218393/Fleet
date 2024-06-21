@@ -8,6 +8,7 @@ import com.example.fleet.domain.Models.Message
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
+import com.example.fleet.presentation.fragments.MessageBox
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -29,13 +30,21 @@ class DialogueViewModel (
         }
     }
 
-    suspend fun getMessages(chat: Chat):List<Message>{
-        return this.messages.first().filter { it.chatId == chat.id }
+    fun getMessages(chatId: Int): List<MessageBox>{
+        var a : List<MessageBox>
+        runBlocking {
+            a = messages.first().filter { it.chatId == chatId }.map{message -> MessageBox(message = message) }
+        }
+        return a
     }
 
     suspend fun getTenants(chat: Chat):List<Tenant>{
         val tenantChats = this.tenantChat.first().filter { it.chatId == chat.id }.map{it.tenantId}
         return this.tenants.first().filter{it.id in tenantChats}
+    }
+
+    fun getSettingsTenantId(): Int{
+        return settings.value.tenantId
     }
 
 }

@@ -3,7 +3,6 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.time.LocalDate
 import java.util.Date
 
 @Entity(
@@ -30,8 +29,8 @@ data class Message (
     val id: Int = 0,
     val chatId: Int,//
     val senderId: Int,//
-    var text: String = "",
+    var text: String = "",//Todo remove this default value
     var sendingTime: Date = Date(),
     var profileImage: Int? = null,
-    var imageUrl: String? = null,
+    var imageUrl: String? = null,//Todo ? what did i even think with this
 )

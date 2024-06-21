@@ -1,6 +1,5 @@
 package com.example.fleet.presentation.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -29,7 +28,7 @@ private val DarkColorScheme = darkColorScheme(
     tertiaryContainer = Color(0xFFB8B7B7),
     onTertiaryContainer = Black,
 
-    background = Black,
+    background = Color(0xFF1F1F1F),
     )
 
 private val LightColorScheme = lightColorScheme(

@@ -12,6 +12,7 @@ import com.example.fleet.data.Tenants
 import com.example.fleet.data.apartments
 import com.example.fleet.data.buildings
 import com.example.fleet.data.chats
+import com.example.fleet.data.messages
 import com.example.fleet.data.notifications
 import com.example.fleet.data.pollOptions
 import com.example.fleet.data.polls
@@ -53,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 val appInstances = AppInstances(notificationViewModel, dialogueViewModel, chatViewModel)
 
 
-                Navigator(appInstances.notificationActivity)
+                Navigator(appInstances.dialogueScreen)
             }
         }
     }
@@ -91,6 +92,9 @@ fun seed(db: FleetDatabase){
         }
         for (i in tenantChat){
             db.tenantChatDao().upsert(i)
+        }
+        for (i  in messages){
+            db.messageDao().upsert(i)
         }
         Log.i("aaa", settings.toString())
     }

@@ -10,6 +10,7 @@ import com.example.fleet.domain.Enums.PollType
 import com.example.fleet.domain.Models.Apartment
 import com.example.fleet.domain.Models.Building
 import com.example.fleet.domain.Models.Chat
+import com.example.fleet.domain.Models.Message
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
@@ -261,4 +262,28 @@ val tasks = listOf(
         description = "My name is Jonnas i am carrying the wheel",
         creatorId = 1
     )
+)
+
+val messages = listOf(
+    Message(
+        chatId = 1,
+        senderId = 1,
+        text = "WEEEEEEEEE"
+    ),
+    Message(
+        chatId = 1,
+        senderId = 2,
+        text = "Jonnanatourus 20000"
+    ),
+    Message(
+        chatId = 2,
+        senderId = 1,
+        text = "This is a veryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggggggggggggggg messssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssaaassggggggggggggeeeeeeeee"
+    ),
+    Message(
+        chatId = 1,
+        senderId = 1,
+        text = "This is a veryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggggggggggggggg messssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssaaassggggggggggggeeeeeeeee"
+    )
+
 )
