@@ -10,7 +10,7 @@ import com.example.fleet.domain.Navigation
 import com.example.fleet.presentation.fragments.BottomBar
 
 abstract class BaseActivity(
-    private val navigation: Navigation
+    val navigation: Navigation
 ): Screen {
 
     @Composable

@@ -25,8 +25,16 @@ class ChatViewModel (
         runBlocking {//Todo make this smarter
             tenantChats = db.tenantChatDao().getByTenantId(settings.value.tenantId)
             chats = tenantChats.first().map { db.chatDao().getById(it.chatId).first() }
-            chatBars = chats.map { ChatBar(it, getLastMessageText =  {"yeaaaaa"}) }
+            chatBars = chats.map { ChatBar(it, getLastMessageText =  {"yeaaaaa"}, ) }
         }
+    }
+
+    fun getChatById(id : Int): Chat{
+        val a: Chat
+        runBlocking{
+            a =  db.chatDao().getById(id).first()
+        }
+        return a
     }
 }
 

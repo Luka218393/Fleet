@@ -1,67 +1,79 @@
 package com.example.fleet.presentation.fragments
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
+import cafe.adriel.voyager.navigator.Navigator
+import com.example.fleet.R
 
 
 //Todo create 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
     modifier: Modifier,
-    navigator: Navigation
+    title: String,
+    nav : Navigator = LocalNavigator.current!!//Todo this may cause issues ?
 ) {
-    val nav = LocalNavigator.current
-    BottomAppBar(
+    TopAppBar(
         modifier = modifier
-            .fillMaxWidth()
-            .height(50.dp),
-        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        actions = {
+            .fillMaxWidth(),
+        navigationIcon = {
             Row(
                 modifier = modifier
-                    .fillMaxWidth()
-                    .height(36.dp),
-                horizontalArrangement = Arrangement.SpaceAround,
+                    .clickable { nav.pop() }
+                    .fillMaxHeight(),
+                verticalAlignment = Alignment.CenterVertically,
+
+            ){
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Icon(
+                    Icons.Default.ArrowBack, contentDescription = "Back arrow",
+                    modifier = modifier.size(32.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+
+            }
+        },
+        title = {
+            Row(
+                modifier = modifier
+                    .fillMaxSize(),
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { navigator.goTo(Screens.NOTIFICATION_SCREEN, nav )}) {
-                    Icon(
-                        Icons.Default.Star, contentDescription = "Notifications",
-                        modifier = modifier.fillMaxSize()
-                    )
-                }
-                IconButton(onClick = { navigator.goTo(screen = Screens.CHAT_SCREEN, nav) }) {
-                    Icon(
-                        Icons.Default.Home, contentDescription = "Chat",
-                        modifier = modifier.fillMaxSize()
-                    )
-                }
-                IconButton(onClick = { navigator.goTo(Screens.SETTINGS_SCREEN, nav) }) {
-                    Icon(
-                        Icons.Default.Settings, contentDescription = "Settings",
-                        modifier = modifier.fillMaxSize()
-                    )
-                }
+                Image(
+                    painter = painterResource(id = R.drawable.lukinaikona),
+                    contentDescription = "Logo",
+                    modifier = modifier.size(52.dp)
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = title
+                )
             }
         }
-    )     //Spacer(modifier = Modifier.height(50.dp))
+    )     //
 }

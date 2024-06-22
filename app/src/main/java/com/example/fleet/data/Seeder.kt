@@ -266,21 +266,25 @@ val tasks = listOf(
 
 val messages = listOf(
     Message(
+        id = 1,
         chatId = 1,
         senderId = 1,
         text = "WEEEEEEEEE"
     ),
     Message(
+        id = 2,
         chatId = 1,
         senderId = 2,
         text = "Jonnanatourus 20000"
     ),
     Message(
+        id = 3,
         chatId = 2,
         senderId = 1,
         text = "This is a veryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggggggggggggggg messssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssaaassggggggggggggeeeeeeeee"
     ),
     Message(
+        id = 4,
         chatId = 1,
         senderId = 1,
         text = "This is a veryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggggggggggggggg messssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssaaassggggggggggggeeeeeeeee"

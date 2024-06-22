@@ -10,10 +10,12 @@ import com.example.fleet.presentation.activities.NotificationActivity
 import com.example.fleet.presentation.activities.SettingsActivity
 import com.example.fleet.presentation.screens.DialogueScreen
 
+
+//Todo merge this somehow with Navigaton and make it viewModel
 class AppInstances (
     notificationViewModel: NotificationViewModel,
-    dialogueViewModel: DialogueViewModel,
-    chatViewModel: ChatViewModel
+    private val dialogueViewModel: DialogueViewModel,
+    private val chatViewModel: ChatViewModel
     /*Todo add remaining activities*/
 
 ){
@@ -21,5 +23,7 @@ class AppInstances (
     val notificationActivity = NotificationActivity(viewModel = notificationViewModel, navigation = navigation)
     val settingsActivity = SettingsActivity( settingState1, navigation = navigation)
     val chatActivity = ChatActivity(viewModel = chatViewModel, navigation = navigation)
-    val dialogueScreen = DialogueScreen(dialogueViewModel, navigation )
+    fun dialogueScreen(chatId: Int): DialogueScreen{
+        return DialogueScreen(viewModel = dialogueViewModel, navigation = navigation, chatViewModel.getChatById(chatId) )
+    }
 }

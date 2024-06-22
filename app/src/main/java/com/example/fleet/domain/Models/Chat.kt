@@ -8,7 +8,7 @@ import com.example.fleet.domain.Enums.ChatType
 data class Chat (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    var title: String? = null,
+    var title: String? = null,//make this non nullable
     var profileImageResId: Int? = null,
     var isPrivate: Boolean = true,
     var chatType: ChatType,

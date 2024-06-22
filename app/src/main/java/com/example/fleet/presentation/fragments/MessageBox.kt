@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.data.messages
@@ -33,15 +34,13 @@ class MessageBox(
 
     ){
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .clip(shape = RoundedCornerShape(10.dp)),
             contentAlignment = if(tenantId == message.senderId) Alignment.TopEnd else Alignment.TopStart
         ){
             Card(
                 modifier = Modifier.padding(4.dp)
-                    .widthIn(max = 300.dp)
-
-                    ,
-                shape = RoundedCornerShape(10.dp)
+                    .widthIn(max = 300.dp),
             ){
                 Column(
                     horizontalAlignment = Alignment.Start,

@@ -6,17 +6,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.navigator.LocalNavigator
+import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 
 //Todo Come up with a normal name for this class
 class ChatActivity (
     private val viewModel: ChatViewModel,
-
     navigation: Navigation
+
 ) : BaseActivity(navigation){
     @Composable
     override fun InnerContent() {
+        val nav = LocalNavigator.current
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize(),
@@ -24,7 +28,7 @@ class ChatActivity (
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(viewModel.chatBars.size) { index ->
-                viewModel.chatBars[index].Create()
+                viewModel.chatBars[index].Create(navigateToDialogueScreen = { navigation.goTo( Screens.DIALOGUE_SCREEN, nav, index+1) } )
             }
         }
     }

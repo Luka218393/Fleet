@@ -46,20 +46,30 @@ class MainActivity : ComponentActivity() {
 
                 //seed(db)
 
-                val mainViewModel = ViewModelProvider(this, MainViewModelFactory(db))[MainViewModel::class.java]
-                val notificationViewModel = ViewModelProvider(this, NotificationViewModelFactory(db, mainViewModel.settings))[NotificationViewModel::class.java]
-                val dialogueViewModel = ViewModelProvider(this, DialogueViewModelFactory(db, mainViewModel.settings))[DialogueViewModel::class.java]
-                val chatViewModel = ViewModelProvider(this, ChatViewModelFactory(db, mainViewModel.settings))[ChatViewModel::class.java]
+                val mainViewModel =
+                    ViewModelProvider(this, MainViewModelFactory(db))[MainViewModel::class.java]
+                val notificationViewModel = ViewModelProvider(
+                    this,
+                    NotificationViewModelFactory(db, mainViewModel.settings)
+                )[NotificationViewModel::class.java]
+                val dialogueViewModel = ViewModelProvider(
+                    this,
+                    DialogueViewModelFactory(db, mainViewModel.settings)
+                )[DialogueViewModel::class.java]
+                val chatViewModel = ViewModelProvider(
+                    this,
+                    ChatViewModelFactory(db, mainViewModel.settings)
+                )[ChatViewModel::class.java]
 
-                val appInstances = AppInstances(notificationViewModel, dialogueViewModel, chatViewModel)
+                val appInstances =
+                    AppInstances(notificationViewModel, dialogueViewModel, chatViewModel)
 
 
-                Navigator(appInstances.dialogueScreen)
+                Navigator(appInstances.chatActivity)
             }
         }
     }
 }
-
 
 fun seed(db: FleetDatabase){
     runBlocking{

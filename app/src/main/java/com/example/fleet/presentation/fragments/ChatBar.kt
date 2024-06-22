@@ -35,13 +35,15 @@ class ChatBar (
 ){
     /*TODO add color change based on discussion type -> ViewModel*/
     @Composable
-    fun Create(){
+    fun Create(
+        navigateToDialogueScreen: () -> Unit
+    ){
         Card(
             modifier = modifier
                 .fillMaxWidth()
                 .height(72.dp)
                 .padding(1.dp)
-                .clickable {/*TODO add navigation to chat*/ },
+                .clickable {navigateToDialogueScreen()},
             shape = RoundedCornerShape(2.dp)
 
 
@@ -82,5 +84,5 @@ class ChatBar (
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {
-    ChatBar(chats[0],{"yeaaa"}).Create()
+    ChatBar(chats[0],{"yeaaa"}, Modifier).Create {}
 }
