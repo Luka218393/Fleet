@@ -18,6 +18,10 @@ class MainViewModel (
     var tenant: Flow<Tenant>
     var apartment: Flow<Tenant>
     var building: Flow<Tenant>
+
+    /*
+        tenant = flow<Tenant>{emit it}
+    */
     init {
         runBlocking {//Todo make this smarter
             settings = MutableStateFlow(db.settingsDao().get().first())

@@ -13,15 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SettingsState
 import com.example.fleet.domain.Navigation
 
-class SettingsActivity (
+class SettingsScreen (
     private val settings: SettingsState,
     navigation: Navigation
-) : BaseActivity(navigation){
+) : BaseScreen(navigation){
     @Composable
     override fun InnerContent() {
         Column (

@@ -9,7 +9,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.example.fleet.domain.Navigation
 import com.example.fleet.presentation.fragments.BottomBar
 
-abstract class BaseActivity(
+abstract class BaseScreen(
     val navigation: Navigation
 ): Screen {
 

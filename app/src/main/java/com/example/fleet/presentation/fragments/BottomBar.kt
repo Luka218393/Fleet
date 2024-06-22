@@ -89,12 +89,11 @@ fun InputBottomBar(
         BasicTextField(
             value = text,
             onValueChange = {text = it},
-            modifier = Modifier
+            modifier = Modifier.padding(4.dp)
                 .weight(4f)
                 .fillMaxHeight()
-                .clip(RoundedCornerShape(5.dp))
+                .clip(RoundedCornerShape(8.dp))//Todo make so that text doenst clip
                 .background(MaterialTheme.colorScheme.tertiary)
-                .padding(8.dp)
         )
 
         IconButton(

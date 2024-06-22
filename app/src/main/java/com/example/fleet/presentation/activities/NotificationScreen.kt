@@ -10,13 +10,13 @@ import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.NotificationViewModel
 
 
-class NotificationActivity(
+class NotificationScreen(
     private val modifier: Modifier = Modifier,
     private val viewModel: NotificationViewModel,
     navigation: Navigation
 
 )
-    : BaseActivity(navigation)
+    : BaseScreen(navigation)
 {
     @Composable
     override fun InnerContent() {

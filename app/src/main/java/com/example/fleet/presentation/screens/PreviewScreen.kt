@@ -15,12 +15,12 @@ import androidx.compose.ui.unit.dp
 import com.example.fleet.R
 import com.example.fleet.domain.Models.SettingsState
 import com.example.fleet.domain.Navigation
-import com.example.fleet.presentation.activities.BaseActivity
+import com.example.fleet.presentation.activities.BaseScreen
 
 class PreviewScreen(//Todo rename this screen
     private val settings: SettingsState,
     navigation: Navigation
-) : BaseActivity(navigation){
+) : BaseScreen(navigation){
     @Composable
     override fun InnerContent() {
         Column (

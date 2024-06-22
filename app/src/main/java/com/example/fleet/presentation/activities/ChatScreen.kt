@@ -12,11 +12,11 @@ import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 
 //Todo Come up with a normal name for this class
-class ChatActivity (
+class ChatScreen (
     private val viewModel: ChatViewModel,
     navigation: Navigation
 
-) : BaseActivity(navigation){
+) : BaseScreen(navigation){
     @Composable
     override fun InnerContent() {
         val nav = LocalNavigator.current
