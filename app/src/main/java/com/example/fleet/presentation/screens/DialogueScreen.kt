@@ -11,6 +11,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.DialogueViewModel
+import com.example.fleet.presentation.fragments.InputBottomBar
 import com.example.fleet.presentation.fragments.TopBar
 
 
@@ -23,12 +24,15 @@ class DialogueScreen (
     @Composable
     override fun Content() {
         Scaffold(
-            topBar = { TopBar(Modifier, chat.title!!) }
+            topBar = { TopBar(Modifier, chat.title!!) },
+            bottomBar = {
+                InputBottomBar(modifier = Modifier)
+            }
         ) { padding ->
             LazyColumn(
                 modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
+                    .padding(padding)
+                    .fillMaxSize()
             ) {
                 items(viewModel.getMessages(chat.id)){
                     message -> message.Create(tenantId = viewModel.getSettingsTenantId())

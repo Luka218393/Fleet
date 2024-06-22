@@ -28,7 +28,7 @@ class ChatActivity (
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(viewModel.chatBars.size) { index ->
-                viewModel.chatBars[index].Create(navigateToDialogueScreen = { navigation.goTo( Screens.DIALOGUE_SCREEN, nav, index+1) } )
+                viewModel.chatBars[index].Create(navigateToDialogueScreen = { navigation.goTo( Screens.DIALOGUE_SCREEN, nav, index + 1) } )
             }
         }
     }
