@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.activities
+package com.example.fleet.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize

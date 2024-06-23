@@ -3,6 +3,7 @@ package com.example.fleet.domain.viewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
@@ -61,7 +62,6 @@ class NotificationViewModel (
             cards.sortedBy { card -> card.createdAt  }
         }
     }
-
     fun changeNotification(notification1: Notification){//Todo make this smarter & remove runBlocking
         runBlocking {
             db.notificationDao().upsert(notification1)
@@ -70,11 +70,11 @@ class NotificationViewModel (
 }
 
 @Suppress("UNCHECKED_CAST")
-class NotificationViewModelFactory(private val db: FleetDatabase, private val settings: MutableStateFlow<Settings>) : ViewModelProvider.Factory {
+class NotificationViewModelFactory(private val settings: MutableStateFlow<Settings>) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
-            return NotificationViewModel(db, settings) as T
+            return NotificationViewModel(FleetApplication.fleetModule.fleetDatabase, settings) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

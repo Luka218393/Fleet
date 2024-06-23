@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.activities
+package com.example.fleet.presentation.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding

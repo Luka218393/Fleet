@@ -2,6 +2,7 @@ package com.example.fleet.domain.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.Tenant
@@ -10,7 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class MainViewModel (
+
+class MainViewModel(
     var db: FleetDatabase
 ): ViewModel() {
 
@@ -33,11 +35,11 @@ class MainViewModel (
 }
 
 @Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val db: FleetDatabase) : ViewModelProvider.Factory {
+class MainViewModelFactory(/*private val db: FleetDatabase*/) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(db) as T
+            return MainViewModel(FleetApplication.fleetModule.fleetDatabase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -2,6 +2,7 @@ package com.example.fleet.domain.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Message
@@ -50,11 +51,11 @@ class DialogueViewModel (
 }
 
 @Suppress("UNCHECKED_CAST")
-class DialogueViewModelFactory(private val db: FleetDatabase, private val settings: MutableStateFlow<Settings>) : ViewModelProvider.Factory {
+class DialogueViewModelFactory(private val settings: MutableStateFlow<Settings>) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DialogueViewModel::class.java)) {
-            return DialogueViewModel(db, settings) as T
+            return DialogueViewModel(FleetApplication.fleetModule.fleetDatabase, settings) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

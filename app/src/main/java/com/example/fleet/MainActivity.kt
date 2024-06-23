@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.activities
+package com.example.fleet
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.navigator.Navigator
-import com.example.fleet.AppInstances
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.data.Tenants
 import com.example.fleet.data.apartments
@@ -35,34 +34,25 @@ import kotlinx.coroutines.runBlocking
 /**
 This is the starting point of the app.
 */
+//Todo what is a service???
 class MainActivity : ComponentActivity() {
 
-    //Todo update kotlin and gradle version
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             FleetTheme {
-                val db = FleetDatabase.getDatabase(context = this)
 
                 //seed(db)
+                val mainViewModel = ViewModelProvider(this, MainViewModelFactory())[MainViewModel::class.java]
 
-                val mainViewModel =
-                    ViewModelProvider(this, MainViewModelFactory(db))[MainViewModel::class.java]
-                val notificationViewModel = ViewModelProvider(
-                    this,
-                    NotificationViewModelFactory(db, mainViewModel.settings)
-                )[NotificationViewModel::class.java]
-                val dialogueViewModel = ViewModelProvider(
-                    this,
-                    DialogueViewModelFactory(db, mainViewModel.settings)
+
+                val notificationViewModel = ViewModelProvider(this, NotificationViewModelFactory( mainViewModel.settings))[NotificationViewModel::class.java]
+                val dialogueViewModel = ViewModelProvider(this,
+                    DialogueViewModelFactory( mainViewModel.settings)
                 )[DialogueViewModel::class.java]
-                val chatViewModel = ViewModelProvider(
-                    this,
-                    ChatViewModelFactory(db, mainViewModel.settings)
-                )[ChatViewModel::class.java]
+                val chatViewModel = ViewModelProvider(this, ChatViewModelFactory(mainViewModel.settings))[ChatViewModel::class.java]
 
-                val appInstances =
-                    AppInstances(notificationViewModel, dialogueViewModel, chatViewModel)
+                val appInstances = AppInstances(notificationViewModel, dialogueViewModel, chatViewModel)
 
 
                 Navigator(appInstances.chatActivity)

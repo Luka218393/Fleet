@@ -5,9 +5,9 @@ import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.DialogueViewModel
 import com.example.fleet.domain.viewModels.NotificationViewModel
-import com.example.fleet.presentation.activities.ChatScreen
-import com.example.fleet.presentation.activities.NotificationScreen
-import com.example.fleet.presentation.activities.SettingsScreen
+import com.example.fleet.presentation.screens.ChatScreen
+import com.example.fleet.presentation.screens.NotificationScreen
+import com.example.fleet.presentation.screens.SettingsScreen
 import com.example.fleet.presentation.screens.DialogueScreen
 
 
