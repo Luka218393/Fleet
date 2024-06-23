@@ -36,7 +36,6 @@ import com.example.fleet.domain.Navigation
 fun BottomBar(
     modifier: Modifier = Modifier,
 ) {
-
     val nav = LocalNavigator.current
     BottomAppBar(
         modifier = modifier
@@ -89,7 +88,8 @@ fun InputBottomBar(
         BasicTextField(
             value = text,
             onValueChange = {text = it},
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier
+                .padding(4.dp)
                 .weight(4f)
                 .fillMaxHeight()
                 .clip(RoundedCornerShape(8.dp))//Todo make so that text doenst clip

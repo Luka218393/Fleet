@@ -10,14 +10,18 @@ import com.example.fleet.presentation.fragments.BottomBar
 import com.example.fleet.presentation.fragments.FloatingButton
 
 abstract class BaseScreen(
-    private val floatingButton: Boolean = false
+    private val floatingButton: Boolean = false,
+    private val a: () -> Unit = {},
+    private val b: () -> Unit = {},
+    private val c: () -> Unit = {}
+
 ): Screen {
 
     @Composable
     override fun Content() {
         Scaffold(
             bottomBar = { BottomBar(Modifier) },
-            floatingActionButton = { if(floatingButton) FloatingButton()}
+            floatingActionButton = { if(floatingButton) FloatingButton(a,b,c)}
         ) { padding ->
             Box(modifier = Modifier.padding(padding)) {
                 InnerContent()

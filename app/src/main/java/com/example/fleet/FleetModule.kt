@@ -14,5 +14,5 @@ class FleetModule(
 ) {
     val fleetDatabase: FleetDatabase = FleetDatabase.getDatabase(context)
     val settings: MutableStateFlow<Settings> = runBlocking {MutableStateFlow(fleetDatabase.settingsDao().get().first())}
-    val viewModelStore: ViewModelStore = ViewModelStore()
+    val viewModelStore: ViewModelStore = ViewModelStore()//Todo maybe make this bind to MainActivity in future (this is used in viewModels)
 }

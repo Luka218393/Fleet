@@ -12,18 +12,21 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fleet.FleetApplication
 import com.example.fleet.domain.viewModels.NotificationViewModel
 import com.example.fleet.domain.viewModels.NotificationViewModelFactory
+import com.example.fleet.presentation.fragments.CreateNotificationDialog
 
 
 class NotificationScreen(
     private val modifier: Modifier = Modifier,
-)
-    : BaseScreen(floatingButton = true)
-{
     private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
+)
+    : BaseScreen(floatingButton = true, {viewModel.toggleNotificationDialog()},{ viewModel.toggleTaskDialog() },{ viewModel.togglePollDialog() }, )
+{
 
     @Composable
     override fun InnerContent() {
-        val cards = viewModel.cards.collectAsState(emptyList()).value.sortedBy { it.createdAt }
+
+        val cards = viewModel.cards.collectAsState(emptyList()).value.filterNotNull()//.sortedByDescending { it.createdAt }//Todo remove this filter not null
+
         LazyColumn(
             modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
@@ -33,5 +36,9 @@ class NotificationScreen(
                 card.Create()
             }
         }
+
+        if (viewModel.isNotificationDialogShown){ CreateNotificationDialog(onDismiss = {viewModel.toggleNotificationDialog()}, onConfirm = {a,b -> viewModel.createNotification(a,b); viewModel.toggleNotificationDialog()})
+        }
+        ///Todo aad remaining creation dialogs
     }
 }
