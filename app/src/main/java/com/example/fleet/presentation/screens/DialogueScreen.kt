@@ -18,9 +18,9 @@ import com.example.fleet.presentation.fragments.TopBar
 
 //Todo come up with reasonable name for this
 class DialogueScreen(
-    private val viewModel: DialogueViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DialogueViewModelFactory())[DialogueViewModel::class.java],
     private val chatId: Int
 ) : Screen {
+    private val viewModel: DialogueViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DialogueViewModelFactory())[DialogueViewModel::class.java]
     private val chat = viewModel.getChat(chatId)
     @Composable
     override fun Content() {

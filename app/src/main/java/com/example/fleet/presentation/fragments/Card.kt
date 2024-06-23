@@ -52,7 +52,8 @@ Other cards must inherit from it
 */
 abstract class BaseCard(//TODo fix empty card
     val createdAt: Date,//ToDo make this time format properly
-    private val createdBy: String//TODO make this reference tenant name
+    private val createdBy: String,//TODO make this reference tenant name
+    val id: String
 ){
 
     //Content of the card
@@ -100,7 +101,7 @@ abstract class BaseCard(//TODo fix empty card
 class NotificationCard (
     private val notification: Notification/*TODO make ui actually pretty*/,
     private val modifier: Modifier = Modifier
-): BaseCard(notification.createdAt, notification.creatorId.toString()){
+): BaseCard(notification.createdAt, notification.creatorId.toString(), "Notification id:" + notification.id){
     @Composable
     override fun Content () {
         Column{
@@ -181,7 +182,7 @@ class PollCard (
     private val poll: Poll,
     private val options: List<PollOption>,
     private val modifier: Modifier = Modifier
-): BaseCard(poll.dateCreated, poll.creatorId.toString()){
+): BaseCard(poll.dateCreated, poll.creatorId.toString(),"Poll id:" + poll.id){
     @Composable
     override fun Content() {
         if (options.isEmpty()) {
@@ -258,7 +259,7 @@ class TaskCard (
     private val task: Task,
     private val onCheckboxChange: (Boolean) -> Unit,
     private val modifier: Modifier = Modifier
-): BaseCard(task.createdAt, task.creatorId.toString()){
+): BaseCard(task.createdAt, task.creatorId.toString(),"Task id:" + task.id){
     @Composable
     override fun Content() {
         Column{

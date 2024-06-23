@@ -52,19 +52,19 @@ fun BottomBar(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { Navigation.goTo(Screens.NOTIFICATION_SCREEN, nav )}) {
+                IconButton(onClick = { Navigation.goTo(Screens.NOTIFICATION, nav )}) {
                     Icon(
                         Icons.Default.Star, contentDescription = "Notifications",
                         modifier = modifier.fillMaxSize()
                     )
                 }
-                IconButton(onClick = { Navigation.goTo(screen = Screens.CHAT_SCREEN, nav) }) {
+                IconButton(onClick = { Navigation.goTo(screen = Screens.CHAT, nav) }) {
                     Icon(
                         Icons.Default.Home, contentDescription = "Chat",
                         modifier = modifier.fillMaxSize()
                     )
                 }
-                IconButton(onClick = { Navigation.goTo(Screens.SETTINGS_SCREEN, nav) }) {
+                IconButton(onClick = { Navigation.goTo(Screens.DISPLAY, nav) }) {
                     Icon(
                         Icons.Default.Settings, contentDescription = "Settings",
                         modifier = modifier.fillMaxSize()

@@ -15,10 +15,9 @@ import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 
 //Todo Come up with a normal name for this class
-class ChatScreen (
-    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java],
+class ChatScreen: BaseScreen(){
+    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 
-) : BaseScreen(){
     @Composable
     override fun InnerContent() {
         val nav = LocalNavigator.current
@@ -30,7 +29,7 @@ class ChatScreen (
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(viewModel.chatBars.size) { index ->
-                viewModel.chatBars[index].Create(navigateToDialogueScreen = { Navigation.goTo( Screens.DIALOGUE_SCREEN, nav, index + 1) } )
+                viewModel.chatBars[index].Create(navigateToDialogueScreen = { Navigation.goTo( Screens.DIALOGUE, nav, index + 1) } )
             }
         }
     }

@@ -29,14 +29,6 @@ class ChatViewModel (
             chatBars = chats.map { ChatBar(it, getLastMessageText =  {"yeaaaaa"}, ) }
         }
     }
-
-    fun getChatById(id : Int): Chat{
-        val a: Chat
-        runBlocking{
-            a =  db.chatDao().getById(id).first()
-        }
-        return a
-    }
 }
 
 @Suppress("UNCHECKED_CAST")

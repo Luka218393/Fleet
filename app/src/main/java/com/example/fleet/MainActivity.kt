@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.data.Tenants
@@ -18,8 +17,6 @@ import com.example.fleet.data.polls
 import com.example.fleet.data.settings1
 import com.example.fleet.data.tasks
 import com.example.fleet.data.tenantChat
-import com.example.fleet.domain.viewModels.MainViewModel
-import com.example.fleet.domain.viewModels.MainViewModelFactory
 import com.example.fleet.presentation.screens.ChatScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,7 +35,7 @@ class MainActivity : ComponentActivity() {
 
                 //seed(db)
 
-                val mainViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, MainViewModelFactory())[MainViewModel::class.java]
+                //val mainViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, MainViewModelFactory())[MainViewModel::class.java]
 
                 Navigator(ChatScreen())
             }
