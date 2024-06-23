@@ -17,16 +17,15 @@ import com.example.fleet.domain.viewModels.NotificationViewModelFactory
 class NotificationScreen(
     private val modifier: Modifier = Modifier,
 )
-    : BaseScreen()
+    : BaseScreen(floatingButton = true)
 {
     private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
 
     @Composable
     override fun InnerContent() {
-        var cards = viewModel.cards.collectAsState(emptyList()).value.sortedBy { it.createdAt }
+        val cards = viewModel.cards.collectAsState(emptyList()).value.sortedBy { it.createdAt }
         LazyColumn(
-            modifier = modifier
-                .fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

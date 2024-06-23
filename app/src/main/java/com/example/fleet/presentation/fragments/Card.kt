@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -46,8 +45,8 @@ import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Task
 import java.util.Date
 
-/*
-Base class for event cards and poll cards
+/**
+Base class for event cards and poll cards;
 Other cards must inherit from it
 */
 abstract class BaseCard(//TODo fix empty card
@@ -67,10 +66,6 @@ abstract class BaseCard(//TODo fix empty card
             modifier = modifier
                 .fillMaxWidth()
                 .padding(vertical = 6.dp, horizontal = 8.dp),
-            colors =  CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ),
             shape = RoundedCornerShape(2.dp)
             ) {
 

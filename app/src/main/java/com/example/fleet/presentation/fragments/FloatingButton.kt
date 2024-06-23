@@ -1,19 +1,23 @@
 package com.example.fleet.presentation.fragments
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.FabPosition
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,51 +28,40 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FloatingButton() {
     var expanded by remember { mutableStateOf(false) }
-
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { expanded = !expanded },
-            ) {
-                if (expanded) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Close",
-                        tint = Color.White
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add",
-                        tint = Color.White
-                    )
-                }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom
+    ){
+        if (expanded){
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
-        },
-        floatingActionButtonPosition = FabPosition.Center,
-        //isFloatingActionButtonDocked = true,
-        content = {
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .padding(it),
-                contentAlignment = Alignment.BottomEnd
-            ) {
-                if (expanded) {
-                    // Display expanded menu with four buttons
-                    Row(
-                        modifier = Modifier.padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        // Replace these buttons with your actual actions
-                        FloatingMenuButton(icon = Icons.Default.Favorite, onClick = { /* Handle Favorite */ })
-                        FloatingMenuButton(icon = Icons.Default.Add, onClick = { /* Handle Bookmark */ })
-                        FloatingMenuButton(icon = Icons.Default.Share, onClick = { /* Handle Share */ })
-                        FloatingMenuButton(icon = Icons.Default.Delete, onClick = { /* Handle Delete */ })
-                    }
-                }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Ad")
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Ad")
             }
         }
-    )
+        FloatingActionButton(
+            onClick = { expanded = !expanded },
+            shape = CircleShape
+        ) {
+            if (expanded) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close",
+                    tint = Color.White
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Default.Create,
+                    contentDescription = "Add",
+                    tint = Color.White
+                )
+            }
+        }
+    }
 }
 
 @Composable

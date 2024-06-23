@@ -7,14 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import com.example.fleet.presentation.fragments.BottomBar
+import com.example.fleet.presentation.fragments.FloatingButton
 
 abstract class BaseScreen(
+    private val floatingButton: Boolean = false
 ): Screen {
 
     @Composable
     override fun Content() {
         Scaffold(
-            bottomBar = { BottomBar(Modifier) }
+            bottomBar = { BottomBar(Modifier) },
+            floatingActionButton = { if(floatingButton) FloatingButton()}
         ) { padding ->
             Box(modifier = Modifier.padding(padding)) {
                 InnerContent()
