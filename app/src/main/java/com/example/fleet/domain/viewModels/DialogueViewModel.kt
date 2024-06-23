@@ -51,11 +51,11 @@ class DialogueViewModel (
 }
 
 @Suppress("UNCHECKED_CAST")
-class DialogueViewModelFactory(private val settings: MutableStateFlow<Settings>) : ViewModelProvider.Factory {
+class DialogueViewModelFactory() : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DialogueViewModel::class.java)) {
-            return DialogueViewModel(FleetApplication.fleetModule.fleetDatabase, settings) as T
+            return DialogueViewModel(FleetApplication.fleetModule.fleetDatabase,  FleetApplication.fleetModule.settings) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

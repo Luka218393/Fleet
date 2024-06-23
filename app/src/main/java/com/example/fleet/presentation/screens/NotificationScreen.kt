@@ -6,8 +6,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
+import com.example.fleet.FleetApplication
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.NotificationViewModel
+import com.example.fleet.domain.viewModels.NotificationViewModelFactory
 
 
 class NotificationScreen(
@@ -18,8 +21,12 @@ class NotificationScreen(
 )
     : BaseScreen(navigation)
 {
+
+    val viewModel1 = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
+
     @Composable
     override fun InnerContent() {
+
 
         LazyColumn(
             modifier = modifier

@@ -70,11 +70,11 @@ class NotificationViewModel (
 }
 
 @Suppress("UNCHECKED_CAST")
-class NotificationViewModelFactory(private val settings: MutableStateFlow<Settings>) : ViewModelProvider.Factory {
+class NotificationViewModelFactory() : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
-            return NotificationViewModel(FleetApplication.fleetModule.fleetDatabase, settings) as T
+            return NotificationViewModel(FleetApplication.fleetModule.fleetDatabase,  FleetApplication.fleetModule.settings) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

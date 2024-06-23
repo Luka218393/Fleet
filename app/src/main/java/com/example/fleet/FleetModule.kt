@@ -1,14 +1,18 @@
 package com.example.fleet
 
 import android.content.Context
+import androidx.lifecycle.ViewModelStore
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Settings
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 
 class FleetModule(
-    private val context: Context
+    val context: Context
 ) {
     val fleetDatabase: FleetDatabase = FleetDatabase.getDatabase(context)
-    val settings: Flow<Settings> = fleetDatabase.settingsDao().get()
+    val settings: MutableStateFlow<Settings> = runBlocking {MutableStateFlow(fleetDatabase.settingsDao().get().first())}
+    val viewModelStore: ViewModelStore = ViewModelStore()
 }

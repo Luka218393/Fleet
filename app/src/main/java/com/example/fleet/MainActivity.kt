@@ -36,22 +36,18 @@ This is the starting point of the app.
 */
 //Todo what is a service???
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             FleetTheme {
 
                 //seed(db)
-                val mainViewModel = ViewModelProvider(this, MainViewModelFactory())[MainViewModel::class.java]
 
+                val mainViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, MainViewModelFactory())[MainViewModel::class.java]
 
-                val notificationViewModel = ViewModelProvider(this, NotificationViewModelFactory( mainViewModel.settings))[NotificationViewModel::class.java]
-                val dialogueViewModel = ViewModelProvider(this,
-                    DialogueViewModelFactory( mainViewModel.settings)
-                )[DialogueViewModel::class.java]
-                val chatViewModel = ViewModelProvider(this, ChatViewModelFactory(mainViewModel.settings))[ChatViewModel::class.java]
-
+                val notificationViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
+                val dialogueViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DialogueViewModelFactory())[DialogueViewModel::class.java]
+                val chatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
                 val appInstances = AppInstances(notificationViewModel, dialogueViewModel, chatViewModel)
 
 

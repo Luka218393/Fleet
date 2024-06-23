@@ -40,11 +40,10 @@ class ChatViewModel (
 }
 
 @Suppress("UNCHECKED_CAST")
-class ChatViewModelFactory(private val settings: MutableStateFlow<Settings>) : ViewModelProvider.Factory {
-
+class ChatViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ChatViewModel::class.java)) {
-            return ChatViewModel(FleetApplication.fleetModule.fleetDatabase, settings) as T
+            return ChatViewModel(FleetApplication.fleetModule.fleetDatabase,  FleetApplication.fleetModule.settings) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

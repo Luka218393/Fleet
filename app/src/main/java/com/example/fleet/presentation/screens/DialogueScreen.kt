@@ -16,11 +16,11 @@ import com.example.fleet.presentation.fragments.TopBar
 
 
 //Todo come up with reasonable name for this
-class DialogueScreen (
+class DialogueScreen(
     private val viewModel: DialogueViewModel,
     private val navigation: Navigation,
     private val chat: Chat
-) : Screen{
+) : Screen {
     @Composable
     override fun Content() {
         Scaffold(
