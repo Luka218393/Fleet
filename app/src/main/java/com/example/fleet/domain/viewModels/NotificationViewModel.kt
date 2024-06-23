@@ -3,20 +3,18 @@ package com.example.fleet.domain.viewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
-import com.example.fleet.domain.Models.Notification
-import com.example.fleet.domain.Models.Poll
-import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
-import com.example.fleet.domain.Models.Task
 import com.example.fleet.presentation.fragments.BaseCard
 import com.example.fleet.presentation.fragments.NotificationCard
 import com.example.fleet.presentation.fragments.PollCard
 import com.example.fleet.presentation.fragments.TaskCard
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class NotificationViewModel (
@@ -24,9 +22,47 @@ class NotificationViewModel (
     var settings: MutableStateFlow<Settings>,
 ): ViewModel() {
 
-    var cards: List<BaseCard>
+    private var _cards: MutableStateFlow<List<BaseCard>> = MutableStateFlow(mutableListOf())
+    var cards = _cards.asStateFlow()
+    init {
+        runBlocking{
+            insertTaskToCards()
+            insertPollToCards()
+            insertNotificationToCards()
+        }
+    }
 
-    private var tasks: Flow<List<Task>>
+    private fun insertTaskToCards(){
+        viewModelScope.launch {
+            db.taskDao().getByBuildingId(settings.value.buildingId).collect{task ->
+                _cards.update {prev -> prev + task.map{ TaskCard(it) } }
+            }
+        }
+    }
+
+    private fun insertNotificationToCards(){
+        viewModelScope.launch {
+            db.pollDao().getByBuildingId(settings.value.buildingId).collect { polls ->
+                db.pollOptionDao().getAll().collect { pollOptions ->
+                    _cards.update {prev -> prev +
+                        polls.map { poll -> PollCard( poll,pollOptions.filter { it.pollId == poll.id })}
+                    }
+                }
+            }
+        }
+    }
+
+    private fun insertPollToCards(){
+        viewModelScope.launch {
+            Log.i("NotificationViewModel", "NotificationViewModel init")
+            db.notificationDao().getByBuildingId(settings.value.buildingId)
+                .collect { notification ->
+                    _cards.update {prev -> prev + notification.map { NotificationCard(it) }
+                    }
+                }
+        }
+    }
+    /*private var tasks: Flow<List<Task>>
     private var taskCards: MutableList<TaskCard> = mutableListOf()
     private var notifications: Flow<List<Notification>>
     private var notificationCards: MutableList<NotificationCard> = mutableListOf()
@@ -66,7 +102,7 @@ class NotificationViewModel (
         runBlocking {
             db.notificationDao().upsert(notification1)
         }
-    }
+    }*/
 }
 
 @Suppress("UNCHECKED_CAST")

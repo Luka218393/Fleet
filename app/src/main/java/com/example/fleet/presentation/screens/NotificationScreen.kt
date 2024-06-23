@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
@@ -22,15 +23,14 @@ class NotificationScreen(
 
     @Composable
     override fun InnerContent() {
-
-
+        var cards = viewModel.cards.collectAsState(emptyList()).value.sortedBy { it.createdAt }
         LazyColumn(
             modifier = modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            items(viewModel.cards, key = { it.id }) { card ->
+            items(cards, key = { it.id }) { card ->
                 card.Create()
             }
         }

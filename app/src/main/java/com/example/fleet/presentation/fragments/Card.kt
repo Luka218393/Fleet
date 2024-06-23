@@ -257,7 +257,7 @@ class PollCard (
 //Todo make clickable and make finishable
 class TaskCard (
     private val task: Task,
-    private val onCheckboxChange: (Boolean) -> Unit,
+    //private val onCheckboxChange: (Boolean) -> Unit,
     private val modifier: Modifier = Modifier
 ): BaseCard(task.createdAt, task.creatorId.toString(),"Task id:" + task.id){
     @Composable
@@ -333,6 +333,6 @@ fun PollCardPreview(){
 @Composable
 @Preview
 fun TaskCardPreview(){
-    TaskCard(tasks[0], {}).Content()
+    TaskCard(tasks[0]).Content()
 }
 
