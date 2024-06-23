@@ -7,20 +7,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
-import com.example.fleet.domain.Models.Chat
-import com.example.fleet.domain.Navigation
+import com.example.fleet.FleetApplication
 import com.example.fleet.domain.viewModels.DialogueViewModel
+import com.example.fleet.domain.viewModels.DialogueViewModelFactory
 import com.example.fleet.presentation.fragments.InputBottomBar
 import com.example.fleet.presentation.fragments.TopBar
 
 
 //Todo come up with reasonable name for this
 class DialogueScreen(
-    private val viewModel: DialogueViewModel,
-    private val navigation: Navigation,
-    private val chat: Chat
+    private val viewModel: DialogueViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DialogueViewModelFactory())[DialogueViewModel::class.java],
+    private val chatId: Int
 ) : Screen {
+    private val chat = viewModel.getChat(chatId)
     @Composable
     override fun Content() {
         Scaffold(

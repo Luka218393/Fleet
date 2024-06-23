@@ -14,12 +14,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
 import com.example.fleet.domain.Models.SettingsState
-import com.example.fleet.domain.Navigation
 
 class PreviewScreen(//Todo rename this screen
     private val settings: SettingsState,
-    navigation: Navigation
-) : BaseScreen(navigation){
+) : BaseScreen(){
     @Composable
     override fun InnerContent() {
         Column (

@@ -34,9 +34,9 @@ import com.example.fleet.domain.Navigation
 
 @Composable
 fun BottomBar(
-    modifier: Modifier,
-    navigator: Navigation
+    modifier: Modifier = Modifier,
 ) {
+
     val nav = LocalNavigator.current
     BottomAppBar(
         modifier = modifier
@@ -52,19 +52,19 @@ fun BottomBar(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { navigator.goTo(Screens.NOTIFICATION_SCREEN, nav )}) {
+                IconButton(onClick = { Navigation.goTo(Screens.NOTIFICATION_SCREEN, nav )}) {
                     Icon(
                         Icons.Default.Star, contentDescription = "Notifications",
                         modifier = modifier.fillMaxSize()
                     )
                 }
-                IconButton(onClick = { navigator.goTo(screen = Screens.CHAT_SCREEN, nav) }) {
+                IconButton(onClick = { Navigation.goTo(screen = Screens.CHAT_SCREEN, nav) }) {
                     Icon(
                         Icons.Default.Home, contentDescription = "Chat",
                         modifier = modifier.fillMaxSize()
                     )
                 }
-                IconButton(onClick = { navigator.goTo(Screens.SETTINGS_SCREEN, nav) }) {
+                IconButton(onClick = { Navigation.goTo(Screens.SETTINGS_SCREEN, nav) }) {
                     Icon(
                         Icons.Default.Settings, contentDescription = "Settings",
                         modifier = modifier.fillMaxSize()

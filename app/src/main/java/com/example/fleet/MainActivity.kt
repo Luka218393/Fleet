@@ -18,14 +18,9 @@ import com.example.fleet.data.polls
 import com.example.fleet.data.settings1
 import com.example.fleet.data.tasks
 import com.example.fleet.data.tenantChat
-import com.example.fleet.domain.viewModels.ChatViewModel
-import com.example.fleet.domain.viewModels.ChatViewModelFactory
-import com.example.fleet.domain.viewModels.DialogueViewModel
-import com.example.fleet.domain.viewModels.DialogueViewModelFactory
 import com.example.fleet.domain.viewModels.MainViewModel
 import com.example.fleet.domain.viewModels.MainViewModelFactory
-import com.example.fleet.domain.viewModels.NotificationViewModel
-import com.example.fleet.domain.viewModels.NotificationViewModelFactory
+import com.example.fleet.presentation.screens.ChatScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -45,13 +40,7 @@ class MainActivity : ComponentActivity() {
 
                 val mainViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, MainViewModelFactory())[MainViewModel::class.java]
 
-                val notificationViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
-                val dialogueViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DialogueViewModelFactory())[DialogueViewModel::class.java]
-                val chatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
-                val appInstances = AppInstances(notificationViewModel, dialogueViewModel, chatViewModel)
-
-
-                Navigator(appInstances.chatActivity)
+                Navigator(ChatScreen())
             }
         }
     }

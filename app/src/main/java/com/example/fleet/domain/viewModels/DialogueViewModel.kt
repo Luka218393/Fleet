@@ -39,6 +39,14 @@ class DialogueViewModel (
         return a
     }
 
+    fun getChat(chatId: Int): Chat{
+        var a : Chat
+        runBlocking {
+            a = db.chatDao().getById(chatId).first()
+        }
+        return a
+    }
+
     suspend fun getTenants(chat: Chat):List<Tenant>{
         val tenantChats = this.tenantChat.first().filter { it.chatId == chat.id }.map{it.tenantId}
         return this.tenants.first().filter{it.id in tenantChats}

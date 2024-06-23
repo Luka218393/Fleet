@@ -6,17 +6,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.example.fleet.FleetApplication
 import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
+import com.example.fleet.domain.viewModels.ChatViewModelFactory
 
 //Todo Come up with a normal name for this class
 class ChatScreen (
-    private val viewModel: ChatViewModel,
-    navigation: Navigation
+    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java],
 
-) : BaseScreen(navigation){
+) : BaseScreen(){
     @Composable
     override fun InnerContent() {
         val nav = LocalNavigator.current
@@ -28,7 +30,7 @@ class ChatScreen (
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(viewModel.chatBars.size) { index ->
-                viewModel.chatBars[index].Create(navigateToDialogueScreen = { navigation.goTo( Screens.DIALOGUE_SCREEN, nav, index + 1) } )
+                viewModel.chatBars[index].Create(navigateToDialogueScreen = { Navigation.goTo( Screens.DIALOGUE_SCREEN, nav, index + 1) } )
             }
         }
     }
