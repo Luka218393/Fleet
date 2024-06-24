@@ -43,7 +43,7 @@ fun CreateNotificationDialog(
             Card() {
                 Column(
                 ) {
-                    //Todo
+                    //Todo add marks
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier

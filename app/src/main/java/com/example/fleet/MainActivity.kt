@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FleetTheme {
 
-                //seed(db)
+                //seed(FleetApplication.fleetModule.fleetDatabase)
 
                 //val mainViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, MainViewModelFactory())[MainViewModel::class.java]
 

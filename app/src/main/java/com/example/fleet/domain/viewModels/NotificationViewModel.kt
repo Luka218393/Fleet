@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Notification
+import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.presentation.fragments.BaseCard
 import com.example.fleet.presentation.fragments.NotificationCard
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.Date
 
 class NotificationViewModel (
     val db: FleetDatabase,
@@ -55,6 +57,27 @@ class NotificationViewModel (
     }
 
 
+    //Todo make this smarter
+    private fun changePollOption(pollOptionSelected: PollOption, pollOptionUnselected: PollOption?){
+        if (pollOptionUnselected == pollOptionSelected){
+            pollOptionSelected.votes -=1
+        }
+        pollOptionSelected.votes += 1
+        viewModelScope.launch {
+            db.pollOptionDao().upsert(
+                pollOptionSelected
+            )
+        }
+        if (pollOptionUnselected != null) {
+            pollOptionUnselected.votes -= 1
+            viewModelScope.launch {
+                db.pollOptionDao().upsert(
+                    pollOptionUnselected
+                )
+            }
+        }
+
+    }
 
     fun toggleNotificationDialog(){isNotificationDialogShown = !isNotificationDialogShown}
     fun toggleTaskDialog(){isTaskDialogShown = !isTaskDialogShown}
@@ -64,6 +87,7 @@ class NotificationViewModel (
         viewModelScope.launch {
             db.taskDao().getByBuildingId(settings.value.buildingId).collect{task ->
                 _cards.update {prev -> prev.filterNot{"Task" in (it?.id ?: "") } + task.map{ TaskCard(it) } }
+                _cards.update { prev -> prev.sortedByDescending { it?.createdAt ?: Date(1, 1, 1) } }
             }
         }
     }
@@ -74,9 +98,9 @@ class NotificationViewModel (
                 db.pollOptionDao().getAll().collect { pollOptions ->
                         //Todo make so that poll cannot be created without any options and rhan remove if statement
                         _cards.update {prev -> prev.filterNot{ "Poll" in (it?.id ?: "") } +
-                            polls.map { poll -> if (pollOptions.any { it.pollId == poll.id })  PollCard( poll, pollOptions.filter { it.pollId == poll.id }) else null}
+                            polls.map { poll -> if (pollOptions.any { it.pollId == poll.id })  PollCard( poll, pollOptions.filter { it.pollId == poll.id }, onPollOptionChange =  {poll1, poll2 -> changePollOption(poll1, poll2)}) else null}
                         }
-
+                    _cards.update { prev -> prev.sortedByDescending {  it?.createdAt ?: Date(1, 1, 1)  } }
                 }
             }
         }
@@ -86,6 +110,8 @@ class NotificationViewModel (
         viewModelScope.launch {
             db.notificationDao().getByBuildingId(settings.value.buildingId).collect { notifications ->
                 _cards.update {prev -> prev.filterNot{"Notification" in (it?.id ?: "") } + notifications.map { NotificationCard(it) }}
+                _cards.update { prev -> prev.sortedByDescending { it?.createdAt ?: Date(1, 1, 1)  } }
+
             }
         }
     }
@@ -125,44 +151,3 @@ class NotificationViewModelFactory() : ViewModelProvider.Factory {
 
 
 
-/*private var tasks: Flow<List<Task>>
-private var taskCards: MutableList<TaskCard> = mutableListOf()
-private var notifications: Flow<List<Notification>>
-private var notificationCards: MutableList<NotificationCard> = mutableListOf()
-private var polls: Flow<List<Poll>>
-private var pollOptions: Flow<List<PollOption>>
-private var pollCards: MutableList<PollCard> = mutableListOf()
-
-
-init {
-    runBlocking {//Todo make this smarter & remove runBlocking
-
-        Log.i("NotificationViewModel", "NotificationViewModel init")
-
-        notifications = db.notificationDao().getByBuildingId(settings.value.buildingId)
-
-        polls = db.pollDao().getByBuildingId(settings.value.buildingId)
-        pollOptions = db.pollOptionDao().getAll()
-
-        tasks = db.taskDao().getByBuildingId(settings.value.buildingId)
-
-        for (poll in polls.first()){pollCards.add(PollCard(poll, pollOptions.first().filter { pollOption -> pollOption.pollId == poll.id }))}
-        for (notification in notifications.first()){ notificationCards.add(NotificationCard(notification))}
-
-        /*TODO Checkbutton isn't updating*/
-        for (task in tasks.first()){
-            taskCards.add(TaskCard(
-                task = task,
-                onCheckboxChange = {task.completed = it; runBlocking {db.taskDao().upsert(task)}})
-            )
-        }
-        /*Todo sort by date*/
-        cards = taskCards + notificationCards + pollCards
-        cards.sortedBy { card -> card.createdAt  }
-    }
-}
-fun changeNotification(notification1: Notification){//Todo make this smarter & remove runBlocking
-    runBlocking {
-        db.notificationDao().upsert(notification1)
-    }
-}*/

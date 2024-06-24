@@ -1,6 +1,5 @@
 package com.example.fleet.presentation.fragments
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,8 +27,10 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -176,74 +177,113 @@ TODO make poll model
 class PollCard (
     private val poll: Poll,
     private val options: List<PollOption>,
-    private val modifier: Modifier = Modifier
+    private val modifier: Modifier = Modifier,
+    private val onPollOptionChange: (PollOption, PollOption?) -> Unit = {a,b ->}//Todo check if seeder will work properly
 ): BaseCard(poll.dateCreated, poll.creatorId.toString(),"Poll id:" + poll.id){
+
     @Composable
     override fun Content() {
+
         if (options.isEmpty()) {
-            Log.d("PollCard", "No options")
-            return/*TODO make this smarter*/
+            throw error("Poll has no options to display")
         }
 
-        val selectedOption = remember { mutableStateOf(options[0]) }/*TODO move this to viewModel*/
-
+        val selectedOption = rememberSaveable{ mutableIntStateOf(-1) }
+        val allVotes = remember { mutableIntStateOf(options.sumOf { it.votes }) }
         Column{
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-            ) {
 
-                Text(
-                    text = poll.title,
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }
-            HorizontalDivider(
-                modifier = modifier.fillMaxWidth(),
-                thickness = 0.4.dp,
-                color = MaterialTheme.colorScheme.secondary
+            Title()
+
+            //Todo when you restart app you can vote many times
+            Options(selectedOption, allVotes)
+        }
+    }
+    @Composable
+    fun Title(){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
+
+            Text(
+                text = poll.title,
+                style = MaterialTheme.typography.titleLarge
             )
+        }
+        HorizontalDivider(
+            modifier = modifier.fillMaxWidth(),
+            thickness = 0.4.dp,
+            color = MaterialTheme.colorScheme.secondary
+        )
 
-            //Poll options
+    }
 
-            Column{
-                for (index in options.indices) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 4.dp)
-                    ){
-                        Row(
-                            modifier = modifier.clickable { selectedOption.value = options[index] },
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = selectedOption.value == options[index],
-                                onClick = { selectedOption.value = options[index] },
-                                colors = RadioButtonDefaults.colors(MaterialTheme.colorScheme.secondary),
-                                modifier = modifier.size(32.dp)
+    @Composable
+    fun Options(
+        selectedOption: MutableIntState,
+        allVotes: MutableIntState
+        ){
+        Column{
+            for (index in options.indices) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp)
+                ){
+                    Row(
+                        modifier = modifier.clickable {
+                            onPollOptionChange(
+                                options[index],
+                                if (selectedOption.intValue == -1)  null else options[selectedOption.intValue],
                             )
+                            if (selectedOption.intValue == index) selectedOption.intValue = -1
+                            else selectedOption.intValue = index
+                        },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = selectedOption.intValue == index,
+                            onClick = {
+                                onPollOptionChange(
+                                    options[index],
+                                    if (selectedOption.intValue == -1) null else options[selectedOption.intValue],
+                                )
+                                if (selectedOption.intValue == index) selectedOption.intValue = -1
+                                else selectedOption.intValue = index
+                            },
+                            colors = RadioButtonDefaults.colors(MaterialTheme.colorScheme.secondary),
+                            modifier = modifier.size(32.dp)
+                        )
 
-                            Text(
-                                text = options[index].value,
-                            )
-                        }
-
-                        LinearProgressIndicator(//TODO make this sometimes visible
-                            progress = { 0.3f },//Todo make this update
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            color = MaterialTheme.colorScheme.secondary
+                        Text(
+                            text = options[index].value,
                         )
                     }
+                    Row (
+                        modifier = modifier.fillMaxWidth()
+                    ){
+                        LinearProgressIndicator(//TODO make this sometimes visible
+                            progress = { (  options[index].votes.toFloat() / allVotes.intValue.toFloat()) },//Todo make this update
+                            modifier = Modifier
+                                .weight(6f)
+                                .padding(12.dp),
+                            color = MaterialTheme.colorScheme.secondary,
+                            trackColor = MaterialTheme.colorScheme.tertiary
+                        )
+                        Text(
+                            text = options[index].votes.toString(),
+                            modifier = modifier.weight(1f)
+                        )
+                    }
+
                 }
             }
         }
     }
+
 }
 
 //TODO add task result card
@@ -291,7 +331,8 @@ class TaskCard (
                     color = MaterialTheme.colorScheme.secondary
                 )
                 Box(
-                    modifier = modifier.weight(2f)
+                    modifier = modifier
+                        .weight(2f)
                         .fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ){
@@ -305,7 +346,8 @@ class TaskCard (
                 }
             }
             HorizontalDivider(
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier
+                    .fillMaxWidth()
                     .padding(bottom = 4.dp),
                 thickness = 0.4.dp,
                 color = MaterialTheme.colorScheme.secondary
@@ -323,7 +365,7 @@ fun NotificationCardPreview(){
 @Composable
 @Preview
 fun PollCardPreview(){
-    PollCard(polls[0], pollOptions).Content()
+    PollCard(polls[0], pollOptions,Modifier, {a,b  ->}).Content()
 }
 @Composable
 @Preview

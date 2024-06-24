@@ -74,13 +74,13 @@ var pollOptions: List<PollOption> = listOf(
     PollOption(
         id = 1,
         value = "Option 1",
-        votes = 100,
+        votes = 2,
         pollId = 1
     ),
     PollOption(
         id = 2,
         value = "Option 2",
-        votes = 10,
+        votes = 1,
         pollId = 1
     ),
     PollOption(
@@ -92,25 +92,25 @@ var pollOptions: List<PollOption> = listOf(
     PollOption(
         id = 4,
         value = "Option 4",
-        votes = 12,
+        votes = 4,
         pollId = 1
     ),
     PollOption(
         id = 5,
         value = "Option 1",
-        votes = 32,
+        votes = 2,
         pollId = 1
     ),
     PollOption(
         id = 6,
         value = "Da",
-        votes = 12,
+        votes = 1,
         pollId = 2
     ),
     PollOption(
         id = 7,
         value = "Ne",
-        votes = 123,
+        votes = 0,
         pollId = 2
     ),
 )
