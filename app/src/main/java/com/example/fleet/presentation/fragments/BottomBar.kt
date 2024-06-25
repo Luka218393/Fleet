@@ -32,6 +32,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 
+//Todo move this to object
 @Composable
 fun BottomBar(
     modifier: Modifier = Modifier,
@@ -57,7 +58,7 @@ fun BottomBar(
                         modifier = modifier.fillMaxSize()
                     )
                 }
-                IconButton(onClick = { Navigation.goTo(screen = Screens.CHAT, nav) }) {
+                IconButton(onClick = { Navigation.goTo(screen = Screens.CHAT_SELECTION, nav) }) {
                     Icon(
                         Icons.Default.Home, contentDescription = "Chat",
                         modifier = modifier.fillMaxSize()
@@ -78,6 +79,7 @@ fun BottomBar(
 @Composable
 fun InputBottomBar(
     modifier: Modifier,
+    send: (String) -> Unit
 ) {
     BottomAppBar(
         modifier = modifier
@@ -97,7 +99,7 @@ fun InputBottomBar(
         )
 
         IconButton(
-            onClick = {},
+            onClick = {send(text)},
             modifier = modifier
                 .weight(1f)
                 .fillMaxHeight()

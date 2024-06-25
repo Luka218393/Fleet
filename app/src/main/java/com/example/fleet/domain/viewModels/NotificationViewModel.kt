@@ -11,7 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
+import com.example.fleet.domain.Enums.PollType
 import com.example.fleet.domain.Models.Notification
+import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.presentation.fragments.BaseCard
@@ -24,6 +26,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Date
+import kotlin.random.Random
 
 class NotificationViewModel (
     val db: FleetDatabase,
@@ -53,6 +56,29 @@ class NotificationViewModel (
                     creatorId = settings.value.tenantId
                 )
             )
+        }
+    }
+
+    fun createPoll(title: String, options: List<String>){
+        val poll = Poll(
+            id = Random.nextLong(999999999999999999).toInt(),
+            creatorId = settings.value.tenantId,
+            buildingId = settings.value.buildingId,
+            title = title,
+            pollType = PollType.SINGLE_CHOICE
+        )
+        viewModelScope.launch {
+            db.pollDao().upsert(
+                poll
+            )
+            for (i in options) {
+                db.pollOptionDao().upsert(
+                    PollOption(
+                        value = i,
+                        pollId = poll.id
+                    )
+                )
+            }
         }
     }
 
@@ -92,11 +118,16 @@ class NotificationViewModel (
         }
     }
 
+    //Todo totaly remodel poll creation
+    // i dont have nerves to do this anymore
     private fun insertPollToCards(){
         viewModelScope.launch {
-            db.pollDao().getByBuildingId(settings.value.buildingId).collect { polls ->
+            db.pollDao().getAll().collect {polls ->
+                Log.i("negro", "POllCollectactivated")
+
                 db.pollOptionDao().getAll().collect { pollOptions ->
                         //Todo make so that poll cannot be created without any options and rhan remove if statement
+                        Log.i("negro", "POllOption")
                         _cards.update {prev -> prev.filterNot{ "Poll" in (it?.id ?: "") } +
                             polls.map { poll -> if (pollOptions.any { it.pollId == poll.id })  PollCard( poll, pollOptions.filter { it.pollId == poll.id }, onPollOptionChange =  {poll1, poll2 -> changePollOption(poll1, poll2)}) else null}
                         }

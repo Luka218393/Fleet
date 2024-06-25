@@ -30,7 +30,8 @@ class MessageBox(
     @Composable
     fun Create(
         modifier: Modifier = Modifier,
-        tenantId: Int
+        tenantId: Int,
+
 
     ){
         Box(

@@ -1,9 +1,9 @@
 package com.example.fleet.domain.Enums
 
 enum class Screens{
-    CHAT,
+    CHAT_SELECTION,
     SETTINGS,
     NOTIFICATION,
-    DIALOGUE,
+    CHAT,
     DISPLAY
 }

@@ -289,7 +289,8 @@ class PollCard (
 //TODO add task result card
 
 //Todo create TaskSetCard
-//Todo make clickable and make finishable
+//Todo and make finishable
+//todo make result hidable
 class TaskCard (
     private val task: Task,
     //private val onCheckboxChange: (Boolean) -> Unit,

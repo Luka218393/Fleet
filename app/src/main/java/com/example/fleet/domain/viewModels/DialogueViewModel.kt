@@ -1,18 +1,24 @@
 package com.example.fleet.domain.viewModels
-
+/*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
+import com.example.fleet.data.messages
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Message
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
+import com.example.fleet.presentation.fragments.BaseCard
 import com.example.fleet.presentation.fragments.MessageBox
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class DialogueViewModel (
@@ -20,23 +26,20 @@ class DialogueViewModel (
     var settings: MutableStateFlow<Settings>,
 ): ViewModel() {
 
-    private var messages: Flow<List<Message>>
-    private var tenants: Flow<List<Tenant>>
-    private var tenantChat: Flow<List<TenantChat>>
+    private var _messages: MutableStateFlow<List<MessageBox>> = MutableStateFlow(mutableListOf())
+    var messageBoxes = _messages.asStateFlow()
+    /*private var tenants: Flow<List<Tenant>>
+    private var tenantChat: Flow<List<TenantChat>>*/
     init {
-        runBlocking {//Todo make this smarter
-            tenantChat = db.tenantChatDao().getAll()
-            messages = db.messageDao().getAll()
-            tenants = db.tenantDao().getAll()
-        }
+
     }
 
-    fun getMessages(chatId: Int): List<MessageBox>{
-        var a : List<MessageBox>
-        runBlocking {
-            a = messages.first().filter { it.chatId == chatId }.map{message -> MessageBox(message = message) }
+    fun getMessages(chatId: Int){
+        viewModelScope.launch {
+            db.messageDao().getByChatId(chatId).collect{ messages ->
+                _messages.update { messages.map{MessageBox(it)} }
+            }
         }
-        return a
     }
 
     fun getChat(chatId: Int): Chat{
@@ -47,10 +50,10 @@ class DialogueViewModel (
         return a
     }
 
-    suspend fun getTenants(chat: Chat):List<Tenant>{
+    /*suspend fun getTenants(chat: Chat):List<Tenant>{
         val tenantChats = this.tenantChat.first().filter { it.chatId == chat.id }.map{it.tenantId}
         return this.tenants.first().filter{it.id in tenantChats}
-    }
+    }*/
 
     fun getSettingsTenantId(): Int{
         return settings.value.tenantId
@@ -67,5 +70,5 @@ class DialogueViewModelFactory() : ViewModelProvider.Factory {
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}*/
 

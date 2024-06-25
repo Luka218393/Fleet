@@ -29,8 +29,8 @@ import com.example.fleet.data.chats
 import com.example.fleet.domain.Models.Chat
 
 class ChatBar (
-    private val chat: Chat,
-    private val getLastMessageText: () -> String,
+    val chat: Chat,
+    private val lastMessageText: String,
     private val modifier: Modifier = Modifier,
 ){
     /*TODO add color change based on discussion type -> ViewModel*/
@@ -67,7 +67,7 @@ class ChatBar (
                 ){
                     Text(text = chat.title ?: "No title", style = MaterialTheme.typography.titleLarge, modifier = modifier
                         .align(Alignment.Start))
-                    Text(text = getLastMessageText(), style = MaterialTheme.typography.bodyMedium,modifier = modifier
+                    Text(text = lastMessageText, style = MaterialTheme.typography.bodyMedium,modifier = modifier
                         .align(Alignment.Start))
                 }
 
@@ -84,5 +84,5 @@ class ChatBar (
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {
-    ChatBar(chats[0],{"yeaaa"}, Modifier).Create {}
+    ChatBar(chats[0],"Yeaaaaaaaa", Modifier).Create {}
 }

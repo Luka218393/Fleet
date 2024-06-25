@@ -32,7 +32,8 @@ import com.example.fleet.R
 fun TopBar(
     modifier: Modifier,
     title: String,
-    nav : Navigator = LocalNavigator.current!!//Todo this may cause issues ?
+    nav : Navigator = LocalNavigator.current!!,//Todo this may cause issues ?
+    cancelMessageCollection: () -> Unit//Todo Make this smarter
 ) {
     TopAppBar(
         modifier = modifier
@@ -40,7 +41,7 @@ fun TopBar(
         navigationIcon = {
             Row(
                 modifier = modifier
-                    .clickable { nav.pop() }
+                    .clickable { nav.pop();cancelMessageCollection() }
                     .fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically,
 

@@ -13,6 +13,7 @@ import com.example.fleet.FleetApplication
 import com.example.fleet.domain.viewModels.NotificationViewModel
 import com.example.fleet.domain.viewModels.NotificationViewModelFactory
 import com.example.fleet.presentation.fragments.CreateNotificationDialog
+import com.example.fleet.presentation.fragments.PollDialog
 
 
 class NotificationScreen(
@@ -37,7 +38,17 @@ class NotificationScreen(
             }
         }
 
-        if (viewModel.isNotificationDialogShown){ CreateNotificationDialog(onDismiss = {viewModel.toggleNotificationDialog()}, onConfirm = {a,b -> viewModel.createNotification(a,b); viewModel.toggleNotificationDialog()})
+        if (viewModel.isNotificationDialogShown){
+            CreateNotificationDialog(
+                onDismiss = {viewModel.toggleNotificationDialog()},
+                onConfirm = {
+                    a,b -> viewModel.createNotification(a,b)
+                    viewModel.toggleNotificationDialog()
+                }
+            )
+
+        }
+        if (viewModel.isPollDialogShown){ PollDialog.Create(onDismiss = {viewModel.togglePollDialog()}, onConfirm = {a,b -> viewModel.createPoll(a,b); viewModel.togglePollDialog()})
         }
         ///Todo aad remaining creation dialogs
     }
