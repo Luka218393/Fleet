@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "tenant_chat",
+@Entity(tableName = "tenant_pollOption",
     foreignKeys = [
         ForeignKey(
             entity = Tenant::class,
@@ -14,18 +14,17 @@ import androidx.room.PrimaryKey
             onUpdate = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = Chat::class,
+            entity = PollOption::class,
             parentColumns = ["id"],
-            childColumns = ["chatId"],
+            childColumns = ["pollOptionId"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
     ]
 )
-/*TODO change primary key to be combination of tenantId and chatId*/
-data class TenantChat(
+data class TenantPollOption(
     val tenantId: Int,
-    val chatId: Int,
+    val pollOptionId: Int,
     @PrimaryKey(autoGenerate = false)
     val id: String
 )

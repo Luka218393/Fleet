@@ -19,6 +19,7 @@ data class Tenant(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     var name: String,
+    var surname: String = "",
     var age: Int? = null,
     var apartmentId: Int, //
     val phoneNumber: String? = null,

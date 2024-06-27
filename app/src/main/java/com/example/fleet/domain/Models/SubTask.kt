@@ -5,29 +5,28 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.Date
 
-@Entity(tableName = "tasks",
+@Entity(tableName = "SubTasks",
     foreignKeys = [
         ForeignKey(
-        entity = Tenant::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("creatorId"),
-        onDelete = ForeignKey.CASCADE
-    ),
+            entity = Task::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("taskId"),
+            onDelete = ForeignKey.CASCADE
+        ),
         ForeignKey(
-            entity = Building::class,
+            entity = Tenant::class,
             parentColumns = ["id"],
-            childColumns = ["buildingId"],
+            childColumns = ["completedBy"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )]
 )
-data class Task(
+data class SubTask(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    var title: String,
-    val buildingId: Int,//
-    val priority: Int = 0,//TODO Enum class
-    val creatorId: Int,//
+    var text: String,
+    var completed: Boolean = false,
+    val taskId: Int,
     var completedAt: Date? = null,
-    val createdAt: Date = Date(),
+    var completedBy: Int? = null
 )

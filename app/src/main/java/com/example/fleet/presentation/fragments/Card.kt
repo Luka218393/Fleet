@@ -320,7 +320,7 @@ class TaskCard (
                 modifier = modifier.height(50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ){
-                Text(text = task.description,
+                Text(text = "task.description",
                     modifier = modifier
                         .padding(12.dp)
                         .weight(8f),

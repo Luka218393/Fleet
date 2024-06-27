@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.fleet.domain.Models.Apartment
-import com.example.fleet.domain.Models.PollOption
 import kotlinx.coroutines.flow.Flow
 
 
@@ -27,19 +26,3 @@ interface ApartmentDao {
     @Query("SELECT * from apartments WHERE id = :id")
     fun getById(id: Int): Flow<Apartment>
 }
-/*
-@Dao
-interface Dao {
-
-    @Upsert
-    suspend fun upsert()
-
-    @Delete
-    suspend fun delete()
-
-    @Query("SELECT * FROM ")
-    suspend fun getAll(): Flow<List<>>
-
-    @Query("SELECT * from  WHERE id = :id")
-    fun getById(id: Int): Flow<>
-}*/

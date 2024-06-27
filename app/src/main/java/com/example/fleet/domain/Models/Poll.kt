@@ -30,7 +30,6 @@ data class Poll (
     val buildingId: Int,//
     val dateCreated: Date = Date(),
     val title: String,
-    val question: String = "",//Todo remove this
     val pollType: PollType,
     val voteEndDate: Date = Date(),
     val isPublic: Boolean = true,

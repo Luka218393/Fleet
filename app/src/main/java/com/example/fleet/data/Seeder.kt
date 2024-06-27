@@ -118,24 +118,21 @@ var polls: List<Poll> = listOf(
     Poll(
         id = 1,
         creatorId = 1,
-        title = "First poll ever",
-        question = "Why is sky blue?",
+        title = "Why is sky blue?",
         pollType = PollType.MULTIPLE_CHOICE,
         buildingId = 1
     ),
     Poll(
         id = 2,
         creatorId = 1,
-        title = "Second poll",
-        question = "Is this poll better than the first one?",
+        title = "Is this poll better than the first one?",
         pollType = PollType.SINGLE_CHOICE,
         buildingId = 1
     ),
     Poll(
         id = 3,
         creatorId = 2,
-        title = "Hidden poll",
-        question = "You cant see me",
+        title = "You cant see me",
         pollType = PollType.SINGLE_CHOICE,
         buildingId = 1
     ),
@@ -173,19 +170,23 @@ val chats: List<Chat> = listOf(
 val tenantChat = listOf<TenantChat>(
     TenantChat(
         tenantId = 1,
-        chatId = 1
+        chatId = 1,
+        id = "1,1"
     ),
     TenantChat(
         tenantId = 1,
-        chatId = 2
+        chatId = 2,
+        id = "1,2"
     ),
     TenantChat(
         tenantId = 2,
-        chatId = 2
+        chatId = 2,
+        id = "2,2"
     ),
     TenantChat(
         tenantId = 2,
-        chatId = 1
+        chatId = 1,
+        id = "2,1"
     )
 )
 
@@ -245,21 +246,18 @@ val tasks = listOf(
         id = 1,
         title = "Task1",
         buildingId = 1,
-        description = "My name is Jonnas i am carrying the wheel",
         creatorId = 1
     ),
     Task(
         id = 2,
         title = "I am the best Task",
         buildingId = 1,
-        description = "Can you see an irony in this",
         creatorId = 2
     ),
     Task(
         id = 3,
         title = "Task from another Buiilding",
         buildingId = 2,
-        description = "My name is Jonnas i am carrying the wheel",
         creatorId = 1
     )
 )

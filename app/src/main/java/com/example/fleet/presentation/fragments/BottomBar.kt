@@ -2,13 +2,16 @@ package com.example.fleet.presentation.fragments
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -28,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.domain.Enums.Screens
@@ -85,7 +89,6 @@ fun InputBottomBar(
     BottomAppBar(
         modifier = modifier
             .fillMaxWidth()
-            .height(52.dp),
     ){
         Row (
             horizontalArrangement = Arrangement.Center,
@@ -97,17 +100,28 @@ fun InputBottomBar(
         BasicTextField(
             value = text,
             onValueChange = {text = it},
+            modifier = modifier
+                //.width(250.dp)
+                .weight(3f)
+                ,
             decorationBox = {
                 Row(
                     modifier = Modifier
-                        .padding(4.dp)
+                        .wrapContentSize().padding(4.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.tertiary)
                         .width(300.dp)
-                        .fillMaxHeight()
-                        .clip(RoundedCornerShape(8.dp))//Todo make so that text noes not clip
-                        .background(MaterialTheme.colorScheme.tertiary),
-                    verticalAlignment = Alignment.CenterVertically
+                        .heightIn(min = 30.dp)
+                    ,
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                 ){
-                    it()
+                    Box(
+                        modifier = Modifier
+                            .padding(4.dp)
+                    ){
+                        it()
+                    }
                 }
             },
         )
@@ -126,4 +140,11 @@ fun InputBottomBar(
         }
     }
 }
+}
+
+
+@Preview
+@Composable
+fun InputBottomBarPreview(){
+    InputBottomBar(modifier = Modifier, send = {})
 }

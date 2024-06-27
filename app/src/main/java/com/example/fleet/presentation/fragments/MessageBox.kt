@@ -25,53 +25,53 @@ import com.example.fleet.presentation.HelperFunctions
 // 1) you sent message
 // 2) second tenant sent it
 // 3) You are in a group
-class MessageBox(
-    val message: Message,
-    private val senderName: String
-) {
-    @Composable
-    fun CreateMessageBox(
-        modifier: Modifier = Modifier,
-        tenantId: Int,
+//Todo Send images
+
+@Composable
+fun CreateMessageBox(
+    modifier: Modifier = Modifier,
+    message: Message,
+    tenantId: Int,
+
+){
+    Box(
+        modifier = modifier.fillMaxWidth()
+            .clip(shape = RoundedCornerShape(10.dp)),
+        contentAlignment = if(tenantId == message.senderId) Alignment.TopEnd else Alignment.TopStart
     ){
-        Box(
-            modifier = Modifier.fillMaxWidth()
-                .clip(shape = RoundedCornerShape(10.dp)),
-            contentAlignment = if(tenantId == message.senderId) Alignment.TopEnd else Alignment.TopStart
+        Card(
+            modifier = modifier.padding(4.dp)
+                .widthIn(max = 300.dp, min = 100.dp),
         ){
-            Card(
-                modifier = Modifier.padding(4.dp)
-                    .widthIn(max = 300.dp, min = 100.dp),
+            Column(
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.SpaceBetween,
+                modifier = modifier.padding(4.dp)
             ){
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.padding(4.dp)
-                ){
+                if (message.senderId != tenantId) {
                     Text(
-                        text = senderName,//Todo make this display persons name
+                        text = /*FleetApplication.fleetModule.getTenantName(message.senderId) ?:*/ "No name",//Todo This greatly slows down the app
                         style = MaterialTheme.typography.bodySmall
-                        )
-                    Box{
-                        Text(
-                            text = message.text,
-                            style = MaterialTheme.typography.bodyMedium
-
-                        )
-                    }
-
-                    Text(
-                        text = HelperFunctions.getMessageDate(message.sendingTime),
-                        style = MaterialTheme.typography.labelSmall
                     )
                 }
+                Box{
+                    Text(
+                        text = message.text,
+                        style = MaterialTheme.typography.bodyMedium
+
+                    )
+                }
+
+                Text(
+                    text = HelperFunctions.getMessageDate(message.sendingTime),
+                    style = MaterialTheme.typography.labelSmall
+                )
             }
         }
     }
 }
-
 @Preview
 @Composable
 fun MessageBoxPreview(){
-    MessageBox(messages[0], "Jonnas").CreateMessageBox(tenantId = 1)
+    CreateMessageBox(message = messages[0], tenantId = 2)
 }

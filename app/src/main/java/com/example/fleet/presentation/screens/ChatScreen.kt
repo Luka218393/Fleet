@@ -13,6 +13,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.example.fleet.FleetApplication
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
+import com.example.fleet.presentation.fragments.CreateMessageBox
 import com.example.fleet.presentation.fragments.InputBottomBar
 import com.example.fleet.presentation.fragments.TopBar
 
@@ -25,7 +26,7 @@ class ChatScreen(
 
     @Composable
     override fun Content() {
-        val messageBoxes = viewModel.messageBoxes.collectAsState(emptyList()).value
+        val messages = viewModel.messages.collectAsState(emptyList()).value
 
         Scaffold(
             topBar = { TopBar(Modifier, chat.title!!) },
@@ -42,8 +43,9 @@ class ChatScreen(
                     .fillMaxSize(),
                 reverseLayout = true
             ) {
-                items(messageBoxes, key = { it.message.id }){messageBox ->
-                    messageBox.CreateMessageBox(tenantId = viewModel.getTenantId())
+                //Todo make so on new message you scroll to the bottom of the chat
+                items(messages, key = { it.id }){message ->
+                    CreateMessageBox(message = message, tenantId = viewModel.getTenantId() )
                 }
             }
         }

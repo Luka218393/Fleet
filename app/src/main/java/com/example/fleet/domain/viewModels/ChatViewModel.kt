@@ -12,7 +12,6 @@ import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Message
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.presentation.fragments.ChatBar
-import com.example.fleet.presentation.fragments.MessageBox
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,8 +27,8 @@ class ChatViewModel (
 
     private var _chatBars: MutableStateFlow<List<ChatBar>> = MutableStateFlow(mutableListOf())
     var chatBars = _chatBars.asStateFlow()
-    private var _messageBoxes: MutableStateFlow<List<MessageBox>> = MutableStateFlow(mutableListOf())
-    var messageBoxes = _messageBoxes.asStateFlow()
+    private var _messages: MutableStateFlow<List<Message>> = MutableStateFlow(mutableListOf())
+    var messages = _messages.asStateFlow()
 
     init{
         runBlocking{
@@ -56,7 +55,7 @@ class ChatViewModel (
         messageCollectorJob?.cancel()
         messageCollectorJob = viewModelScope.launch {
                 db.messageDao().getByChatId(chatId).collect{ messages ->
-                    _messageBoxes.update { messages.map{ MessageBox(it, getTenantById(it.senderId)) } }
+                    _messages.update { messages }
             }
         }
     }
