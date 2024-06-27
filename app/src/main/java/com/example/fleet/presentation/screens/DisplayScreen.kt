@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -23,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -65,14 +68,16 @@ class DisplayScreen(
                     Column(
                         verticalArrangement = Arrangement.SpaceEvenly,
                         modifier = modifier.fillMaxHeight()
+
                     ) {
-                        EditableTextField( editMode = editMode, display = remember { mutableStateOf(tenant.name) })
+                        //Todo add remaining fields
+                        EditableTextField( editMode = editMode, display = remember { mutableStateOf(tenant.name) }, "Name")
 
-                        EditableTextField( editMode = editMode, display = remember { mutableStateOf(tenant.name) })
+                        EditableTextField( editMode = editMode, display = remember { mutableStateOf(tenant.name)}, "Surname")
 
-                        EditableTextField( editMode = editMode, display = remember { mutableStateOf(tenant.age.toString()) })
+                        EditableTextField( editMode = editMode, display = remember { mutableStateOf(tenant.age.toString())},"Age" )
 
-                        EditableTextField( editMode = editMode, display = remember { mutableStateOf(tenant.gender.toString()) })
+                        EditableTextField( editMode = editMode, display = remember { mutableStateOf(tenant.gender.toString())} ,"Gender" )
 
                     }
                 }
@@ -118,10 +123,29 @@ class DisplayScreen(
 @Composable
 fun EditableTextField(
     editMode: Boolean,
-    display: MutableState<Any>
+    display: MutableState<Any>,
+    label: String
 ){
     if (editMode) {
-        BasicTextField(value = display.value.toString(), onValueChange = {display.value = it})
+        BasicTextField(
+            value = display.value.toString(),
+            onValueChange = { display.value = it },
+            singleLine = true,
+            modifier = Modifier.height(30.dp),
+            decorationBox = { innerTextField ->
+                Column(
+                    Modifier.padding(3.dp),
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    innerTextField()
+                    HorizontalDivider(
+                        thickness = 2.dp
+                    )
+                }
+            },
+            textStyle = TextStyle(color = MaterialTheme.colorScheme.secondary)
+        )
     } else {
         Text(
             text = display.value.toString()

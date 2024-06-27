@@ -12,10 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,12 +27,12 @@ import androidx.compose.ui.unit.dp
 import com.example.fleet.R
 import com.example.fleet.data.chats
 import com.example.fleet.domain.Models.Chat
+import com.example.fleet.presentation.HelperFunctions
 
 class ChatBar (
     val chat: Chat,
     private val lastMessageText: MutableState<String>,
-            private
-    val modifier: Modifier = Modifier,
+    private val modifier: Modifier = Modifier,
 ){
     /*TODO add color change based on discussion type -> ViewModel*/
     @Composable
@@ -69,14 +66,23 @@ class ChatBar (
                         .weight(8f),
                     verticalArrangement = Arrangement.Center
                 ){
-                    Text(text = chat.title ?: "No title", style = MaterialTheme.typography.titleLarge, modifier = modifier
-                        .align(Alignment.Start))
-                    Text(text = lastMessageText.value, style = MaterialTheme.typography.bodyMedium,modifier = modifier
-                        .align(Alignment.Start))
+                    Text(
+                        text = chat.title ?: "No title",
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = modifier.align(Alignment.Start),
+                        maxLines = 1
+                    )
+                    Text(
+                        text = HelperFunctions.cutString(text = lastMessageText.value),
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = modifier.align(Alignment.Start),
+                        maxLines = 1
+                    )
                 }
 
+
                 //TODO make this visible when there are new messages in ViewModel
-                Icon(imageVector = Icons.Default.Star, contentDescription = "New message", tint = MaterialTheme.colorScheme.secondary, modifier = modifier.weight(1f))
+                //Icon(imageVector = Icons.Default.Star, contentDescription = "New message", tint = MaterialTheme.colorScheme.secondary, modifier = modifier.weight(1f))
             }
         }
     }

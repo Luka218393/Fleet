@@ -11,4 +11,8 @@ object HelperFunctions {
     fun getMessageDate(date: Date):String{
         return formatDate(date).subList(3,5).joinToString (separator = ":")
     }
+
+    fun cutString(text: String, dots: Boolean = true, length: Int = 20): String{
+        return if (text.length > length) text.slice(0..length) + " ..." else text
+    }
 }

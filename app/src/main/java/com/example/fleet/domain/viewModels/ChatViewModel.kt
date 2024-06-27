@@ -76,8 +76,7 @@ class ChatViewModel (
     private fun getLastMessage(chatId: Int): MutableState<String> {
         val a = mutableStateOf("No message yet")
         viewModelScope.launch {
-            db.messageDao().getLastMessagefromChat(chatId).collect{a.value = it.text;Log.i("ChatViewModel","a is updated to" + it.text)}
-
+            db.messageDao().getLastMessagefromChat(chatId).collect{a.value = it?.text ?: "aaa" }//Todo this crashes the app {it} can be null
         }
         return a
     }

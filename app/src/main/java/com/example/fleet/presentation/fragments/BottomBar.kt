@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -64,7 +65,7 @@ fun BottomBar(
                         modifier = modifier.fillMaxSize()
                     )
                 }
-                IconButton(onClick = { Navigation.goTo(Screens.DISPLAY, nav) }) {
+                IconButton(onClick = { Navigation.goTo(Screens.SETTINGS, nav) }) {
                     Icon(
                         Icons.Default.Settings, contentDescription = "Settings",
                         modifier = modifier.fillMaxSize()
@@ -74,7 +75,7 @@ fun BottomBar(
         }
     )
 }
-
+//Todo change text style
 //Todo Make this functional and preatty
 @Composable
 fun InputBottomBar(
@@ -84,28 +85,45 @@ fun InputBottomBar(
     BottomAppBar(
         modifier = modifier
             .fillMaxWidth()
-            .height(52.dp)
+            .height(52.dp),
     ){
+        Row (
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+
+
         var text by remember{mutableStateOf("")}
         BasicTextField(
             value = text,
             onValueChange = {text = it},
-            modifier = Modifier
-                .padding(4.dp)
-                .weight(4f)
-                .fillMaxHeight()
-                .clip(RoundedCornerShape(8.dp))//Todo make so that text doenst clip
-                .background(MaterialTheme.colorScheme.tertiary)
+            decorationBox = {
+                Row(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .width(300.dp)
+                        .fillMaxHeight()
+                        .clip(RoundedCornerShape(8.dp))//Todo make so that text noes not clip
+                        .background(MaterialTheme.colorScheme.tertiary),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    it()
+                }
+            },
         )
 
         IconButton(
-            onClick = {send(text)},
+            onClick = {
+                send(text)
+                text = ""
+            },
             modifier = modifier
                 .weight(1f)
-                .fillMaxHeight()
+                .fillMaxHeight(),
+            enabled = text.isNotEmpty()
         ){
             Icon(imageVector = Icons.Default.Send, contentDescription = "Send")
         }
     }
 }
-
+}

@@ -30,7 +30,7 @@ class MessageBox(
     private val senderName: String
 ) {
     @Composable
-    fun Create(
+    fun CreateMessageBox(
         modifier: Modifier = Modifier,
         tenantId: Int,
     ){
@@ -73,5 +73,5 @@ class MessageBox(
 @Preview
 @Composable
 fun MessageBoxPreview(){
-    MessageBox(messages[0], "Jonnas").Create(tenantId = 1)
+    MessageBox(messages[0], "Jonnas").CreateMessageBox(tenantId = 1)
 }

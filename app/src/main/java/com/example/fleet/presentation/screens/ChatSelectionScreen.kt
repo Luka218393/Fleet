@@ -17,7 +17,6 @@ import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 
 
-//Todo Come up with a normal name for this class
 class ChatSelectionScreen: BaseScreen(){
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 

@@ -22,6 +22,7 @@ class ChatScreen(
 ) : Screen {
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
     private val chat = viewModel.getChat(chatId)
+
     @Composable
     override fun Content() {
         val messageBoxes = viewModel.messageBoxes.collectAsState(emptyList()).value
@@ -42,7 +43,7 @@ class ChatScreen(
                 reverseLayout = true
             ) {
                 items(messageBoxes, key = { it.message.id }){messageBox ->
-                    messageBox.Create(tenantId = viewModel.getTenantId())
+                    messageBox.CreateMessageBox(tenantId = viewModel.getTenantId())
                 }
             }
         }
