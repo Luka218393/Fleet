@@ -1,6 +1,5 @@
 package com.example.fleet.presentation.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,7 +17,6 @@ import com.example.fleet.presentation.fragments.InputBottomBar
 import com.example.fleet.presentation.fragments.TopBar
 
 
-//Todo come up with reasonable name for this
 class ChatScreen(
     private val chatId: Int
 ) : Screen {
@@ -27,8 +25,9 @@ class ChatScreen(
     @Composable
     override fun Content() {
         val messageBoxes = viewModel.messageBoxes.collectAsState(emptyList()).value
+
         Scaffold(
-            topBar = { TopBar(Modifier, chat.title!!, cancelMessageCollection = {Log.i("ChatScreen","messageInsertionCancelled: ")} ) },
+            topBar = { TopBar(Modifier, chat.title!!) },
             bottomBar = {
                 InputBottomBar(
                     modifier = Modifier,
@@ -39,9 +38,10 @@ class ChatScreen(
             LazyColumn(
                 modifier = Modifier
                     .padding(padding)
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                reverseLayout = true
             ) {
-                items(messageBoxes){messageBox ->
+                items(messageBoxes, key = { it.message.id }){messageBox ->
                     messageBox.Create(tenantId = viewModel.getTenantId())
                 }
             }

@@ -3,7 +3,6 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.time.LocalDate
 import java.util.Date
 
 @Entity(tableName = "tenants",
@@ -33,4 +32,4 @@ data class Tenant(
     var isOnline: Boolean = true,
     var isApartmentHead: Boolean = false,
     var isTenantLeader: Boolean = false,
-)
+)//Todo add surename

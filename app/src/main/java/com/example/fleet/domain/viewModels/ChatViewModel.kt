@@ -1,6 +1,8 @@
 package com.example.fleet.domain.viewModels
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -35,10 +37,16 @@ class ChatViewModel (
             insertChatBars()
         }
     }
+
+    private fun getTenantById(id: Int): String {
+        val a: String
+        runBlocking { a = db.tenantDao().getById(id).first().name }
+        return a
+    }
     private fun insertChatBars(){
         viewModelScope.launch {
             db.chatDao().getAll().collect{chats->
-                _chatBars.update { chats.map{chat -> ChatBar(chat, getLastMessage(chat.id).text)} }
+                _chatBars.update { chats.map{chat -> ChatBar(chat, getLastMessage(chat.id))} }
             }
         }
     }
@@ -48,7 +56,7 @@ class ChatViewModel (
         messageCollectorJob?.cancel()
         messageCollectorJob = viewModelScope.launch {
                 db.messageDao().getByChatId(chatId).collect{ messages ->
-                    _messageBoxes.update { messages.map{ MessageBox(it) } }
+                    _messageBoxes.update { messages.map{ MessageBox(it, getTenantById(it.senderId)) } }
             }
         }
     }
@@ -65,12 +73,13 @@ class ChatViewModel (
         }
     }
 
-    private fun getLastMessage(chatId: Int):Message{
-        var a : Message?
-        runBlocking {
-            a = db.messageDao().getLastMessagefromChat(chatId).first()
+    private fun getLastMessage(chatId: Int): MutableState<String> {
+        val a = mutableStateOf("No message yet")
+        viewModelScope.launch {
+            db.messageDao().getLastMessagefromChat(chatId).collect{a.value = it.text;Log.i("ChatViewModel","a is updated to" + it.text)}
+
         }
-        return a ?: Message(text = "No messages yet", chatId = 1, senderId = 1)
+        return a
     }
 
     fun getTenantId(): Int = settings.value.tenantId

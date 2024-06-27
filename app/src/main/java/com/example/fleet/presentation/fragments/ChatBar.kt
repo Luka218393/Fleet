@@ -19,6 +19,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,8 +33,9 @@ import com.example.fleet.domain.Models.Chat
 
 class ChatBar (
     val chat: Chat,
-    private val lastMessageText: String,
-    private val modifier: Modifier = Modifier,
+    private val lastMessageText: MutableState<String>,
+            private
+    val modifier: Modifier = Modifier,
 ){
     /*TODO add color change based on discussion type -> ViewModel*/
     @Composable
@@ -67,7 +71,7 @@ class ChatBar (
                 ){
                     Text(text = chat.title ?: "No title", style = MaterialTheme.typography.titleLarge, modifier = modifier
                         .align(Alignment.Start))
-                    Text(text = lastMessageText, style = MaterialTheme.typography.bodyMedium,modifier = modifier
+                    Text(text = lastMessageText.value, style = MaterialTheme.typography.bodyMedium,modifier = modifier
                         .align(Alignment.Start))
                 }
 
@@ -84,5 +88,5 @@ class ChatBar (
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {
-    ChatBar(chats[0],"Yeaaaaaaaa", Modifier).Create {}
+    ChatBar(chats[0], remember{mutableStateOf("heijaaaaa")}, Modifier).Create {}
 }

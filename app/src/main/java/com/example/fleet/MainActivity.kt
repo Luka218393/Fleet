@@ -17,7 +17,7 @@ import com.example.fleet.data.polls
 import com.example.fleet.data.settings1
 import com.example.fleet.data.tasks
 import com.example.fleet.data.tenantChat
-import com.example.fleet.presentation.screens.NotificationScreen
+import com.example.fleet.presentation.screens.DisplayScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
                 //val mainViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, MainViewModelFactory())[MainViewModel::class.java]
 
-                Navigator(NotificationScreen())
+                Navigator(DisplayScreen())
             }
         }
     }

@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.data.messages
 import com.example.fleet.domain.Models.Message
+import com.example.fleet.presentation.HelperFunctions
 
 
 //Todo make message boxes if
@@ -25,14 +26,13 @@ import com.example.fleet.domain.Models.Message
 // 2) second tenant sent it
 // 3) You are in a group
 class MessageBox(
-    private val message: Message
+    val message: Message,
+    private val senderName: String
 ) {
     @Composable
     fun Create(
         modifier: Modifier = Modifier,
         tenantId: Int,
-
-
     ){
         Box(
             modifier = Modifier.fillMaxWidth()
@@ -41,7 +41,7 @@ class MessageBox(
         ){
             Card(
                 modifier = Modifier.padding(4.dp)
-                    .widthIn(max = 300.dp),
+                    .widthIn(max = 300.dp, min = 100.dp),
             ){
                 Column(
                     horizontalAlignment = Alignment.Start,
@@ -49,12 +49,10 @@ class MessageBox(
                     modifier = Modifier.padding(4.dp)
                 ){
                     Text(
-                        text = "Pokemon",//Todo make this display persons name
+                        text = senderName,//Todo make this display persons name
                         style = MaterialTheme.typography.bodySmall
                         )
-                    Box(
-
-                    ){
+                    Box{
                         Text(
                             text = message.text,
                             style = MaterialTheme.typography.bodyMedium
@@ -63,7 +61,7 @@ class MessageBox(
                     }
 
                     Text(
-                        text = message.sendingTime.toString(),//Todo MAke this display time nicely
+                        text = HelperFunctions.getMessageDate(message.sendingTime),
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
@@ -75,5 +73,5 @@ class MessageBox(
 @Preview
 @Composable
 fun MessageBoxPreview(){
-    MessageBox(messages[0]).Create(tenantId = 1)
+    MessageBox(messages[0], "Jonnas").Create(tenantId = 1)
 }

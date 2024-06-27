@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.fleet.R
+import com.example.fleet.domain.Navigation
 
 
 //Todo create 
@@ -33,7 +34,6 @@ fun TopBar(
     modifier: Modifier,
     title: String,
     nav : Navigator = LocalNavigator.current!!,//Todo this may cause issues ?
-    cancelMessageCollection: () -> Unit//Todo Make this smarter
 ) {
     TopAppBar(
         modifier = modifier
@@ -41,7 +41,7 @@ fun TopBar(
         navigationIcon = {
             Row(
                 modifier = modifier
-                    .clickable { nav.pop();cancelMessageCollection() }
+                    .clickable { Navigation.pop(nav) }
                     .fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically,
 

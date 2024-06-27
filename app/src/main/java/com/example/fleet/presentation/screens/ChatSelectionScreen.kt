@@ -20,6 +20,7 @@ import com.example.fleet.domain.viewModels.ChatViewModelFactory
 //Todo Come up with a normal name for this class
 class ChatSelectionScreen: BaseScreen(){
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
+
     @Composable
     override fun InnerContent() {
         val nav = LocalNavigator.current
@@ -32,7 +33,10 @@ class ChatSelectionScreen: BaseScreen(){
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(chatBars) { chatBar ->
-                chatBar.Create(navigateToDialogueScreen = { Navigation.goTo( Screens.CHAT, nav, chatBar.chat.id); viewModel.changeMessageCollectorJob(chatBar.chat.id) } )// Todo give chatbar chat ID
+                chatBar.Create(navigateToDialogueScreen = {
+                    Navigation.goTo( Screens.CHAT, nav, chatBar.chat.id)
+                    viewModel.changeMessageCollectorJob(chatBar.chat.id)
+                } )
             }
         }
     }
