@@ -29,7 +29,7 @@ class ChatScreen(
         val messages = viewModel.messages.collectAsState(emptyList()).value
 
         Scaffold(
-            topBar = { TopBar(Modifier, chat.title!!) },
+            topBar = { TopBar(Modifier, chat.title) },
             bottomBar = {
                 InputBottomBar(
                     modifier = Modifier,
@@ -45,14 +45,12 @@ class ChatScreen(
             ) {
                 //Todo make so on new message you scroll to the bottom of the chat
                 items(messages.size, key = { messages[it].id }) { index ->
+                    CreateMessageBox(message = messages[index], tenantId = viewModel.getTenantId() )
                     if (index + 1 < messages.size){
                         if (messages[index + 1].sendingTime.day != messages[index].sendingTime.day){
                             DateSeparator(date = messages[index].sendingTime)
                         }
                     }
-                    CreateMessageBox(message = messages[index], tenantId = viewModel.getTenantId() )
-
-
                 }
             }
         }

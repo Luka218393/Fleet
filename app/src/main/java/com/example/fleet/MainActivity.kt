@@ -36,11 +36,15 @@ class MainActivity : ComponentActivity() {
 
                 //seed(FleetApplication.fleetModule.fleetDatabase)
 
+                //Problem je u spremanju ViewModela unutar Navigatora
                 Navigator(NotificationScreen())
             }
         }
     }
 }
+
+
+
 
 fun seed(db: FleetDatabase){
     runBlocking{

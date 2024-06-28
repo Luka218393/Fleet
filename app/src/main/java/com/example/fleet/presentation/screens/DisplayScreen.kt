@@ -34,7 +34,7 @@ import com.example.fleet.R
 import com.example.fleet.domain.viewModels.DisplayViewModel
 import com.example.fleet.domain.viewModels.DisplayViewModelFactory
 
-class DisplayScreen(
+data class DisplayScreen(
     private val viewModel: DisplayViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DisplayViewModelFactory())[DisplayViewModel::class.java],
     private val modifier: Modifier = Modifier
 ): BaseScreen() {

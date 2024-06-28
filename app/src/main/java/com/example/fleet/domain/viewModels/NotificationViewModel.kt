@@ -30,8 +30,8 @@ import java.util.Date
 import kotlin.random.Random
 
 class NotificationViewModel (
-    val db: FleetDatabase,
-    var settings: MutableStateFlow<Settings>,
+    private val db: FleetDatabase = FleetApplication.fleetModule.fleetDatabase,
+    private val settings: MutableStateFlow<Settings> = FleetApplication.fleetModule.settings
 ): ViewModel() {
 
     private var _cards: MutableStateFlow<List<BaseCard?>> = MutableStateFlow(mutableListOf())
@@ -126,16 +126,16 @@ class NotificationViewModel (
         runBlocking { db.subTaskDao().upsert(subTask)}
     }
 
-    //Todo totaly remodel poll creation
-    // i dont have nerves to do this anymore
+    //Todo totally remodel poll creation
+    // i don't have nerves to do this anymore
     private fun insertPollToCards(){
         viewModelScope.launch {
             db.pollDao().getAll().collect {polls ->
-                Log.i("negro", "POllCollectactivated")
+                Log.i("aaa", "POll Collect Activated")
 
                 db.pollOptionDao().getAll().collect { pollOptions ->
                         //Todo make so that poll cannot be created without any options and than remove if statement
-                        Log.i("negro", "POllOption")
+                        Log.i("aaa", "POll Option")
                         _cards.update {prev -> prev.filterNot{ "Poll" in (it?.id ?: "") } +
                             polls.map { poll -> if (pollOptions.any { it.pollId == poll.id })  PollCard( poll, pollOptions.filter { it.pollId == poll.id }, onPollOptionChange =  {poll1, poll2 -> changePollOption(poll1, poll2)}) else null}
                         }

@@ -45,7 +45,7 @@ class ChatViewModel (
     private fun insertChatBars(){
         viewModelScope.launch {
             db.chatDao().getAll().collect{chats->
-                _chatBars.update { chats.map{chat -> ChatBar(chat, getLastMessage(chat.id))} }
+                _chatBars.update { chats.map{chat -> ChatBar(chat, getLastMessage(chat.id)) } }
             }
         }
     }

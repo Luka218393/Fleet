@@ -8,8 +8,6 @@ object HelperFunctions {
         return SimpleDateFormat("yyyy/MM/dd/HH/mm/ss").format(date).split("/")
     }
 
-
-
     fun cutString(text: String, dots: Boolean = true, length: Int = 20): String{
         return if (text.length > length) text.slice(0..length) + " ..." else text
     }

@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fleet.FleetApplication
 import com.example.fleet.domain.viewModels.NotificationViewModel
 import com.example.fleet.domain.viewModels.NotificationViewModelFactory
-import com.example.fleet.presentation.fragments.CreateNotificationDialog
 import com.example.fleet.presentation.fragments.DateSeparator
-import com.example.fleet.presentation.fragments.PollDialog
+import com.example.fleet.presentation.fragments.card_dialogs.NotificationDialog
+import com.example.fleet.presentation.fragments.card_dialogs.PollDialog
 
 
 class NotificationScreen(
@@ -34,18 +34,19 @@ class NotificationScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             items(cards.size, key = { cards[it].id }) { index ->
-                if (index+1 < cards.size){
+                cards[index].Create()
+
+                if (index + 1 < cards.size){
                     if (cards[index + 1].createdAt.day != cards[index].createdAt.day){
-                        DateSeparator(date = cards[index].createdAt)
+                        DateSeparator(date = cards[index + 1 ].createdAt)
                     }
                 }
-                cards[index].Create()
-                
+
             }
         }
 
         if (viewModel.isNotificationDialogShown){
-            CreateNotificationDialog(
+            NotificationDialog(
                 onDismiss = {viewModel.toggleNotificationDialog()},
                 onConfirm = {
                     a,b -> viewModel.createNotification(a,b)
@@ -54,7 +55,7 @@ class NotificationScreen(
             )
 
         }
-        if (viewModel.isPollDialogShown){ PollDialog.Create(onDismiss = {viewModel.togglePollDialog()}, onConfirm = {a,b -> viewModel.createPoll(a,b); viewModel.togglePollDialog()})
+        if (viewModel.isPollDialogShown){ PollDialog(onDismiss = {viewModel.togglePollDialog()}, onConfirm = { a, b -> viewModel.createPoll(a,b); viewModel.togglePollDialog()})
         }
         //Todo ad remaining creation dialogs
     }
