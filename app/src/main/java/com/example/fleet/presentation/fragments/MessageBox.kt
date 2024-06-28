@@ -63,7 +63,7 @@ fun CreateMessageBox(
                 }
 
                 Text(
-                    text = HelperFunctions.getMessageDate(message.sendingTime),
+                    text = HelperFunctions.getMinAndHour(message.sendingTime),
                     style = MaterialTheme.typography.labelSmall
                 )
             }

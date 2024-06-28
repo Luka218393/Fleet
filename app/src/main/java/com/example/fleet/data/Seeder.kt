@@ -20,9 +20,10 @@ import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
-import com.example.fleet.presentation.fragments.BaseCard
-import com.example.fleet.presentation.fragments.NotificationCard
-import com.example.fleet.presentation.fragments.PollCard
+import com.example.fleet.presentation.fragments.cards.BaseCard
+import com.example.fleet.presentation.fragments.cards.NotificationCard
+import com.example.fleet.presentation.fragments.cards.PollCard
+import java.util.Date
 
 data class Tenants(
 
@@ -50,7 +51,8 @@ data class Tenants(
         iconResId = Icons.Default.Favorite,
         creatorId = 1,
         imageResId = R.drawable.lukinaikona,
-        buildingId = 1
+        buildingId = 1,
+        createdAt = Date()
     ),
 
     Notification(
@@ -59,7 +61,7 @@ data class Tenants(
         text = "Lorem ipsum dolor sit amet",
         iconResId = Icons.Default.List,
         creatorId = 1,
-        buildingId = 1
+        buildingId = 1,
     ),
     Notification(
         id = 3,
@@ -135,7 +137,8 @@ var polls: List<Poll> = listOf(
         creatorId = 2,
         title = "You cant see me",
         pollType = PollType.SINGLE_CHOICE,
-        buildingId = 1
+        buildingId = 1,
+
     ),
 
 )
@@ -301,7 +304,7 @@ val subTasks = listOf(
         taskId = 1
     ),
     SubTask(
-        text = "Kokoš",
+        text = "KFokoš",
         taskId = 1
     ),
     SubTask(

@@ -17,10 +17,10 @@ import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SubTask
-import com.example.fleet.presentation.fragments.BaseCard
-import com.example.fleet.presentation.fragments.NotificationCard
-import com.example.fleet.presentation.fragments.PollCard
-import com.example.fleet.presentation.fragments.TaskCard
+import com.example.fleet.presentation.fragments.cards.BaseCard
+import com.example.fleet.presentation.fragments.cards.NotificationCard
+import com.example.fleet.presentation.fragments.cards.PollCard
+import com.example.fleet.presentation.fragments.cards.TaskCard
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

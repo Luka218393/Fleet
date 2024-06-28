@@ -33,7 +33,7 @@ class ChatBar (
     val chat: Chat,
     private val lastMessageText: MutableState<String>,
     private val modifier: Modifier = Modifier,
-){
+) {
     /*TODO add color change based on discussion type -> ViewModel*/
     @Composable
     fun Create(

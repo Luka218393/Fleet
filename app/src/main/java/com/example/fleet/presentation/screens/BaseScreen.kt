@@ -6,8 +6,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import com.example.fleet.presentation.fragments.BottomBar
-import com.example.fleet.presentation.fragments.FloatingButton
+import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
+import com.example.fleet.presentation.fragments.scaffold_elements.FloatingButton
 
 abstract class BaseScreen(
     private val floatingButton: Boolean = false,
@@ -21,7 +21,7 @@ abstract class BaseScreen(
     override fun Content() {
         Scaffold(
             bottomBar = { BottomBar(Modifier) },
-            floatingActionButton = { if(floatingButton) FloatingButton(a,b,c)}
+            floatingActionButton = { if(floatingButton) FloatingButton(a,b,c) }
         ) { padding ->
             Box(modifier = Modifier.padding(padding)) {
                 InnerContent()

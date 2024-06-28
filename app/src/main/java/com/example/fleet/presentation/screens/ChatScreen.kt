@@ -3,7 +3,6 @@ package com.example.fleet.presentation.screens
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,8 +13,9 @@ import com.example.fleet.FleetApplication
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.fragments.CreateMessageBox
-import com.example.fleet.presentation.fragments.InputBottomBar
-import com.example.fleet.presentation.fragments.TopBar
+import com.example.fleet.presentation.fragments.DateSeparator
+import com.example.fleet.presentation.fragments.scaffold_elements.InputBottomBar
+import com.example.fleet.presentation.fragments.scaffold_elements.TopBar
 
 
 class ChatScreen(
@@ -44,8 +44,15 @@ class ChatScreen(
                 reverseLayout = true
             ) {
                 //Todo make so on new message you scroll to the bottom of the chat
-                items(messages, key = { it.id }){message ->
-                    CreateMessageBox(message = message, tenantId = viewModel.getTenantId() )
+                items(messages.size, key = { messages[it].id }) { index ->
+                    if (index-1 >= 0){
+                        if (messages[index-1].sendingTime.day != messages[index].sendingTime.day){
+                            DateSeparator(date = messages[index].sendingTime)
+                        }
+                    }
+                    CreateMessageBox(message = messages[index], tenantId = viewModel.getTenantId() )
+
+
                 }
             }
         }

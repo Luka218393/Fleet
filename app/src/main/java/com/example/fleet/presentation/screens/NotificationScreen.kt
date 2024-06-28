@@ -3,7 +3,6 @@ package com.example.fleet.presentation.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -13,6 +12,7 @@ import com.example.fleet.FleetApplication
 import com.example.fleet.domain.viewModels.NotificationViewModel
 import com.example.fleet.domain.viewModels.NotificationViewModelFactory
 import com.example.fleet.presentation.fragments.CreateNotificationDialog
+import com.example.fleet.presentation.fragments.DateSeparator
 import com.example.fleet.presentation.fragments.PollDialog
 
 
@@ -26,15 +26,21 @@ class NotificationScreen(
     @Composable
     override fun InnerContent() {
 
-        val cards = viewModel.cards.collectAsState(emptyList()).value.filterNotNull()//.sortedByDescending { it.createdAt }//Todo remove this filter not null
+        val cards = viewModel.cards.collectAsState(emptyList()).value.filterNotNull()//Todo remove this filter not null
 
         LazyColumn(
             modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            items(cards, key = { it.id }) { card ->
-                card.Create()
+            items(cards.size, key = { cards[it].id }) { index ->
+                if (index-1 >= 0){
+                    if (cards[index-1].createdAt.day != cards[index].createdAt.day){
+                        DateSeparator(date = cards[index].createdAt)
+                    }
+                }
+                cards[index].Create()
+                
             }
         }
 

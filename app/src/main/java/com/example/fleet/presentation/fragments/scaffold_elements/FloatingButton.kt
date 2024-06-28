@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.fragments
+package com.example.fleet.presentation.fragments.scaffold_elements
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
