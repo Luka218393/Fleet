@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +44,9 @@ fun FloatingButton(
         }
         FloatingActionButton(
             onClick = { expanded = !expanded },
-            shape = CircleShape
+            shape = CircleShape,
+            contentColor = MaterialTheme.colorScheme.secondary,
+            containerColor = MaterialTheme.colorScheme.secondary
         ) {
             if (expanded) {
                 Icon(

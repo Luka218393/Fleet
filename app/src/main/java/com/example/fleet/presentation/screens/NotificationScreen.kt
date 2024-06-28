@@ -34,8 +34,8 @@ class NotificationScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             items(cards.size, key = { cards[it].id }) { index ->
-                if (index-1 >= 0){
-                    if (cards[index-1].createdAt.day != cards[index].createdAt.day){
+                if (index+1 < cards.size){
+                    if (cards[index + 1].createdAt.day != cards[index].createdAt.day){
                         DateSeparator(date = cards[index].createdAt)
                     }
                 }
@@ -56,6 +56,6 @@ class NotificationScreen(
         }
         if (viewModel.isPollDialogShown){ PollDialog.Create(onDismiss = {viewModel.togglePollDialog()}, onConfirm = {a,b -> viewModel.createPoll(a,b); viewModel.togglePollDialog()})
         }
-        ///Todo aad remaining creation dialogs
+        //Todo ad remaining creation dialogs
     }
 }

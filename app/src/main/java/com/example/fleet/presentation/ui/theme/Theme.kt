@@ -30,6 +30,18 @@ private val DarkColorScheme = darkColorScheme(
 
     background = Color(0xFF1F1F1F),
     )
+private val DarkColorScheme2 = darkColorScheme(
+    primary = Color(0xFF34113F),
+    onPrimary = White,
+
+    secondary = Color(0xFFF78D1B),
+    onSecondary = Black,
+
+    tertiary = Color(0xff8E8E8E),
+    onTertiary = Black,
+
+    background = Color(0xFF1F1F1F),
+)
 
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFFF9F23E),
@@ -62,7 +74,7 @@ fun FleetTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
+        darkTheme -> DarkColorScheme2
         else -> LightColorScheme
     }
 

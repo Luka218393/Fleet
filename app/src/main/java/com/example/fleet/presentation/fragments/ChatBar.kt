@@ -70,7 +70,8 @@ class ChatBar (
                         text = chat.title ?: "No title",
                         style = MaterialTheme.typography.titleLarge,
                         modifier = modifier.align(Alignment.Start),
-                        maxLines = 1
+                        maxLines = 1,
+                        color = if(chat.isPrivate) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                     )
                     Text(
                         text = HelperFunctions.cutString(text = lastMessageText.value),

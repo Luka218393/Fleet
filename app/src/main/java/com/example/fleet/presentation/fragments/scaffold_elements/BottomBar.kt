@@ -37,7 +37,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 
-//Todo move this to object
 @Composable
 fun BottomBar(
     modifier: Modifier = Modifier,
@@ -46,9 +45,7 @@ fun BottomBar(
     BottomAppBar(
         modifier = modifier
             .fillMaxWidth()
-            .height(50.dp),
-        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            .height(48.dp),
         actions = {
             Row(
                 modifier = modifier
@@ -80,7 +77,6 @@ fun BottomBar(
     )
 }
 //Todo change text style
-//Todo Make this functional and preatty
 @Composable
 fun InputBottomBar(
     modifier: Modifier,
