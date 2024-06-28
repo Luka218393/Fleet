@@ -16,6 +16,7 @@ import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
+import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.presentation.fragments.BaseCard
 import com.example.fleet.presentation.fragments.NotificationCard
 import com.example.fleet.presentation.fragments.PollCard
@@ -111,11 +112,18 @@ class NotificationViewModel (
 
     private fun insertTaskToCards(){
         viewModelScope.launch {
-            db.taskDao().getByBuildingId(settings.value.buildingId).collect{task ->
-                _cards.update {prev -> prev.filterNot{"Task" in (it?.id ?: "") } + task.map{ TaskCard(it) } }
-                _cards.update { prev -> prev.sortedByDescending { it?.createdAt ?: Date(1, 1, 1) } }
+            db.taskDao().getByBuildingId(settings.value.buildingId).collect{tasks ->
+                db.subTaskDao().getAll().collect{ subTasks ->
+                    _cards.update {prev -> prev.filterNot{"Task" in (it?.id ?: "") } + tasks.map{ task -> TaskCard(task, subTasks = subTasks.filter{it.taskId == task.id}, {subTaskId -> subTasks.find {it.id == subTaskId}?.let { completeSubTask(it) } }) } }
+                    _cards.update { prev -> prev.sortedByDescending { it?.createdAt ?: Date(1, 1, 1) } }
+                }
             }
         }
+    }
+
+    private fun completeSubTask(subTask: SubTask){
+        subTask.completed = !subTask.completed
+        runBlocking { db.subTaskDao().upsert(subTask)}
     }
 
     //Todo totaly remodel poll creation
@@ -126,7 +134,7 @@ class NotificationViewModel (
                 Log.i("negro", "POllCollectactivated")
 
                 db.pollOptionDao().getAll().collect { pollOptions ->
-                        //Todo make so that poll cannot be created without any options and rhan remove if statement
+                        //Todo make so that poll cannot be created without any options and than remove if statement
                         Log.i("negro", "POllOption")
                         _cards.update {prev -> prev.filterNot{ "Poll" in (it?.id ?: "") } +
                             polls.map { poll -> if (pollOptions.any { it.pollId == poll.id })  PollCard( poll, pollOptions.filter { it.pollId == poll.id }, onPollOptionChange =  {poll1, poll2 -> changePollOption(poll1, poll2)}) else null}

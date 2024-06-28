@@ -16,6 +16,7 @@ import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SettingsState
+import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
@@ -288,4 +289,23 @@ val messages = listOf(
         text = "This is a veryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggggggggggggggg messssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssaaassggggggggggggeeeeeeeee"
     )
 
+)
+
+val subTasks = listOf(
+    SubTask(
+        text = "Mijauuuuu",
+        taskId = 1
+    ),
+    SubTask(
+        text = "Nijauu",
+        taskId = 1
+    ),
+    SubTask(
+        text = "Kokoš",
+        taskId = 1
+    ),
+    SubTask(
+        text = "Kaktus",
+        taskId = 2
+    )
 )

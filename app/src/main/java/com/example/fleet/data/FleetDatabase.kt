@@ -63,7 +63,7 @@ abstract class FleetDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
     abstract fun tenantChatDao(): TenantChatDao
     abstract fun tenantDao(): TenantDao
-    abstract fun SubTaskDao(): SubTaskDao
+    abstract fun subTaskDao(): SubTaskDao
     abstract fun TenantPollOptionDao(): TenantPollOptionDao
 
     companion object {

@@ -17,9 +17,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -39,10 +41,12 @@ import androidx.compose.ui.unit.dp
 import com.example.fleet.data.notifications
 import com.example.fleet.data.pollOptions
 import com.example.fleet.data.polls
+import com.example.fleet.data.subTasks
 import com.example.fleet.data.tasks
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
+import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 import java.util.Date
 
@@ -73,7 +77,9 @@ abstract class BaseCard(//TODo fix empty card
             Content()
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
                 horizontalArrangement = Arrangement.Absolute.SpaceAround
             ){
                 Text(
@@ -178,7 +184,7 @@ class PollCard (
     private val poll: Poll,
     private val options: List<PollOption>,
     private val modifier: Modifier = Modifier,
-    private val onPollOptionChange: (PollOption, PollOption?) -> Unit = {a,b ->}//Todo check if seeder will work properly
+    private val onPollOptionChange: (PollOption, PollOption?) -> Unit = {a,b ->}
 ): BaseCard(poll.dateCreated, poll.creatorId.toString(),"Poll id:" + poll.id){
 
     @Composable
@@ -188,7 +194,7 @@ class PollCard (
             throw error("Poll has no options to display")
         }
 
-        val selectedOption = rememberSaveable{ mutableIntStateOf(-1) }
+        val selectedOption = rememberSaveable{ mutableIntStateOf(-1)} //Todo make poll remember tenants vote
         val allVotes = remember { mutableIntStateOf(options.sumOf { it.votes }) }
         Column{
 
@@ -293,52 +299,75 @@ class PollCard (
 //todo make result hidable
 class TaskCard (
     private val task: Task,
-    //private val onCheckboxChange: (Boolean) -> Unit,
+    private val subTasks: List<SubTask>,
+    private val onTaskCompletion: (Int) -> Unit,//Todo Make muatble
     private val modifier: Modifier = Modifier
 ): BaseCard(task.createdAt, task.creatorId.toString(),"Task id:" + task.id){
     @Composable
     override fun Content() {
         Column{
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-            ) {
-                Text(
-                    text = task.title,
-                    modifier = modifier,
-                    style = MaterialTheme.typography.titleLarge
-                )
+
+            TaskDisplay()
+
+            for (subTask in subTasks) {
+                SubTaskDisplay(subTask)
             }
-            HorizontalDivider(
-                modifier = modifier.fillMaxWidth(),
+
+        }
+    }
+    @Composable
+    fun TaskDisplay(){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
+            Text(
+                text = task.title,
+                modifier = modifier,
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+        HorizontalDivider(
+            modifier = modifier.fillMaxWidth(),
+            thickness = 0.4.dp,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    }
+
+    @Composable
+    fun SubTaskDisplay(
+        subTask: SubTask
+    ){
+        Column {
+        Row (
+            modifier = modifier.height(50.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(text = subTask.text,
+                modifier = modifier
+                    .padding(12.dp)
+                    .weight(8f),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            VerticalDivider(
+                modifier = modifier.fillMaxHeight(),
                 thickness = 0.4.dp,
                 color = MaterialTheme.colorScheme.secondary
             )
-            Row (
-                modifier = modifier.height(50.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Box(
+                modifier = modifier
+                    .weight(2f)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ){
-                Text(text = "task.description",
-                    modifier = modifier
-                        .padding(12.dp)
-                        .weight(8f),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                VerticalDivider(
-                    modifier = modifier.fillMaxHeight(),
-                    thickness = 0.4.dp,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                Box(
-                    modifier = modifier
-                        .weight(2f)
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ){
+                IconButton(
+                    onClick = { onTaskCompletion(subTask.id) }
+                ) {
+
                     Icon(//TODO Make this invisible
-                        imageVector = Icons.Default.Check,
+                        imageVector = if(subTask.completed) Icons.Default.Check else Icons.Default.Clear,
                         contentDescription = "icon",
                         tint = MaterialTheme.colorScheme.secondary,
                         modifier = modifier
@@ -346,10 +375,11 @@ class TaskCard (
                     )
                 }
             }
+        }
             HorizontalDivider(
                 modifier = modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 4.dp),
+                    .fillMaxWidth(),
+                    //.padding(bottom = 4.dp),
                 thickness = 0.4.dp,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -371,6 +401,6 @@ fun PollCardPreview(){
 @Composable
 @Preview
 fun TaskCardPreview(){
-    TaskCard(tasks[0]).Content()
+    TaskCard(tasks[0], subTasks.subList(1,3),{}).Content()
 }
 

@@ -15,9 +15,10 @@ import com.example.fleet.data.notifications
 import com.example.fleet.data.pollOptions
 import com.example.fleet.data.polls
 import com.example.fleet.data.settings1
+import com.example.fleet.data.subTasks
 import com.example.fleet.data.tasks
 import com.example.fleet.data.tenantChat
-import com.example.fleet.presentation.screens.ChatSelectionScreen
+import com.example.fleet.presentation.screens.NotificationScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -33,11 +34,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             FleetTheme {
 
-                seed(FleetApplication.fleetModule.fleetDatabase)
+                //seed(FleetApplication.fleetModule.fleetDatabase)
 
-                //val mainViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, MainViewModelFactory())[MainViewModel::class.java]
-
-                Navigator(ChatSelectionScreen())
+                Navigator(NotificationScreen())
             }
         }
     }
@@ -77,6 +76,9 @@ fun seed(db: FleetDatabase){
         }
         for (i  in messages){
             db.messageDao().upsert(i)
+        }
+        for (i in subTasks){
+            db.subTaskDao().upsert(i)
         }
         Log.i("aaa", settings.toString())
     }
