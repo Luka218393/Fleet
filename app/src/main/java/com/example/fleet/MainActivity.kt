@@ -33,8 +33,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FleetTheme {
+                /*val a = Color(0xFFF78D1B).value
+                Log.i("Heijaaaaaaa", Color(0xFFF78D1B).value.toString())
+                Log.i("Heijaaaaaaa", Color(Color(0xFFF78D1B).value).toString())
+                Log.i("Heijaaaaaaa", Color(a).toString())*/
 
-                //seed(FleetApplication.fleetModule.fleetDatabase)
+                seed(FleetApplication.fleetModule.fleetDatabase)
                 //Problem je u spremanju ViewModela unutar Navigatora
                 Navigator(SettingsScreen())
             }

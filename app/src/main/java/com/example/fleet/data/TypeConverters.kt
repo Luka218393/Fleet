@@ -25,6 +25,7 @@ class TypeConverte {
     fun toIcon(iconName: String?): ImageVector {
         return Icono.entries.find { icono -> icono.name == iconName }?.imageVector ?: Icons.Filled.ExitToApp
     }
+
 }
 
 

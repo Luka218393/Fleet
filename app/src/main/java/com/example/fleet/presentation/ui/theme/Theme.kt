@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 
+var Black = Color(0,0,0)
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFF34113F),
     onPrimary = White,
@@ -30,20 +31,9 @@ private val DarkColorScheme = darkColorScheme(
 
     background = Color(0xFF1F1F1F),
     )
-private val DarkColorScheme2 = darkColorScheme(
-    primary = Color(0xFF34113F),
-    onPrimary = White,
 
-    secondary = Color(0xFFF78D1B),
-    onSecondary = Black,
 
-    tertiary = Color(0xff8E8E8E),
-    onTertiary = Black,
-
-    background = Color(0xFF1F1F1F),
-)
-
-private val LightColorScheme = lightColorScheme(
+private var LightColorScheme = lightColorScheme(
     primary = Color(0xFFF9F23E),
     onPrimary = Black,
     primaryContainer = Color(0xFFFAF69D),
@@ -74,7 +64,7 @@ fun FleetTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme2
+        darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 

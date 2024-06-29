@@ -7,6 +7,7 @@ import com.example.fleet.domain.Enums.Countries
 import com.example.fleet.domain.Enums.FontSize
 import com.example.fleet.domain.Enums.Theme
 
+
 @Entity(
     tableName = "settings",
     foreignKeys = [
@@ -45,6 +46,7 @@ data class Settings (
     var language: Countries = Countries.ENGLAND,
     var showNotifications: Boolean = true,
 
-    //var appColor: Color
+    var appColor: String = "18444365946022789120"
+
 )
 
