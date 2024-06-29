@@ -19,7 +19,9 @@ import com.example.fleet.data.subTasks
 import com.example.fleet.data.tasks
 import com.example.fleet.data.tenantChat
 import com.example.fleet.presentation.screens.SettingsScreen
+import com.example.fleet.presentation.ui.theme.DarkScheme
 import com.example.fleet.presentation.ui.theme.FleetTheme
+import com.example.fleet.presentation.ui.theme.LightScheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -32,16 +34,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FleetTheme {
-                /*val a = Color(0xFFF78D1B).value
-                Log.i("Heijaaaaaaa", Color(0xFFF78D1B).value.toString())
-                Log.i("Heijaaaaaaa", Color(Color(0xFFF78D1B).value).toString())
-                Log.i("Heijaaaaaaa", Color(a).toString())*/
-
-                seed(FleetApplication.fleetModule.fleetDatabase)
-                //Problem je u spremanju ViewModela unutar Navigatora
-                Navigator(SettingsScreen())
-            }
+            FleetTheme (
+                darkScheme = DarkScheme,
+                lightScheme = LightScheme,
+                content = {
+                    //seed(FleetApplication.fleetModule.fleetDatabase)
+                    //Problem je u spremanju ViewModela unutar Navigatora
+                    Navigator(SettingsScreen())
+                }
+            )
         }
     }
 }

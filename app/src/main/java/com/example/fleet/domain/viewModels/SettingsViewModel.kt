@@ -3,11 +3,13 @@ package com.example.fleet.domain.viewModels
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Settings
+import com.example.fleet.presentation.ui.theme.DarkScheme
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class SettingsViewModel(
@@ -19,8 +21,8 @@ class SettingsViewModel(
 
     fun toggleColorPalette(){showColorSelector = !showColorSelector}
 
-    fun changeSettingsColor(){
-
+    fun changeSettingsColor(color: Color){
+        DarkScheme.value = DarkScheme.value.copy(secondary = color)
     }
 }
 

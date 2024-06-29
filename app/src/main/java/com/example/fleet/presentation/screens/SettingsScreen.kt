@@ -68,7 +68,7 @@ class SettingsScreen (
 
             if (viewModel.showColorSelector){
                 ColorSelector(
-                    onConfirm = {},
+                    onConfirm = {viewModel.changeSettingsColor(it);viewModel.toggleColorPalette()},
                     onDismiss = {viewModel.toggleColorPalette()},
                 )
             }
