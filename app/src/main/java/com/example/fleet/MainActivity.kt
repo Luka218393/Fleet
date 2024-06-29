@@ -18,7 +18,7 @@ import com.example.fleet.data.settings1
 import com.example.fleet.data.subTasks
 import com.example.fleet.data.tasks
 import com.example.fleet.data.tenantChat
-import com.example.fleet.presentation.screens.NotificationScreen
+import com.example.fleet.presentation.screens.SettingsScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -35,9 +35,8 @@ class MainActivity : ComponentActivity() {
             FleetTheme {
 
                 //seed(FleetApplication.fleetModule.fleetDatabase)
-
                 //Problem je u spremanju ViewModela unutar Navigatora
-                Navigator(NotificationScreen())
+                Navigator(SettingsScreen())
             }
         }
     }

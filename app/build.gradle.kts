@@ -78,28 +78,12 @@ dependencies {
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
-    //Navigation
+    //Voyager navigation
     implementation("cafe.adriel.voyager:voyager-navigator:1.0.0")
     implementation("cafe.adriel.voyager:voyager-tab-navigator:1.0.0")
     implementation("cafe.adriel.voyager:voyager-transitions:1.0.0")
 
-    /*
-    //Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.3")
-    //implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    //Color picker
+    implementation("com.github.skydoves:colorpicker-compose:1.1.0")
 
-    //Dagger-Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-    //implementation(libs.androidx.hilt.lifecycle.viewmodel)
-    kapt(libs.androidx.hilt.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
-}
-
-hilt {
-    enableAggregatingTask = true
-}
-kapt {
-    correctErrorTypes = true*/
 }

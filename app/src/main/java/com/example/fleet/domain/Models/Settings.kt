@@ -3,8 +3,8 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.fleet.domain.Enums.FontSize
 import com.example.fleet.domain.Enums.Countries
+import com.example.fleet.domain.Enums.FontSize
 import com.example.fleet.domain.Enums.Theme
 
 @Entity(
@@ -43,18 +43,8 @@ data class Settings (
     var font: FontSize = FontSize.MEDIUM,
     var showAnimation: Boolean = true,
     var language: Countries = Countries.ENGLAND,
-    var showNotifications: Boolean = true
+    var showNotifications: Boolean = true,
+
+    //var appColor: Color
 )
 
-data class SettingsState (
-    val id: Int = 0,
-    val tenant: Tenant,
-    //var tags = List<Tag>
-    val building: Building,
-    val apartment: Apartment,
-    var theme: Theme = Theme.DEFAULT,
-    var font: FontSize = FontSize.MEDIUM,
-    var showAnimation: Boolean = true,
-    var language: Countries = Countries.ENGLAND,
-    var showNotifications: Boolean = true
-)

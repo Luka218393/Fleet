@@ -15,13 +15,10 @@ import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
-import com.example.fleet.domain.Models.SettingsState
 import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
-import com.example.fleet.presentation.fragments.cards.BaseCard
-import com.example.fleet.presentation.fragments.cards.NotificationCard
 import com.example.fleet.presentation.fragments.cards.PollCard
 import java.util.Date
 
@@ -226,13 +223,6 @@ var apartments = listOf(
 
 )
 
-val settingState1 = SettingsState(
-    id = 1,
-    tenant = Tenants().tenant1,
-    apartment = apartments[0],
-    building = buildings[0]
-
-)
 
 val settings1 = Settings(
     id = 1,
@@ -241,7 +231,6 @@ val settings1 = Settings(
     buildingId = 1
 
 )
-var cards: List<BaseCard> = pollCards + notifications.map { notification -> NotificationCard(notification) }
 
 
 

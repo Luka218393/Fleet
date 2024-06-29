@@ -53,8 +53,8 @@ class NotificationScreen(
                     viewModel.toggleNotificationDialog()
                 }
             )
-
         }
+
         if (viewModel.isPollDialogShown){ PollDialog(onDismiss = {viewModel.togglePollDialog()}, onConfirm = { a, b -> viewModel.createPoll(a,b); viewModel.togglePollDialog()})
         }
         //Todo ad remaining creation dialogs
