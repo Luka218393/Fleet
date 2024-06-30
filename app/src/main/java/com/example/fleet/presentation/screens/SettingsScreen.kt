@@ -1,6 +1,7 @@
 package com.example.fleet.presentation.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,6 +41,7 @@ class SettingsScreen (
     private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]
     @Composable
     override fun InnerContent() {
+        var systemTheme = isSystemInDarkTheme()
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ){
@@ -68,7 +70,7 @@ class SettingsScreen (
 
             if (viewModel.showColorSelector){
                 ColorSelector(
-                    onConfirm = {viewModel.changeSettingsColor(it);viewModel.toggleColorPalette()},
+                    onConfirm = {viewModel.changeSettingsColor(it,systemTheme);viewModel.toggleColorPalette()},
                     onDismiss = {viewModel.toggleColorPalette()},
                 )
             }

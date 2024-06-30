@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.fleet.FleetApplication
 import com.github.skydoves.colorpicker.compose.AlphaTile
 import com.github.skydoves.colorpicker.compose.BrightnessSlider
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
@@ -34,6 +35,7 @@ fun ColorSelector(
     val controller = rememberColorPickerController()
     Dialog(
         onDismissRequest = {onDismiss()},
+        //Todo select last position
         content = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,6 +47,7 @@ fun ColorSelector(
                         .height(400.dp)
                         .padding(10.dp),
                     controller = controller,
+                    initialColor = FleetApplication.fleetModule.appColor
                 )
 
                 BrightnessSlider(

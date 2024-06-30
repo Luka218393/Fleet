@@ -58,7 +58,7 @@ fun TaskDialog(
                         )
                         Spacer(modifier = modifier.width(12.dp))
                         // Title text field
-                        BasicTextField(value = title, onValueChange = { title = it })
+                        //InputField(value = title.value)
                         //https://developer.android.com/develop/ui/compose/text/user-input
                     }
 

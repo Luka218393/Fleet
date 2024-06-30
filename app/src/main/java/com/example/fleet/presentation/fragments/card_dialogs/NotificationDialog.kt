@@ -101,7 +101,7 @@ fun NotificationDialog(
 }
 
 
-
+//Todo automatically break lines
 @Composable
 fun InputField(
     value: MutableState<String>,

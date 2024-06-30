@@ -22,7 +22,7 @@ var DarkScheme = mutableStateOf(
         primary = Color(0xFF34113F),
         onPrimary = White,
 
-        secondary = Color(0xFFF78D1B),
+        secondary = FleetApplication.fleetModule.appColor,
         onSecondary = Black,
 
         tertiary = Color(0xff8E8E8E),
@@ -34,7 +34,7 @@ var DarkScheme = mutableStateOf(
 
 var LightScheme = mutableStateOf(
     lightColorScheme(
-        primary = Color(0xFFF9F23E),
+        primary = FleetApplication.fleetModule.appColor,
         onPrimary = Black,
 
         secondary = Color(0xFF34113F),
