@@ -20,7 +20,7 @@ class NotificationScreen(
     private val modifier: Modifier = Modifier,
     private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
 )
-    : BaseScreen(floatingButton = true, {viewModel.toggleNotificationDialog()},{ viewModel.toggleTaskDialog() },{ viewModel.togglePollDialog() }, )
+    : BaseScreen(floatingButton = listOf( {viewModel.toggleNotificationDialog()}, { viewModel.toggleTaskDialog() }, { viewModel.togglePollDialog()}))
 {
 
     @Composable

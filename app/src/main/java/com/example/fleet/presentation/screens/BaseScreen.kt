@@ -10,10 +10,7 @@ import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.FloatingButton
 
 abstract class BaseScreen(
-    private val floatingButton: Boolean = false,
-    private val a: () -> Unit = {},
-    private val b: () -> Unit = {},
-    private val c: () -> Unit = {}
+    private val floatingButton: List<()->Unit> = emptyList()
 
 ): Screen {
 
@@ -21,7 +18,7 @@ abstract class BaseScreen(
     override fun Content() {
         Scaffold(
             bottomBar = { BottomBar(Modifier) },
-            floatingActionButton = { if(floatingButton) FloatingButton(a,b,c) }
+            floatingActionButton = { if(floatingButton.isNotEmpty()) FloatingButton(floatingButton[0],floatingButton[1],floatingButton[2]) }
         ) { padding ->
             Box(modifier = Modifier.padding(padding)) {
                 InnerContent()

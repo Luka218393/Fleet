@@ -6,14 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.presentation.ui.theme.DarkScheme
 import com.example.fleet.presentation.ui.theme.LightScheme
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class SettingsViewModel(
@@ -36,11 +34,11 @@ class SettingsViewModel(
             LightScheme.value = LightScheme.value.copy(secondary = color)
         }
         runBlocking{db.settingsDao().upsert(settings = settings.value)}
-        viewModelScope.launch {
+        /*viewModelScope.launch {
             db.settingsDao().get().collect{
                 FleetApplication.fleetModule.appColor = Color(it.appColor.toULong())
             }
-        }
+        }*/
     }
 
 }

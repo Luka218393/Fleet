@@ -44,21 +44,15 @@ class NotificationViewModel (
     var isPollDialogShown by mutableStateOf(false)
         private set
 
-
-    fun createNotification(title: String, text: String){
-        viewModelScope.launch {
-            db.notificationDao().upsert(
-                Notification(
-                    buildingId = settings.value.buildingId,
-                    title = title,
-                    text = text,
-                    imageResId = null,
-                    iconResId = Icons.Default.Favorite,
-                    creatorId = settings.value.tenantId
-                )
-            )
+    init {
+        runBlocking{
+            insertTaskToCards()
+            insertPollToCards()
+            insertNotificationToCards()
         }
     }
+
+
 
     fun createPoll(title: String, options: List<String>){
         val poll = Poll(
@@ -106,9 +100,7 @@ class NotificationViewModel (
 
     }
 
-    fun toggleNotificationDialog(){isNotificationDialogShown = !isNotificationDialogShown}
-    fun toggleTaskDialog(){isTaskDialogShown = !isTaskDialogShown}
-    fun togglePollDialog(){isPollDialogShown = !isPollDialogShown}
+
 
     private fun insertTaskToCards(){
         viewModelScope.launch {
@@ -129,18 +121,33 @@ class NotificationViewModel (
     //Todo totally remodel poll creation
     // i don't have nerves to do this anymore
     private fun insertPollToCards(){
+        var polls = emptyList<Poll>()
+        var pollOptions = emptyList<PollOption>()
+        fun update(){
+            _cards.update {prev ->
+                prev.filterNot{ "Poll" in (it?.id ?: "") } + //Deletes all polls from cards
+                    polls.map { poll ->
+                        PollCard(
+                            poll, pollOptions.filter { it.pollId == poll.id },
+                            onPollOptionChange =  {poll1, poll2 -> changePollOption(poll1, poll2)}
+                        )
+                    }
+            }
+            _cards.update { prev -> prev.sortedByDescending {  it?.createdAt ?: Date(1, 1, 1)  } }
+        }
         viewModelScope.launch {
-            db.pollDao().getAll().collect {polls ->
-                Log.i("aaa", "POll Collect Activated")
+            db.pollOptionDao().getAll().collect {
+                //Todo make so that poll cannot be created without any options and than remove if statement
+                pollOptions = it
+                update()
+            }
+        }
 
-                db.pollOptionDao().getAll().collect { pollOptions ->
-                        //Todo make so that poll cannot be created without any options and than remove if statement
-                        Log.i("aaa", "POll Option")
-                        _cards.update {prev -> prev.filterNot{ "Poll" in (it?.id ?: "") } +
-                            polls.map { poll -> if (pollOptions.any { it.pollId == poll.id })  PollCard( poll, pollOptions.filter { it.pollId == poll.id }, onPollOptionChange =  {poll1, poll2 -> changePollOption(poll1, poll2)}) else null}
-                        }
-                    _cards.update { prev -> prev.sortedByDescending {  it?.createdAt ?: Date(1, 1, 1)  } }
-                }
+        viewModelScope.launch {
+            db.pollDao().getAll().collect {
+                Log.i("NotificationViewModel", "Poll collection")
+                polls = it
+                update()
             }
         }
     }
@@ -156,14 +163,24 @@ class NotificationViewModel (
     }
 
 
-    init {
-        Log.i("NotificationViewModel", "NotificationViewModel init")
-        runBlocking{
-            insertTaskToCards()
-            insertPollToCards()
-            insertNotificationToCards()
+
+    fun createNotification(title: String, text: String){
+        viewModelScope.launch {
+            db.notificationDao().upsert(
+                Notification(
+                    buildingId = settings.value.buildingId,
+                    title = title,
+                    text = text,
+                    imageResId = null,
+                    iconResId = Icons.Default.Favorite,
+                    creatorId = settings.value.tenantId
+                )
+            )
         }
     }
+    fun toggleNotificationDialog(){isNotificationDialogShown = !isNotificationDialogShown}
+    fun toggleTaskDialog(){isTaskDialogShown = !isTaskDialogShown}
+    fun togglePollDialog(){isPollDialogShown = !isPollDialogShown}
 }
 
 @Suppress("UNCHECKED_CAST")
