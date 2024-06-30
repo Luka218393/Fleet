@@ -14,6 +14,7 @@ import com.example.fleet.domain.viewModels.NotificationViewModelFactory
 import com.example.fleet.presentation.fragments.DateSeparator
 import com.example.fleet.presentation.fragments.card_dialogs.NotificationDialog
 import com.example.fleet.presentation.fragments.card_dialogs.PollDialog
+import com.example.fleet.presentation.fragments.card_dialogs.TaskDialog
 
 
 class NotificationScreen(
@@ -56,6 +57,8 @@ class NotificationScreen(
         }
 
         if (viewModel.isPollDialogShown){ PollDialog(onDismiss = {viewModel.togglePollDialog()}, onConfirm = { a, b -> viewModel.createPoll(a,b); viewModel.togglePollDialog()})
+        }
+        if (viewModel.isTaskDialogShown){ TaskDialog(onDismiss = {viewModel.toggleTaskDialog()}, onConfirm = { a, b -> viewModel.createTask(a,b); viewModel.toggleTaskDialog()})
         }
         //Todo ad remaining creation dialogs
     }

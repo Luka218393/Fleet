@@ -17,6 +17,7 @@ import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SubTask
+import com.example.fleet.domain.Models.Task
 import com.example.fleet.presentation.fragments.cards.BaseCard
 import com.example.fleet.presentation.fragments.cards.NotificationCard
 import com.example.fleet.presentation.fragments.cards.PollCard
@@ -77,6 +78,25 @@ class NotificationViewModel (
         }
     }
 
+    fun createTask(title: String, subTasks: List<String>){
+        val task = Task(
+            id = Random.nextLong(999999999999999999).toInt(),
+            creatorId = settings.value.tenantId,
+            buildingId = settings.value.buildingId,
+            title = title,
+        )
+        viewModelScope.launch {
+            db.taskDao().upsert(task)
+            for (i in subTasks) {
+                db.subTaskDao().upsert(
+                    SubTask(
+                        text = i,
+                        taskId = task.id,
+                    )
+                )
+            }
+        }
+    }
 
     //Todo make this smarter
     private fun changePollOption(pollOptionSelected: PollOption, pollOptionUnselected: PollOption?){
@@ -103,12 +123,33 @@ class NotificationViewModel (
 
 
     private fun insertTaskToCards(){
+        var tasks = emptyList<Task>()
+        var subTasks = emptyList<SubTask>()
+
+        fun update(){
+            _cards.update {prev ->
+                prev.filterNot{ "Task" in (it?.id ?: "") } + //Deletes all tasks from cards
+                    tasks.map { task ->
+                        TaskCard(
+                            task,
+                            subTasks = subTasks.filter{it.taskId == task.id},
+                            onTaskCompletion = {subTaskId -> subTasks.find {it.id == subTaskId}?.let { completeSubTask(it) } }
+                        )
+                    }
+            }
+            _cards.update { prev -> prev.sortedByDescending {  it?.createdAt ?: Date(1, 1, 1)  } }
+        }
         viewModelScope.launch {
-            db.taskDao().getByBuildingId(settings.value.buildingId).collect{tasks ->
-                db.subTaskDao().getAll().collect{ subTasks ->
-                    _cards.update {prev -> prev.filterNot{"Task" in (it?.id ?: "") } + tasks.map{ task -> TaskCard(task, subTasks = subTasks.filter{it.taskId == task.id}, {subTaskId -> subTasks.find {it.id == subTaskId}?.let { completeSubTask(it) } }) } }
-                    _cards.update { prev -> prev.sortedByDescending { it?.createdAt ?: Date(1, 1, 1) } }
-                }
+            db.taskDao().getAll().collect {
+                tasks = it
+                update()
+            }
+        }
+
+        viewModelScope.launch {
+            db.subTaskDao().getAll().collect {
+                subTasks = it
+                update()
             }
         }
     }
