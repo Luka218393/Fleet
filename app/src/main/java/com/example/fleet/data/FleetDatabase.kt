@@ -78,8 +78,6 @@ abstract class FleetDatabase : RoomDatabase() {
                     .build()
                     .also { Instance = it }
             }
-
         }
     }
-
 }

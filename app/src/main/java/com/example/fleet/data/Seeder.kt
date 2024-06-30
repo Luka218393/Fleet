@@ -128,16 +128,7 @@ var polls: List<Poll> = listOf(
         title = "Is this poll better than the first one?",
         pollType = PollType.SINGLE_CHOICE,
         buildingId = 1
-    ),
-    Poll(
-        id = 3,
-        creatorId = 2,
-        title = "You cant see me",
-        pollType = PollType.SINGLE_CHOICE,
-        buildingId = 1,
-
-    ),
-
+    )
 )
 var pollCards: List<PollCard> = polls.map { poll -> PollCard(poll, pollOptions.filter { it.pollId == poll.id }) }
 

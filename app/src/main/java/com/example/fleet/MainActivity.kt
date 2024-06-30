@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 darkScheme = DarkScheme,
                 lightScheme = LightScheme,
                 content = {
-                    seed(FleetApplication.fleetModule.fleetDatabase)
+                    //seed(FleetApplication.fleetModule.fleetDatabase)
                     //Problem je u spremanju ViewModela unutar Navigatora
                     Navigator(NotificationScreen())
                 }
@@ -61,10 +61,11 @@ fun seed(db: FleetDatabase){
         db.tenantDao().upsert(Tenants().tenant1)
         db.tenantDao().upsert(Tenants().tenant2)
         db.tenantDao().upsert(Tenants().tenant3)
+        db.settingsDao().upsert(settings1)
         for (i in notifications) {
             db.notificationDao().upsert(i)
         }
-        db.settingsDao().upsert(settings1)
+
         val settings = MutableStateFlow(db.settingsDao().get().first())
 
         for (i in polls){

@@ -44,7 +44,7 @@ class PollCard (
     override fun Content() {
 
         if (options.isEmpty()) {
-            throw error("Poll has no options to display")
+            return //todo throw error("Poll has no options to display")
         }
 
         val selectedOption = rememberSaveable{ mutableIntStateOf(-1) } //Todo make poll remember tenants vote
