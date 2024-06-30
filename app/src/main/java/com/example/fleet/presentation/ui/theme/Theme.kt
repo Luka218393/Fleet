@@ -1,7 +1,6 @@
 package com.example.fleet.presentation.ui.theme
 
 import android.os.Build
-import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -34,10 +33,10 @@ var DarkScheme = mutableStateOf(
 
 var LightScheme = mutableStateOf(
     lightColorScheme(
-        primary = FleetApplication.fleetModule.appColor,
+        primary = Color(0xFF34113F),
         onPrimary = Black,
 
-        secondary = Color(0xFF34113F),
+        secondary = FleetApplication.fleetModule.appColor,
         onSecondary = White,
 
         tertiary = Color(0xff8E8E8E),
@@ -46,6 +45,7 @@ var LightScheme = mutableStateOf(
         background = Color(0xFFCFCECE),
     )
 )
+
 @Composable
 fun FleetTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -55,7 +55,6 @@ fun FleetTheme(
     lightScheme: MutableState<ColorScheme>
 ) {
 
-    Log.i("č<pufdyv","FleetThemeCreated")
     val colorScheme = when {
             dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
                 val context = FleetApplication.fleetModule.context
@@ -72,7 +71,7 @@ fun FleetTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+        content = content,
     )
 
 }

@@ -159,7 +159,7 @@ val chats: List<Chat> = listOf(
     )
 )
 
-val tenantChat = listOf<TenantChat>(
+val tenantChat = listOf(
     TenantChat(
         tenantId = 1,
         chatId = 1,
@@ -217,10 +217,9 @@ var apartments = listOf(
 
 val settings1 = Settings(
     id = 1,
-    tenantId = 1,
+    tenantId = 2,
     apartmentId = 1,
     buildingId = 1
-
 )
 
 

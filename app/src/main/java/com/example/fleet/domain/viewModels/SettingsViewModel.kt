@@ -38,7 +38,7 @@ class SettingsViewModel(
         runBlocking{db.settingsDao().upsert(settings = settings.value)}
         viewModelScope.launch {
             db.settingsDao().get().collect{
-                FleetApplication.fleetModule.appColor = Color(it.appColor.toULong())
+                    FleetApplication.fleetModule.appColor = Color(it.appColor.toULong())
             }
         }
     }

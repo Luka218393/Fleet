@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
                 darkScheme = DarkScheme,
                 lightScheme = LightScheme,
                 content = {
-                    //seed(FleetApplication.fleetModule.fleetDatabase)
                     //Problem je u spremanju ViewModela unutar Navigatora
                     Navigator(NotificationScreen())
                 }

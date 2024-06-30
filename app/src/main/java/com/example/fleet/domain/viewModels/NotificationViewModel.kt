@@ -153,6 +153,10 @@ class NotificationViewModel (
             }
         }
     }
+    //Todo implement this
+    fun getTenantName(id: Int): String = runBlocking{db.tenantDao().getNameById(id)}
+
+
 
     private fun completeSubTask(subTask: SubTask){
         subTask.completed = !subTask.completed

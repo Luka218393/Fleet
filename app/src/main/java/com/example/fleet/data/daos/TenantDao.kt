@@ -21,4 +21,7 @@ interface TenantDao {
 
     @Query("SELECT * from tenants WHERE id = :id")
     fun getById(id: Int): Flow<Tenant>
+
+    @Query("SELECT Name from tenants where id = :id ")
+    fun getNameById(id:Int): String
 }

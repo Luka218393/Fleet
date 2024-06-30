@@ -46,10 +46,9 @@ class SettingsScreen (
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             SettingsSeparator(text = "Theme")
-            SettingsBar(iconVector = Icons.Default.Create, text = "Color",onClick = {viewModel.toggleColorPalette()})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Animations",onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Font size",onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Theme",onClick = {})
+            SettingsBar(iconVector = Icons.Default.Create, text = "Color", onClick = {viewModel.toggleColorPalette()})
+            SettingsBar(iconVector = Icons.Default.Settings, text = "Animations", onClick = {})
+            SettingsBar(iconVector = Icons.Default.Settings, text = "Theme", onClick = {})
 
             SettingsSeparator(text = "Help the dev")
             SettingsBar(iconVector = Icons.Default.Settings, text = "Message the dev", onClick = {})
@@ -58,14 +57,14 @@ class SettingsScreen (
             SettingsBar(iconVector = Icons.Default.Settings, text = "Report problem", onClick = {})
 
             SettingsSeparator(text = "Edit")
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit account",onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit apartment",onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit building",onClick = {})
+            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit account", onClick = {})
+            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit apartment", onClick = {})
+            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit building", onClick = {})
 
             SettingsSeparator(text = "Acconut")
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Terms of service",onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Change account",onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Privacy",onClick = {})
+            SettingsBar(iconVector = Icons.Default.Settings, text = "Terms of service", onClick = {})
+            SettingsBar(iconVector = Icons.Default.Settings, text = "Change account", onClick = {})
+            SettingsBar(iconVector = Icons.Default.Settings, text = "Privacy", onClick = {})
 
 
             if (viewModel.showColorSelector){

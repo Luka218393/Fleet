@@ -33,7 +33,7 @@ class ChatViewModel (
     init{
         runBlocking{
             Log.i("ChatViewModel","ChatViewModel init")
-            insertChatBars()
+            insertChatBars(settings.value.tenantId)
         }
     }
 
@@ -42,10 +42,17 @@ class ChatViewModel (
         runBlocking { a = db.tenantDao().getById(id).first().name }
         return a
     }
-    private fun insertChatBars(){
+    private fun insertChatBars(tenantId: Int){
+        var chats: List<Chat> = emptyList()
+        fun update(){
+            _chatBars.update { chats.map{chat -> ChatBar(chat, getLastMessage(chat.id)) } }
+        }
         viewModelScope.launch {
-            db.chatDao().getAll().collect{chats->
-                _chatBars.update { chats.map{chat -> ChatBar(chat, getLastMessage(chat.id)) } }
+            db.tenantChatDao().getByTenantId(tenantId).collect{
+                tenantChats ->
+                chats = db.chatDao().getChatsByIds(tenantChats.map{it.chatId}).first()
+                update()
+
             }
         }
     }
