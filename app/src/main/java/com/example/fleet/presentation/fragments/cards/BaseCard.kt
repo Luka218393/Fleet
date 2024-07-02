@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.fleet.FleetApplication
 import com.example.fleet.presentation.HelperFunctions
 import java.util.Date
 
@@ -21,7 +22,7 @@ Other cards must inherit from it
 */
 abstract class BaseCard(//TODo fix empty card
     val createdAt: Date,//ToDo make this time format properly
-    private val createdBy: String,//TODO make this reference tenant name
+    private val createdBy: Int,//TODO make this reference tenant name
     val id: String
 ){
 
@@ -48,7 +49,7 @@ abstract class BaseCard(//TODo fix empty card
                 horizontalArrangement = Arrangement.Absolute.SpaceAround
             ){
                 Text(
-                    text = createdBy,
+                    text = FleetApplication.fleetModule.getTenantNameAndSurname(createdBy)?: "Unknown author",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.tertiary
                 )

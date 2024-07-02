@@ -89,11 +89,8 @@ class ChatViewModel (
 
     fun getTenantId(): Int = settings.value.tenantId
 
-    fun getChat(id: Int): Chat {
-        var a : Chat
-        runBlocking { a = db.chatDao().getById(id).first() }
-        return a
-    }
+    fun getChat(id: Int): Chat = runBlocking { db.chatDao().getById(id).first() }
+
 }
 
 @Suppress("UNCHECKED_CAST")

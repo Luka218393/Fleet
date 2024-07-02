@@ -39,7 +39,7 @@ class TaskCard (
     private val subTasks: List<SubTask>,
     private val onTaskCompletion: (Int) -> Unit,//Todo Make muatble
     private val modifier: Modifier = Modifier
-): BaseCard(task.createdAt, task.creatorId.toString(),"Task id:" + task.id){
+): BaseCard(task.createdAt, task.creatorId,"Task id:" + task.id){
     @Composable
     override fun Content() {
         Column{

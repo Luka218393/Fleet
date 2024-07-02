@@ -39,7 +39,7 @@ class NotificationScreen(
 
                 if (index + 1 < cards.size){
                     if (cards[index + 1].createdAt.day != cards[index].createdAt.day){
-                        DateSeparator(date = cards[index + 1 ].createdAt)
+                        DateSeparator(date = cards[index].createdAt)
                     }
                 }
 

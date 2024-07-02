@@ -14,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -23,12 +22,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import com.example.fleet.FleetApplication
+import com.example.fleet.R
 import com.example.fleet.domain.viewModels.SettingsViewModel
 import com.example.fleet.domain.viewModels.SettingsViewModelFactory
 import com.example.fleet.presentation.settings_fragments.ColorSelector
@@ -47,32 +49,32 @@ class SettingsScreen (
         ){
             SettingsSeparator(text = "Theme")
             SettingsBar(iconVector = Icons.Default.Create, text = "Color", onClick = {viewModel.toggleColorPalette()})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Animations", onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Theme", onClick = {})
-
-            SettingsSeparator(text = "Help the dev")
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Message the dev", onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Answer a poll", onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Get resources", onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Report problem", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.animation_24dp_fill0_wght400_grad0_opsz24), text = "Animations", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.contrast_24dp_fill0_wght400_grad0_opsz24), text = "Theme", onClick = {})
 
             SettingsSeparator(text = "Edit")
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit account", onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit apartment", onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Edit building", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24), text = "Edit account", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.door_front_24dp_fill0_wght400_grad0_opsz24), text = "Edit apartment", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.apartment_24dp_fill0_wght400_grad0_opsz24), text = "Edit building", onClick = {})
 
             SettingsSeparator(text = "Acconut")
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Terms of service", onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Change account", onClick = {})
-            SettingsBar(iconVector = Icons.Default.Settings, text = "Privacy", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.list_alt_24dp_fill0_wght400_grad0_opsz24), text = "Terms of service", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.key_24dp_fill0_wght400_grad0_opsz24), text = "Change account", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.lock_24dp_fill0_wght400_grad0_opsz24), text = "Privacy", onClick = {})
 
-
+            SettingsSeparator(text = "Help the dev")
+            SettingsBar(painterIcon = painterResource(id = R.drawable.chat_24dp_fill0_wght400_grad0_opsz24), text = "Message the dev", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.quiz_24dp_fill0_wght400_grad0_opsz24), text = "Answer a poll", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.image_24dp_fill0_wght400_grad0_opsz24), text = "Get resources", onClick = {})
+            SettingsBar(painterIcon = painterResource(id = R.drawable.bug_report_24dp_fill0_wght400_grad0_opsz24), text = "Report problem", onClick = {})
             if (viewModel.showColorSelector){
                 ColorSelector(
                     onConfirm = {viewModel.changeSettingsColor(it,systemTheme);viewModel.toggleColorPalette()},
                     onDismiss = {viewModel.toggleColorPalette()},
                 )
             }
+
+            //https://fonts.google.com/icons
         }
     }
 }
@@ -80,7 +82,8 @@ class SettingsScreen (
 @Composable
 fun SettingsBar(
     modifier: Modifier = Modifier,
-    iconVector: ImageVector,
+    iconVector: ImageVector? = null,
+    painterIcon: Painter? = null,
     text: String,
     onClick: () -> Unit
 ){
@@ -96,13 +99,24 @@ fun SettingsBar(
         Row (
             verticalAlignment = Alignment.CenterVertically
         ){
-            Icon(
-                imageVector = iconVector,
-                contentDescription = text,
-                tint = MaterialTheme.colorScheme.secondary,
-                modifier = modifier
-                    .size(32.dp)
-            )
+            if (iconVector != null) {
+                Icon(
+                    imageVector = iconVector,
+                    contentDescription = text,
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = modifier
+                        .size(32.dp)
+                )
+            }
+            else{
+                Icon(
+                    painter = painterIcon!!,
+                    contentDescription = text,
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = modifier
+                        .size(32.dp)
+                )
+            }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
                 text = text

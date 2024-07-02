@@ -38,7 +38,7 @@ class PollCard (
     private val options: List<PollOption>,
     private val modifier: Modifier = Modifier,
     private val onPollOptionChange: (PollOption, PollOption?) -> Unit = { a, b ->}
-): BaseCard(poll.dateCreated, poll.creatorId.toString(),"Poll id:" + poll.id){
+): BaseCard(poll.dateCreated, poll.creatorId,"Poll id:" + poll.id){
 
     @Composable
     override fun Content() {

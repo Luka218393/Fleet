@@ -25,7 +25,7 @@ import com.example.fleet.domain.Models.Notification
 class NotificationCard (
     private val notification: Notification/*TODO make ui actually pretty*/,
     private val modifier: Modifier = Modifier
-): BaseCard(notification.createdAt, notification.creatorId.toString(), "Notification id:" + notification.id){
+): BaseCard(notification.createdAt, notification.creatorId, "Notification id:" + notification.id){
     @Composable
     override fun Content () {
         Column{
