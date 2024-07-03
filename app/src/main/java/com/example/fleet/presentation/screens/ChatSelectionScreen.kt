@@ -18,6 +18,7 @@ import com.example.fleet.domain.viewModels.ChatViewModelFactory
 
 
 class ChatSelectionScreen: BaseScreen(){
+    @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 
     @Composable

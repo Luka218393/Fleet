@@ -40,10 +40,11 @@ import com.example.fleet.presentation.settings_fragments.ColorSelector
 //Todo give this normal icons
 class SettingsScreen (
 ) : BaseScreen(){
+    @Transient
     private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]
     @Composable
     override fun InnerContent() {
-        var systemTheme = isSystemInDarkTheme()
+        val systemTheme = isSystemInDarkTheme()
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ){

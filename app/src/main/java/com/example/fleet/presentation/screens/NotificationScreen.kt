@@ -18,7 +18,9 @@ import com.example.fleet.presentation.fragments.card_dialogs.TaskDialog
 
 
 class NotificationScreen(
+    @Transient
     private val modifier: Modifier = Modifier,
+    @Transient
     private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
 )
     : BaseScreen(floatingButton = listOf( {viewModel.toggleNotificationDialog()}, { viewModel.toggleTaskDialog() }, { viewModel.togglePollDialog()}))

@@ -10,8 +10,8 @@ import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.FloatingButton
 
 abstract class BaseScreen(
+    @Transient
     private val floatingButton: List<()->Unit> = emptyList()
-
 ): Screen {
 
     @Composable

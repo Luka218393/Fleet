@@ -19,9 +19,12 @@ import com.example.fleet.presentation.fragments.scaffold_elements.TopBar
 
 
 class ChatScreen(
-    private val chatId: Int
-) : Screen {
+    @Transient
+    private val chatId: Int,
+    @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
+) : Screen {
+    @Transient
     private val chat = viewModel.getChat(chatId)
 
     @Composable
