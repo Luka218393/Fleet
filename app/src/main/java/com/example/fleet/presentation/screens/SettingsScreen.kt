@@ -33,7 +33,6 @@ import com.example.fleet.FleetApplication
 import com.example.fleet.R
 import com.example.fleet.domain.viewModels.SettingsViewModel
 import com.example.fleet.domain.viewModels.SettingsViewModelFactory
-import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.settings_fragments.ColorSelector
 
 
@@ -41,9 +40,7 @@ import com.example.fleet.presentation.settings_fragments.ColorSelector
 //Todo give this normal icons
 class SettingsScreen (
 ) : BaseScreen(
-    floatingButton =  {},
-    bottomBar = { BottomBar() },
-    topBar = {}
+    bottomBar = true,
 ){
     @Transient
     private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]

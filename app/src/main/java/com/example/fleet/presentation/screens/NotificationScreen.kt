@@ -15,8 +15,6 @@ import com.example.fleet.presentation.fragments.DateSeparator
 import com.example.fleet.presentation.fragments.card_dialogs.NotificationDialog
 import com.example.fleet.presentation.fragments.card_dialogs.PollDialog
 import com.example.fleet.presentation.fragments.card_dialogs.TaskDialog
-import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
-import com.example.fleet.presentation.fragments.scaffold_elements.FloatingButton
 
 
 class NotificationScreen(
@@ -26,16 +24,9 @@ class NotificationScreen(
     private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
 )
     : BaseScreen(
-        floatingButton =  {
-            FloatingButton(
-                toggleNotificationDialog = { viewModel.toggleNotificationDialog() },
-                toggleTaskDialog = { viewModel.toggleTaskDialog() },
-                togglePollDialog = { viewModel.togglePollDialog() }
-            )
-        },
-        bottomBar = { BottomBar()},
-        topBar = {}
-){
+        floatingButton = listOf( { viewModel.toggleNotificationDialog() }, { viewModel.toggleTaskDialog() }, { viewModel.togglePollDialog() } ),
+        bottomBar = true
+    ){
 
     @Composable
     override fun InnerContent() {

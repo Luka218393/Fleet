@@ -33,7 +33,6 @@ import com.example.fleet.FleetApplication
 import com.example.fleet.R
 import com.example.fleet.domain.viewModels.DisplayViewModel
 import com.example.fleet.domain.viewModels.DisplayViewModelFactory
-import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 
 data class DisplayScreen(
     @Transient
@@ -41,9 +40,7 @@ data class DisplayScreen(
     @Transient
     private val modifier: Modifier = Modifier
 ): BaseScreen(
-    floatingButton =  {},
-    bottomBar = { BottomBar() },
-    topBar = {}
+    bottomBar = true,
 ) {
 
     @Composable
