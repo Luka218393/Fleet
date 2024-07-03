@@ -79,7 +79,7 @@ fun BottomBar(
 //Todo change text style
 @Composable
 fun InputBottomBar(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     send: (String) -> Unit
 ) {
     BottomAppBar(

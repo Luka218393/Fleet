@@ -33,13 +33,18 @@ import com.example.fleet.FleetApplication
 import com.example.fleet.R
 import com.example.fleet.domain.viewModels.DisplayViewModel
 import com.example.fleet.domain.viewModels.DisplayViewModelFactory
+import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 
 data class DisplayScreen(
     @Transient
     private val viewModel: DisplayViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DisplayViewModelFactory())[DisplayViewModel::class.java],
     @Transient
     private val modifier: Modifier = Modifier
-): BaseScreen() {
+): BaseScreen(
+    floatingButton =  {},
+    bottomBar = { BottomBar() },
+    topBar = {}
+) {
 
     @Composable
     override fun InnerContent() {

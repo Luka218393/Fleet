@@ -15,9 +15,14 @@ import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
+import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 
 
-class ChatSelectionScreen: BaseScreen(){
+class ChatSelectionScreen: BaseScreen(
+    floatingButton =  {},
+    bottomBar = { BottomBar() },
+    topBar = {}
+){
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 

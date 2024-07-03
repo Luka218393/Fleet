@@ -23,6 +23,7 @@ class ChatScreen(
     private val chatId: Int,
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
+    //ToDO implement Base screen it doesn't work for now
 ) : Screen {
     @Transient
     private val chat = viewModel.getChat(chatId)
