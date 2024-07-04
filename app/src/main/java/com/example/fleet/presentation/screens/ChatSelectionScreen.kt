@@ -1,7 +1,6 @@
 package com.example.fleet.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +18,7 @@ import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
+import com.example.fleet.presentation.fragments.SelectChatBar
 import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.ChatCreationFloatingButton
 
@@ -30,7 +30,8 @@ class ChatSelectionScreen: Screen{
     @Composable
     override fun Content() {
         val nav = LocalNavigator.current
-        val chatBars = viewModel.chatBars.collectAsState(emptyList()).value
+        val chats = viewModel.chats.collectAsState(emptyList()).value
+
         Scaffold(
             bottomBar = { BottomBar() },
             floatingActionButton = { ChatCreationFloatingButton() }
@@ -42,11 +43,14 @@ class ChatSelectionScreen: Screen{
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(chatBars) { chatBar ->
-                        chatBar.Create(navigateToDialogueScreen = {
-                            Navigation.goTo( Screens.CHAT, nav, chatBar.chat.id)
-                            viewModel.changeMessageCollectorJob(chatBar.chat.id)
-                        } )
+                    items(chats, key = {it.id}) { chat ->
+                        SelectChatBar(
+                            navigateToChatScreen = {
+                                Navigation.goTo( Screens.CHAT, nav, chat.id)
+                                viewModel.changeMessageCollectorJob(chat.id)
+                            }, chat = chat,
+                            lastMessageText = viewModel.getLastMessage(chat.id)
+                        )
                     }
                 }
             }

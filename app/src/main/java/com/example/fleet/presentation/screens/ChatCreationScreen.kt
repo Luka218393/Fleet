@@ -1,26 +1,51 @@
 package com.example.fleet.presentation.screens
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
-import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
-import com.example.fleet.presentation.fragments.scaffold_elements.TopBar
+import com.example.fleet.FleetApplication
+import com.example.fleet.domain.viewModels.ChatViewModel
+import com.example.fleet.domain.viewModels.ChatViewModelFactory
 
 class ChatCreationScreen: Screen{
+    @Transient
+    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
     @Composable
     override fun Content() {
+
+        /*val chatBars = viewModel.chatBars.collectAsState(emptyList()).value//Todo change ChatBars
+
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { TopBar(modifier = Modifier, title = "ChatCreationScreen")},
+            topBar = { NewChatTopBar() },
             bottomBar = { BottomBar() },
             ) { padding ->
-            Box(modifier = Modifier.padding(padding)) {
-
-            }
-        }
+                Column (
+                    modifier = Modifier.padding(padding)
+                ){
+                    Row{
+                        Button(onClick = { /*TODO*/ }) {
+                            Text(text = "")
+                        }
+                        Button(onClick = { /*TODO*/ }) {
+                            Text(text = "")
+                        }
+                    }
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        items(chatBars) { chatBar ->
+                            chatBar.Create(navigateToDialogueScreen = {
+                                Navigation.goTo( Screens.CHAT, chatBar.chat.id)
+                                viewModel.changeMessageCollectorJob(chatBar.chat.id)
+                            } )
+                        }
+                    }
+                }
+        }*/
     }
 }

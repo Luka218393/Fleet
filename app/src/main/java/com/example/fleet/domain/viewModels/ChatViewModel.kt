@@ -11,7 +11,7 @@ import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Message
 import com.example.fleet.domain.Models.Settings
-import com.example.fleet.presentation.fragments.ChatBar
+import com.example.fleet.domain.Models.Tenant
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,34 +25,32 @@ class ChatViewModel (
     var settings: MutableStateFlow<Settings>,
 ): ViewModel() {
 
-    private var _chatBars: MutableStateFlow<List<ChatBar>> = MutableStateFlow(mutableListOf())
-    var chatBars = _chatBars.asStateFlow()
+    private var _chats: MutableStateFlow<List<Chat>> = MutableStateFlow(mutableListOf())
+    var chats = _chats.asStateFlow()
     private var _messages: MutableStateFlow<List<Message>> = MutableStateFlow(mutableListOf())
     var messages = _messages.asStateFlow()
+    private var _tenants: MutableStateFlow<List<Tenant>> = MutableStateFlow(mutableListOf())
+    var tenants = _tenants.asStateFlow()
 
     init{
         runBlocking{
             Log.i("ChatViewModel","ChatViewModel init")
-            insertChatBars(settings.value.tenantId)
+            insertTenantsChats()
+            insertAllTenants()
         }
     }
-
-    private fun getTenantById(id: Int): String {
-        val a: String
-        runBlocking { a = db.tenantDao().getById(id).first().name }
-        return a
-    }
-    private fun insertChatBars(tenantId: Int){
-        var chats: List<Chat> = emptyList()
-        fun update(){
-            _chatBars.update { chats.map{chat -> ChatBar(chat, getLastMessage(chat.id)) } }
-        }
+    private fun insertTenantsChats(){
         viewModelScope.launch {
-            db.tenantChatDao().getByTenantId(tenantId).collect{
-                tenantChats ->
-                chats = db.chatDao().getChatsByIds(tenantChats.map{it.chatId}).first()
-                update()
-
+            db.tenantChatDao().getByTenantId(settings.value.tenantId).collect { tenantChats ->
+                _chats.value = db.chatDao().getChatsByIds(tenantChats.map { it.chatId }).first()
+            }
+        }
+    }
+    private fun insertAllTenants(){
+        Log.i("ChatViewModel","Insertion of all Tenants")
+        viewModelScope.launch {
+            db.tenantDao().getTenantsByBuildingId(settings.value.buildingId).collect { tenants ->
+                _tenants.value = tenants
             }
         }
     }
@@ -79,7 +77,7 @@ class ChatViewModel (
         }
     }
 
-    private fun getLastMessage(chatId: Int): MutableState<String> {
+    fun getLastMessage(chatId: Int): MutableState<String> {
         val a = mutableStateOf("No message yet")
         viewModelScope.launch {
             db.messageDao().getLastMessagefromChat(chatId).collect{a.value = it?.text ?: "aaa" }//Todo this crashes the app {it} can be null

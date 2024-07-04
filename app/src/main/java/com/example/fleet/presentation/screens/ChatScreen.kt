@@ -1,6 +1,5 @@
 package com.example.fleet.presentation.screens
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +16,7 @@ import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.fragments.CreateMessageBox
 import com.example.fleet.presentation.fragments.DateSeparator
 import com.example.fleet.presentation.fragments.scaffold_elements.InputBottomBar
-import com.example.fleet.presentation.fragments.scaffold_elements.TopBar
+import com.example.fleet.presentation.fragments.scaffold_elements.ChatTopBar
 
 
 class ChatScreen(
@@ -34,7 +33,7 @@ class ChatScreen(
     override fun Content() {
 
         Scaffold(
-            topBar = {TopBar(Modifier, chat.title) },
+            topBar = {ChatTopBar(Modifier, chat.title) },
             bottomBar = {
                 InputBottomBar(
                     modifier = Modifier,

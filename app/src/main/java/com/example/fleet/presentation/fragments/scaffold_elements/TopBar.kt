@@ -30,7 +30,7 @@ import com.example.fleet.domain.Navigation
 //Todo create 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(
+fun ChatTopBar(
     modifier: Modifier,
     title: String,
     nav : Navigator = LocalNavigator.current!!,//Todo this may cause issues ?
@@ -73,6 +73,50 @@ fun TopBar(
 
                 Text(
                     text = title
+                )
+            }
+        }
+    )     //
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NewChatTopBar(
+    modifier: Modifier = Modifier,
+    nav : Navigator = LocalNavigator.current!!
+) {
+    TopAppBar(
+        modifier = modifier
+            .fillMaxWidth(),
+        navigationIcon = {
+            Row(
+                modifier = modifier
+                    .clickable { Navigation.pop(nav) }
+                    .fillMaxHeight(),
+                verticalAlignment = Alignment.CenterVertically,
+
+                ){
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Icon(
+                    Icons.Default.ArrowBack, contentDescription = "Back arrow",
+                    modifier = modifier.size(32.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+
+            }
+        },
+        title = {
+            Row(
+                modifier = modifier
+                    .fillMaxSize(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Spacer(modifier = modifier.width(12.dp))
+                Text(
+                    text = "New chat"
                 )
             }
         }
