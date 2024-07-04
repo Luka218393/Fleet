@@ -79,8 +79,8 @@ fun ChatCreationFloatingButton() {
         containerColor = MaterialTheme.colorScheme.secondary
     ) {
         Icon(
-            imageVector = Icons.Default.Close,
-            contentDescription = "Close",
+            imageVector = Icons.Default.Add,
+            contentDescription = "New Chat",
             tint = Color.White
         )
     }

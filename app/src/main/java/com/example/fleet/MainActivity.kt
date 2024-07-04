@@ -18,7 +18,7 @@ import com.example.fleet.data.settings1
 import com.example.fleet.data.subTasks
 import com.example.fleet.data.tasks
 import com.example.fleet.data.tenantChat
-import com.example.fleet.presentation.screens.DisplayScreen
+import com.example.fleet.presentation.screens.ChatCreationScreen
 import com.example.fleet.presentation.ui.theme.DarkScheme
 import com.example.fleet.presentation.ui.theme.FleetTheme
 import com.example.fleet.presentation.ui.theme.LightScheme
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 darkScheme = DarkScheme,
                 lightScheme = LightScheme,
                 content = {
-                    Navigator(DisplayScreen())
+                    Navigator(ChatCreationScreen())
                 }
             )
         }

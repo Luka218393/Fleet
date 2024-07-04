@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,30 +25,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
 import com.example.fleet.domain.Models.Chat
+import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.presentation.HelperFunctions
 
-/*
-//Todo Move fun out of the class
-class ChatBar (
-    val chat: Chat,
-    private val lastMessageText: MutableState<String> = mutableStateOf("No messages yet"),
-) {
-    /*TODO add color change based on discussion type -> ViewModel*/
-    @Composable
-    fun CreateSelectChatBar(
-        navigateToChatScreen: (Int) -> Unit
-    ){
-        SelectChatBar(navigateToChatScreen = navigateToChatScreen, chat = chat, lastMessageText = lastMessageText)
-    }
-}
-*/
+
 @Composable
-fun SelectChatBar(
+fun Select_ChatBar(
     navigateToChatScreen:(Int)->Unit,
     chat: Chat,
     lastMessageText: MutableState<String>
 ) {
     val modifier = Modifier
+    /*TODO add color change based on discussion type -> ViewModel*/
 
     Card(
         modifier = modifier
@@ -98,6 +87,59 @@ fun SelectChatBar(
         }
     }
 }
+
+
+@Composable
+fun Create_ChatBar(
+    id: Int,
+    tenant: Tenant,
+    isBarSelected: (Int)->Boolean,
+    onClick:(Int) -> Unit,
+    onDismiss: (Int) -> Unit
+) {
+    val modifier = Modifier
+    /*TODO add color change based on discussion type -> ViewModel*/
+
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(72.dp)
+            .padding(1.dp)
+            .clickable {
+                if(isBarSelected(id)) onDismiss(id) else onClick(id)
+//                Log.i("Create_ChatBar",isBarSelected(id).toString()+ id.toString())
+                },
+        shape = RoundedCornerShape(2.dp),
+        colors = if(isBarSelected(id)) CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary) else CardDefaults.cardColors()
+
+
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.fillMaxSize()
+        ) {
+            Image(
+                painter = painterResource(
+                    tenant.profileImageRes ?: R.drawable.lukinaikona
+                ),
+                contentDescription = null,
+                modifier = modifier
+                    .size(60.dp)
+                    .weight(2f)
+            )
+            Spacer(modifier = modifier.weight(0.2f))
+            Text(
+                text = tenant.name,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = modifier.padding()
+                    .weight(8f),
+                maxLines = 1,
+            )
+
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {

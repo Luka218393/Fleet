@@ -18,7 +18,7 @@ import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
-import com.example.fleet.presentation.fragments.SelectChatBar
+import com.example.fleet.presentation.fragments.Select_ChatBar
 import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.ChatCreationFloatingButton
 
@@ -44,7 +44,7 @@ class ChatSelectionScreen: Screen{
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     items(chats, key = {it.id}) { chat ->
-                        SelectChatBar(
+                        Select_ChatBar(
                             navigateToChatScreen = {
                                 Navigation.goTo( Screens.CHAT, nav, chat.id)
                                 viewModel.changeMessageCollectorJob(chat.id)
