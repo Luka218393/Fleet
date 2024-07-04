@@ -2,6 +2,7 @@ package com.example.fleet.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -29,24 +31,31 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import cafe.adriel.voyager.core.screen.Screen
 import com.example.fleet.FleetApplication
 import com.example.fleet.R
 import com.example.fleet.domain.viewModels.DisplayViewModel
 import com.example.fleet.domain.viewModels.DisplayViewModelFactory
+import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 
 data class DisplayScreen(
     @Transient
     private val viewModel: DisplayViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DisplayViewModelFactory())[DisplayViewModel::class.java],
     @Transient
     private val modifier: Modifier = Modifier
-): BaseScreen(
-    bottomBar = true,
-) {
+): Screen {
 
     @Composable
-    override fun InnerContent() {
-        DisplayTenant(2)
+    override fun Content() {
+        Scaffold(
+            bottomBar = {BottomBar()},
+        ) { padding ->
+            Box(modifier = Modifier.padding(padding)) {
+                DisplayTenant(2)
+            }
+        }
     }
+
 
     @Composable
     private fun DisplayTenant(
@@ -160,5 +169,5 @@ fun EditableTextField(
 @Preview
 @Composable
 fun TenantDisplayScreen(){
-    DisplayScreen().InnerContent()
+    DisplayScreen().Content()
 }

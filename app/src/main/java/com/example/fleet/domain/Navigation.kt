@@ -2,6 +2,7 @@ package com.example.fleet.domain
 
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.fleet.domain.Enums.Screens
+import com.example.fleet.presentation.screens.ChatCreationScreen
 import com.example.fleet.presentation.screens.ChatScreen
 import com.example.fleet.presentation.screens.ChatSelectionScreen
 import com.example.fleet.presentation.screens.DisplayScreen
@@ -18,6 +19,7 @@ object Navigation{
             Screens.NOTIFICATION -> navigator?.push(NotificationScreen())
             Screens.CHAT -> navigator?.push(ChatScreen(chatId = chatId ))
             Screens.DISPLAY -> navigator?.push(DisplayScreen())
+            Screens.CHAT_CREATION -> navigator?.push((ChatCreationScreen()))
         }
     }
 

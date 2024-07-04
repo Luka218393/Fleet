@@ -5,5 +5,6 @@ enum class Screens{
     SETTINGS,
     NOTIFICATION,
     CHAT,
-    DISPLAY
+    DISPLAY,
+    CHAT_CREATION
 }

@@ -60,6 +60,7 @@ fun PollDialog(
             )
             Card() {
                 Column(
+                horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     //Todo
                     Row(

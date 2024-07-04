@@ -19,6 +19,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import cafe.adriel.voyager.navigator.LocalNavigator
+import com.example.fleet.domain.Enums.Screens
+import com.example.fleet.domain.Navigation
 
 @Composable
 fun FloatingButton(
@@ -62,6 +65,24 @@ fun FloatingButton(
                 )
             }
         }
+    }
+}
+
+
+@Composable
+fun ChatCreationFloatingButton() {
+    val nav = LocalNavigator.current
+    FloatingActionButton(
+        onClick = { Navigation.goTo(Screens.CHAT_CREATION, nav ) },
+        shape = CircleShape,
+        contentColor = MaterialTheme.colorScheme.secondary,
+        containerColor = MaterialTheme.colorScheme.secondary
+    ) {
+        Icon(
+            imageVector = Icons.Default.Close,
+            contentDescription = "Close",
+            tint = Color.White
+        )
     }
 }
 

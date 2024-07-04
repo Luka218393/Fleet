@@ -122,7 +122,7 @@ class SubTaskTab (
             IconButton(onClick = { removePollOption(id) }) {
                 Icon(imageVector = Icons.Default.Clear, contentDescription = "Remove subtask")
             }
-            InputField(value = value, placeholder = "Option $id")
+            InputField(value = value, placeholder = "Task $id")
 
         }
     }
