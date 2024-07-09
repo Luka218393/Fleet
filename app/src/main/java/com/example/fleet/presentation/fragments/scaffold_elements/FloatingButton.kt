@@ -18,10 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
-import cafe.adriel.voyager.navigator.LocalNavigator
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
 
 @Composable
 fun FloatingButton(
@@ -70,16 +68,18 @@ fun FloatingButton(
 
 
 @Composable
-fun ChatCreationFloatingButton() {
-    val nav = LocalNavigator.current
+fun SimpleFloatingButton(
+    onclick: () -> Unit,
+    icon: ImageVector
+) {
     FloatingActionButton(
-        onClick = { Navigation.goTo(Screens.CHAT_CREATION, nav ) },
+        onClick = onclick,
         shape = CircleShape,
         contentColor = MaterialTheme.colorScheme.secondary,
         containerColor = MaterialTheme.colorScheme.secondary
     ) {
         Icon(
-            imageVector = Icons.Default.Add,
+            imageVector = icon,
             contentDescription = "New Chat",
             tint = Color.White
         )

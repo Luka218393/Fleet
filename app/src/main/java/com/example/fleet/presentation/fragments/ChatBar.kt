@@ -91,7 +91,6 @@ fun Select_ChatBar(
 
 @Composable
 fun Create_ChatBar(
-    id: Int,
     tenant: Tenant,
     isBarSelected: (Int)->Boolean,
     onClick:(Int) -> Unit,
@@ -106,11 +105,11 @@ fun Create_ChatBar(
             .height(72.dp)
             .padding(1.dp)
             .clickable {
-                if(isBarSelected(id)) onDismiss(id) else onClick(id)
+                if(isBarSelected(tenant.id)) onDismiss(tenant.id) else onClick(tenant.id)
 //                Log.i("Create_ChatBar",isBarSelected(id).toString()+ id.toString())
                 },
         shape = RoundedCornerShape(2.dp),
-        colors = if(isBarSelected(id)) CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary) else CardDefaults.cardColors()
+        colors = if(isBarSelected(tenant.id)) CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary) else CardDefaults.cardColors()
 
 
     ) {

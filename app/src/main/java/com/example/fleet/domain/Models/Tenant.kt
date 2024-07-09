@@ -15,6 +15,7 @@ import java.util.Date
         onUpdate = ForeignKey.CASCADE
     )    ]
 )
+//Todo add color so that everyone can see your color
 data class Tenant(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
@@ -24,7 +25,7 @@ data class Tenant(
     var apartmentId: Int, //
     val phoneNumber: String? = null,
     var email: String? = null,
-    var gender: String? = null,
+    var gender: String? = null,//Make enum and rest
     var profileImageRes: Int? = null,
     val birthday: Date? = null,
     val createdAt: Date = Date(),
@@ -33,4 +34,4 @@ data class Tenant(
     var isOnline: Boolean = true,
     var isApartmentHead: Boolean = false,
     var isTenantLeader: Boolean = false,
-)//Todo add surename
+)

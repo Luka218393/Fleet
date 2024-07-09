@@ -3,7 +3,6 @@ package com.example.fleet.presentation.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,8 +31,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
 import com.example.fleet.R
+import com.example.fleet.domain.Enums.Screens
+import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.SettingsViewModel
 import com.example.fleet.domain.viewModels.SettingsViewModelFactory
 import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
@@ -47,6 +49,7 @@ class SettingsScreen  : Screen{
     private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]
     @Composable
     override fun Content() {
+        val nav = LocalNavigator.current
         Scaffold(
             bottomBar = {BottomBar() },
         ) { padding ->
@@ -61,7 +64,7 @@ class SettingsScreen  : Screen{
                 SettingsBar(painterIcon = painterResource(id = R.drawable.contrast_24dp_fill0_wght400_grad0_opsz24), text = "Theme", onClick = {})
 
                 SettingsSeparator(text = "Edit")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24), text = "Edit account", onClick = {})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY, nav)})
                 SettingsBar(painterIcon = painterResource(id = R.drawable.door_front_24dp_fill0_wght400_grad0_opsz24), text = "Edit apartment", onClick = {})
                 SettingsBar(painterIcon = painterResource(id = R.drawable.apartment_24dp_fill0_wght400_grad0_opsz24), text = "Edit building", onClick = {})
 

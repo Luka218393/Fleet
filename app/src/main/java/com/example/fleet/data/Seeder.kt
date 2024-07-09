@@ -19,27 +19,59 @@ import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
-import com.example.fleet.presentation.fragments.cards.PollCard
 import java.util.Date
 
-data class Tenants(
+val tenants = listOf(
 
-    val tenant1: Tenant = Tenant(
+    Tenant(
         id = 1,
-        name = "Tenant1",
+        name = "Lux",
         apartmentId = 1,
+        surname = "Æterna"
     ),
-    val tenant2: Tenant = Tenant(
-        id = 3,
-        name = "Tenant3",
+    Tenant(
+        id = 2,
+        name = "POkemoniiiiijisbgfvhxbfsljbvxdsdfasdsdsa",
         apartmentId = 2,
     ),
-    val tenant3: Tenant = Tenant(
-        id = 2,
-        name = "Tenant2",
+   Tenant(
+        id = 3,
+        name = "Luka Buka",
         apartmentId = 1,
     ),
-    )
+   Tenant(
+        id = 4,
+        name = "Nigo",
+        apartmentId = 3,
+    ),
+    Tenant(
+        id = 5,
+        name = "POkemnoo",
+        apartmentId = 2,
+    ),
+  Tenant(
+        id = 6,
+        name = "YEEEEEEEEEt Shayeeet",
+        apartmentId = 2,
+    ),
+    Tenant(
+        id = 7,
+        name = "Luka",
+        surname = "Brčić",
+        age = 18,
+        apartmentId = 2,
+        phoneNumber = "099 999 0123",
+        email = "zaskoluusegetu@gmail.com",
+        gender = "M",
+        profileImageRes = R.drawable.color_selector_image,
+        birthday = Date(),
+        profession = "Programmer",
+        aboutMe = "My name is Jonnas I am carrying the wheel, I dont care whatt they ll say about us anywhay i dont care about that. Yut taunge is twisting your lips are slick. I dont care about that anymore",
+        isOnline = false,
+        isApartmentHead = true,
+        isTenantLeader = true
+    ),
+)
  var notifications: List<Notification> = listOf(
     Notification(
         id = 1,
@@ -130,7 +162,6 @@ var polls: List<Poll> = listOf(
         buildingId = 1
     )
 )
-var pollCards: List<PollCard> = polls.map { poll -> PollCard(poll, pollOptions.filter { it.pollId == poll.id }) }
 
 val chats: List<Chat> = listOf(
     Chat(
@@ -217,7 +248,7 @@ var apartments = listOf(
 
 val settings1 = Settings(
     id = 1,
-    tenantId = 2,
+    tenantId = 1,
     apartmentId = 1,
     buildingId = 1
 )

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,7 +22,7 @@ import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.fragments.Select_ChatBar
 import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
-import com.example.fleet.presentation.fragments.scaffold_elements.ChatCreationFloatingButton
+import com.example.fleet.presentation.fragments.scaffold_elements.SimpleFloatingButton
 
 
 class ChatSelectionScreen: Screen{
@@ -34,7 +36,15 @@ class ChatSelectionScreen: Screen{
 
         Scaffold(
             bottomBar = { BottomBar() },
-            floatingActionButton = { ChatCreationFloatingButton() }
+            floatingActionButton = {
+                SimpleFloatingButton ({
+                    Navigation.goTo(
+                        Screens.CHAT_CREATION,
+                        nav
+                    )
+                },
+                Icons.Default.Add)
+            }
         ) { padding ->
                 LazyColumn(
                     modifier = Modifier

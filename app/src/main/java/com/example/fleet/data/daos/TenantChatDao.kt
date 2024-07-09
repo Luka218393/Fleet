@@ -24,4 +24,7 @@ interface TenantChatDao {
 
     @Query("SELECT * FROM tenant_chat WHERE tenantId = :tenantId")
     fun getByTenantId(tenantId: Int): Flow<List<TenantChat>>
+
+    @Query("SELECT tenantId FROM tenant_chat WHERE (chatId in (SELECT chatId FROM tenant_chat WHERE tenantId = :tenantId)) ")
+    fun getTenantsInSameChatS(tenantId: Int): List<Int>
 }

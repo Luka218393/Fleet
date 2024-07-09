@@ -1,4 +1,4 @@
-package com.example.fleet.presentation.fragments.card_dialogs
+package com.example.fleet.presentation.fragments.cards.card_dialogs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.fleet.presentation.fragments.InputField
 
 
 @Composable

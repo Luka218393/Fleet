@@ -27,5 +27,5 @@ data class TenantChat(
     val tenantId: Int,
     val chatId: Int,
     @PrimaryKey(autoGenerate = false)
-    val id: String
+    val id: String// format is "tenantId,chatId" ("2,12")
 )

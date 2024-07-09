@@ -8,10 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
+import com.example.fleet.domain.Enums.ChatType
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Message
 import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.Tenant
+import com.example.fleet.domain.Models.TenantChat
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +21,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlin.random.Random
 
 class ChatViewModel (
     val db: FleetDatabase,
@@ -35,11 +38,41 @@ class ChatViewModel (
     init{
         runBlocking{
             Log.i("ChatViewModel","ChatViewModel init")
-            insertTenantsChats()
+            insertChats()
             insertAllTenants()
         }
     }
-    private fun insertTenantsChats(){
+
+    fun createChat(tenantIds: List<Int>, isPrivate: Boolean, title: String){
+        val chatId = Random.nextInt(999999999)
+        runBlocking {
+            db.chatDao().upsert(
+                Chat(
+                    title = title,
+                    chatType = ChatType.TENANT_TO_TENANT,
+                    isPrivate = isPrivate,
+                    id = chatId
+                )
+            )
+            for (i in tenantIds) {
+                db.tenantChatDao().upsert(
+                    TenantChat(
+                        tenantId = i,
+                        chatId = chatId,
+                        id = "$i,$chatId"
+                    )
+                )
+            }
+            db.tenantChatDao().upsert(
+                TenantChat(
+                    tenantId = settings.value.tenantId,
+                    chatId = chatId,
+                    id = "${settings.value.tenantId},$chatId"
+                )
+            )
+        }
+    }
+    private fun insertChats(){
         viewModelScope.launch {
             db.tenantChatDao().getByTenantId(settings.value.tenantId).collect { tenantChats ->
                 _chats.value = db.chatDao().getChatsByIds(tenantChats.map { it.chatId }).first()
@@ -50,7 +83,7 @@ class ChatViewModel (
         Log.i("ChatViewModel","Insertion of all Tenants")
         viewModelScope.launch {
             db.tenantDao().getTenantsByBuildingId(settings.value.buildingId).collect { tenants ->
-                _tenants.value = tenants
+                _tenants.value = tenants.filterNot{it.id == settings.value.tenantId}
             }
         }
     }
