@@ -19,7 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,9 +43,11 @@ import com.example.fleet.presentation.fragments.scaffold_elements.SimpleFloating
 //Todo change text styles
 data class DisplayScreen(
     @Transient
-    private val viewModel: DisplayViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, DisplayViewModelFactory())[DisplayViewModel::class.java],
+    private val viewModel: DisplayViewModel = ViewModelProvider(FleetApplication.viewModelStore, DisplayViewModelFactory())[DisplayViewModel::class.java],
     @Transient
-    private val modifier: Modifier = Modifier
+    private val modifier: Modifier = Modifier,
+    @Transient
+    private val tenantId: Int
 ): Screen {
 
     @Composable
@@ -58,7 +59,7 @@ data class DisplayScreen(
             floatingActionButton = { SimpleFloatingButton(onclick = { editMode = !editMode }, icon = Icons.Default.Create)}
         ) { padding ->
             Box(modifier = Modifier.padding(padding)) {
-                DisplayTenant(7, editMode)
+                DisplayTenant(tenantId, editMode)
             }
         }
     }
@@ -69,8 +70,8 @@ data class DisplayScreen(
         tenantId: Int,
         editMode: Boolean
     ) {
-        viewModel.getTenantById(tenantId)
-        val tenant = viewModel.displayTenant.collectAsState(null).value
+        //viewModel.getTenantById(tenantId)
+        val tenant = viewModel.getTenantById(tenantId)//viewModel.displayTenant.collectAsState(null).value
         if (tenant != null) {
             Column(
                 modifier = modifier.fillMaxSize()
@@ -193,5 +194,5 @@ fun EditableTextField_Int(
 @Preview
 @Composable
 fun TenantDisplayScreen(){
-    DisplayScreen().Content()
+    DisplayScreen(tenantId = 7).Content()
 }

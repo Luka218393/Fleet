@@ -53,7 +53,7 @@ import com.example.fleet.presentation.fragments.scaffold_elements.SimpleFloating
 class ChatCreationScreen: Screen {
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(
-        FleetApplication.fleetModule.viewModelStore,
+        FleetApplication.viewModelStore,
         ChatViewModelFactory()
     )[ChatViewModel::class.java]
 

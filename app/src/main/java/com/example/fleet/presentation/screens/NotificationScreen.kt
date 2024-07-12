@@ -1,7 +1,6 @@
 package com.example.fleet.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,12 +26,9 @@ class NotificationScreen(
     @Transient
     private val modifier: Modifier = Modifier,
     @Transient
-    private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
+    private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
 )
-    : Screen/*(
-        floatingButton = listOf( { viewModel.toggleNotificationDialog() }, { viewModel.toggleTaskDialog() }, { viewModel.togglePollDialog() } ),
-        bottomBar = true
-    )*/{
+    : Screen{
 
     @Composable
     override fun Content() {
@@ -55,6 +51,7 @@ class NotificationScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     items(cards.size, key = { cards[it].id }) { index ->
+
                         cards[index].Create()
 
                         if (index + 1 < cards.size){
@@ -62,7 +59,6 @@ class NotificationScreen(
                                 DateSeparator(date = cards[index].createdAt)
                             }
                         }
-
                     }
                 }
 

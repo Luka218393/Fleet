@@ -11,14 +11,14 @@ import com.example.fleet.presentation.screens.SettingsScreen
 
 
 object Navigation{
-    fun goTo(screen: Screens, navigator: Navigator?, chatId: Int = 1){
+    fun goTo(screen: Screens, navigator: Navigator?, componentId: Int = 1){
         // TODO make so that you cant push activity that you are already on
         when(screen){
             Screens.CHAT_SELECTION -> navigator?.push(ChatSelectionScreen())
             Screens.SETTINGS -> navigator?.push(SettingsScreen())
             Screens.NOTIFICATION -> navigator?.push(NotificationScreen())
-            Screens.CHAT -> navigator?.push(ChatScreen(chatId = chatId ))
-            Screens.DISPLAY -> navigator?.push(DisplayScreen())
+            Screens.CHAT -> navigator?.push(ChatScreen(chatId = componentId ))
+            Screens.DISPLAY -> navigator?.push(DisplayScreen(tenantId = componentId))
             Screens.CHAT_CREATION -> navigator?.push((ChatCreationScreen()))
         }
     }

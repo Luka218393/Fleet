@@ -15,7 +15,6 @@ import com.example.fleet.domain.Enums.PollType
 import com.example.fleet.domain.Models.Notification
 import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
-import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 import com.example.fleet.presentation.fragments.cards.BaseCard
@@ -32,7 +31,6 @@ import kotlin.random.Random
 
 class NotificationViewModel (
     private val db: FleetDatabase = FleetApplication.fleetModule.fleetDatabase,
-    private val settings: MutableStateFlow<Settings> = FleetApplication.fleetModule.settings
 ): ViewModel() {
 
     private var _cards: MutableStateFlow<List<BaseCard?>> = MutableStateFlow(mutableListOf())
@@ -58,8 +56,8 @@ class NotificationViewModel (
     fun createPoll(title: String, options: List<String>){
         val poll = Poll(
             id = Random.nextLong(999999999999999999).toInt(),
-            creatorId = settings.value.tenantId,
-            buildingId = settings.value.buildingId,
+            creatorId = FleetApplication.fleetModule.settings.value.tenantId,
+            buildingId = FleetApplication.fleetModule.settings.value.buildingId,
             title = title,
             pollType = PollType.SINGLE_CHOICE
         )
@@ -81,8 +79,8 @@ class NotificationViewModel (
     fun createTask(title: String, subTasks: List<String>){
         val task = Task(
             id = Random.nextLong(999999999999999999).toInt(),
-            creatorId = settings.value.tenantId,
-            buildingId = settings.value.buildingId,
+            creatorId = FleetApplication.fleetModule.settings.value.tenantId,
+            buildingId = FleetApplication.fleetModule.settings.value.buildingId,
             title = title,
         )
         viewModelScope.launch {
@@ -199,7 +197,7 @@ class NotificationViewModel (
 
     private fun insertNotificationToCards(){
         viewModelScope.launch {
-            db.notificationDao().getByBuildingId(settings.value.buildingId).collect { notifications ->
+            db.notificationDao().getByBuildingId(FleetApplication.fleetModule.settings.value.buildingId).collect { notifications ->
                 _cards.update {prev -> prev.filterNot{"Notification" in (it?.id ?: "") } + notifications.map { NotificationCard(it) }}
                 _cards.update { prev -> prev.sortedByDescending { it?.createdAt ?: Date(1, 1, 1)  } }
 
@@ -213,12 +211,12 @@ class NotificationViewModel (
         viewModelScope.launch {
             db.notificationDao().upsert(
                 Notification(
-                    buildingId = settings.value.buildingId,
+                    buildingId = FleetApplication.fleetModule.settings.value.buildingId,
                     title = title,
                     text = text,
                     imageResId = null,
                     iconResId = Icons.Default.Favorite,
-                    creatorId = settings.value.tenantId
+                    creatorId = FleetApplication.fleetModule.settings.value.tenantId
                 )
             )
         }
@@ -233,7 +231,7 @@ class NotificationViewModelFactory() : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
-            return NotificationViewModel(FleetApplication.fleetModule.fleetDatabase,  FleetApplication.fleetModule.settings) as T
+            return NotificationViewModel(FleetApplication.fleetModule.fleetDatabase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -11,7 +11,6 @@ import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Enums.ChatType
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Message
-import com.example.fleet.domain.Models.Settings
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
 import kotlinx.coroutines.Job
@@ -25,7 +24,6 @@ import kotlin.random.Random
 
 class ChatViewModel (
     val db: FleetDatabase,
-    var settings: MutableStateFlow<Settings>,
 ): ViewModel() {
 
     private var _chats: MutableStateFlow<List<Chat>> = MutableStateFlow(mutableListOf())
@@ -65,25 +63,24 @@ class ChatViewModel (
             }
             db.tenantChatDao().upsert(
                 TenantChat(
-                    tenantId = settings.value.tenantId,
+                    tenantId = FleetApplication.fleetModule.settings.value.tenantId,
                     chatId = chatId,
-                    id = "${settings.value.tenantId},$chatId"
+                    id = "${FleetApplication.fleetModule.settings.value.tenantId},$chatId"
                 )
             )
         }
     }
     private fun insertChats(){
         viewModelScope.launch {
-            db.tenantChatDao().getByTenantId(settings.value.tenantId).collect { tenantChats ->
+            db.tenantChatDao().getByTenantId(FleetApplication.fleetModule.settings.value.tenantId).collect { tenantChats ->
                 _chats.value = db.chatDao().getChatsByIds(tenantChats.map { it.chatId }).first()
             }
         }
     }
     private fun insertAllTenants(){
-        Log.i("ChatViewModel","Insertion of all Tenants")
         viewModelScope.launch {
-            db.tenantDao().getTenantsByBuildingId(settings.value.buildingId).collect { tenants ->
-                _tenants.value = tenants.filterNot{it.id == settings.value.tenantId}
+            db.tenantDao().getTenantsByBuildingId(FleetApplication.fleetModule.settings.value.buildingId).collect { tenants ->
+                _tenants.value = tenants.filterNot{it.id == FleetApplication.fleetModule.settings.value.tenantId}
             }
         }
     }
@@ -103,7 +100,7 @@ class ChatViewModel (
             db.messageDao().upsert(
                 Message(
                     chatId = chatId,
-                    senderId = settings.value.tenantId,
+                    senderId = FleetApplication.fleetModule.settings.value.tenantId,
                     text = text,
                 )
             )
@@ -118,7 +115,7 @@ class ChatViewModel (
         return a
     }
 
-    fun getTenantId(): Int = settings.value.tenantId
+    fun getTenantId(): Int = FleetApplication.fleetModule.settings.value.tenantId
 
     fun getChat(id: Int): Chat = runBlocking { db.chatDao().getById(id).first() }
 
@@ -128,7 +125,7 @@ class ChatViewModel (
 class ChatViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ChatViewModel::class.java)) {
-            return ChatViewModel(FleetApplication.fleetModule.fleetDatabase,  FleetApplication.fleetModule.settings) as T
+            return ChatViewModel(FleetApplication.fleetModule.fleetDatabase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

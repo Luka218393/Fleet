@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.fleet.R
+import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 
 
@@ -34,6 +35,7 @@ fun ChatTopBar(
     modifier: Modifier,
     title: String,
     nav : Navigator = LocalNavigator.current!!,//Todo this may cause issues ?
+    chatId: Int
 ) {
     TopAppBar(
         modifier = modifier
@@ -59,7 +61,8 @@ fun ChatTopBar(
         title = {
             Row(
                 modifier = modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .clickable { Navigation.goTo(Screens.DISPLAY,nav,chatId) },
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {

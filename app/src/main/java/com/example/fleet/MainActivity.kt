@@ -17,10 +17,8 @@ import com.example.fleet.data.subTasks
 import com.example.fleet.data.tasks
 import com.example.fleet.data.tenantChat
 import com.example.fleet.data.tenants
-import com.example.fleet.presentation.screens.DisplayScreen
-import com.example.fleet.presentation.ui.theme.DarkScheme
+import com.example.fleet.presentation.screens.NotificationScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
-import com.example.fleet.presentation.ui.theme.LightScheme
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -32,15 +30,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FleetTheme (
-                darkScheme = DarkScheme,
-                lightScheme = LightScheme,
+                settings = FleetApplication.fleetModule.settings.value,
                 content = {
-                    Navigator(DisplayScreen())
+                    Navigator(NotificationScreen())
                 }
             )
         }
+
     }
 }
+
 
 
 

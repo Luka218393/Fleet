@@ -15,15 +15,15 @@ import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.fragments.CreateMessageBox
 import com.example.fleet.presentation.fragments.DateSeparator
-import com.example.fleet.presentation.fragments.scaffold_elements.InputBottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.ChatTopBar
+import com.example.fleet.presentation.fragments.scaffold_elements.InputBottomBar
 
 
 class ChatScreen(
     @Transient
     private val chatId: Int,
     @Transient
-    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java],
+    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java],
     @Transient
     private val chat: Chat = viewModel.getChat(chatId)
 ) : Screen{
@@ -33,7 +33,7 @@ class ChatScreen(
     override fun Content() {
 
         Scaffold(
-            topBar = {ChatTopBar(Modifier, chat.title) },
+            topBar = {ChatTopBar(Modifier, chat.title, chatId = chat.id) },
             bottomBar = {
                 InputBottomBar(
                     modifier = Modifier,
@@ -48,8 +48,8 @@ class ChatScreen(
                     .fillMaxSize()
                     .padding(padding),
                 reverseLayout = true
-            ) {
-                //Todo make so on new message you scroll to the bottom of the chat
+            ) {//Todo make so on new message you scroll to the bottom of the chat
+
                 items(messages.size, key = { messages[it].id }) { index ->
                     CreateMessageBox(message = messages[index], tenantId = viewModel.getTenantId() )
                     if (index + 1 < messages.size){

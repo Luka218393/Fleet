@@ -46,7 +46,7 @@ import com.example.fleet.presentation.settings_fragments.ColorSelector
 //Todo give this normal icons
 class SettingsScreen  : Screen{
     @Transient
-    private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]
+    private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]
     @Composable
     override fun Content() {
         val nav = LocalNavigator.current
@@ -64,7 +64,7 @@ class SettingsScreen  : Screen{
                 SettingsBar(painterIcon = painterResource(id = R.drawable.contrast_24dp_fill0_wght400_grad0_opsz24), text = "Theme", onClick = {})
 
                 SettingsSeparator(text = "Edit")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY, nav)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY, nav, componentId = 7)})
                 SettingsBar(painterIcon = painterResource(id = R.drawable.door_front_24dp_fill0_wght400_grad0_opsz24), text = "Edit apartment", onClick = {})
                 SettingsBar(painterIcon = painterResource(id = R.drawable.apartment_24dp_fill0_wght400_grad0_opsz24), text = "Edit building", onClick = {})
 

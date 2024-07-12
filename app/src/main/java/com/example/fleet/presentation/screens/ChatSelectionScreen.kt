@@ -27,7 +27,7 @@ import com.example.fleet.presentation.fragments.scaffold_elements.SimpleFloating
 
 class ChatSelectionScreen: Screen{
     @Transient
-    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.fleetModule.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
+    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 
     @Composable
     override fun Content() {

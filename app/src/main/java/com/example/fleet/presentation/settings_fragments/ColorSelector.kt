@@ -47,7 +47,7 @@ fun ColorSelector(
                         .height(400.dp)
                         .padding(10.dp),
                     controller = controller,
-                    initialColor = FleetApplication.fleetModule.appColor
+                    initialColor = Color(FleetApplication.fleetModule.settings.value.appColor.toULong())
                 )
 
                 BrightnessSlider(
