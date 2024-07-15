@@ -32,8 +32,8 @@ class NotificationScreen(
 
     @Composable
     override fun Content() {
-
-        val cards = viewModel.cards.collectAsState(emptyList()).value.filterNotNull()//Todo remove this filter not null
+        //Todo remove empty tasks
+        val cards = viewModel.cards.collectAsState().value.filterNotNull()//Todo remove this filter not null
 
         Scaffold(
             bottomBar = {BottomBar()},
@@ -45,28 +45,34 @@ class NotificationScreen(
                     )
                 },
         ) { padding ->
-                LazyColumn(
-                    modifier = modifier.fillMaxSize().padding(padding),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    items(cards.size, key = { cards[it].id }) { index ->
+            
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                items(cards.size, key = { cards[it].id }) { index ->
 
-                        cards[index].Create()
+                    cards[index].Create()
 
-                        if (index + 1 < cards.size){
-                            if (cards[index + 1].createdAt.day != cards[index].createdAt.day){
-                                DateSeparator(date = cards[index].createdAt)
-                            }
+                    if (index + 1 < cards.size){
+                        if (cards[index + 1].createdAt.day != cards[index].createdAt.day){
+                            DateSeparator(date = cards[index].createdAt)
                         }
                     }
+                    //Todo make this smarter also on chat screen
+
+                    if (cards.isNotEmpty() && index == cards.size-1) DateSeparator(date = cards.last().createdAt)
+
                 }
 
-                if (viewModel.isNotificationDialogShown){ NotificationDialog( onDismiss = {viewModel.toggleNotificationDialog()}, onConfirm = { a,b -> viewModel.createNotification(a,b);viewModel.toggleNotificationDialog() }) }
+            }
 
-                if (viewModel.isPollDialogShown){ PollDialog(onDismiss = {viewModel.togglePollDialog()}, onConfirm = { a, b -> viewModel.createPoll(a,b); viewModel.togglePollDialog()}) }
-
-                if (viewModel.isTaskDialogShown){ TaskDialog(onDismiss = {viewModel.toggleTaskDialog()}, onConfirm = { a, b -> viewModel.createTask(a,b); viewModel.toggleTaskDialog()}) }
+            if (viewModel.isNotificationDialogShown){ NotificationDialog( onDismiss = {viewModel.toggleNotificationDialog()}, onConfirm = { a,b -> viewModel.createNotification(a,b);viewModel.toggleNotificationDialog() }) }
+            if (viewModel.isPollDialogShown){ PollDialog(onDismiss = {viewModel.togglePollDialog()}, onConfirm = { a, b, c-> viewModel.createPoll(a,b,c); viewModel.togglePollDialog()}) }
+            if (viewModel.isTaskDialogShown){ TaskDialog(onDismiss = {viewModel.toggleTaskDialog()}, onConfirm = { a, b -> viewModel.createTask(a,b); viewModel.toggleTaskDialog()}) }
             }
         }
     }

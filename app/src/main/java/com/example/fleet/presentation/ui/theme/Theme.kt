@@ -15,36 +15,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import com.example.fleet.FleetApplication
 import com.example.fleet.domain.Models.Settings
 
-var Black = Color(0,0,0)/*
-fun  darkScheme (settings: MutableState<Settings>): ColorScheme {
-    return darkColorScheme(
-        primary = Color(0xFF34113F),
-        onPrimary = White,
-
-        secondary = Color(settings.value.appColor.toULong()),
-        onSecondary = Black,
-
-        tertiary = Color(0xff8E8E8E),
-        onTertiary = Black,
-
-        background = Color(0xFF1F1F1F),
-    )
-}
-
-fun  lightScheme (settings: MutableState<Settings>): ColorScheme{
-    return lightColorScheme(
-        primary = Color(0xFF34113F),
-        onPrimary = Black,
-        secondary = Color(settings.value.appColor.toULong()),
-        onSecondary = White,
-
-        tertiary = Color(0xff8E8E8E),
-        onTertiary = Black,
-
-        background = Color(0xFFCFCECE),
-    )
-}
-*/
+var Black = Color(0,0,0)
 @Composable
 fun FleetTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

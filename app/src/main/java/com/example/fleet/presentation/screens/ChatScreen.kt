@@ -57,6 +57,8 @@ class ChatScreen(
                             DateSeparator(date = messages[index].sendingTime)
                         }
                     }
+                    if (messages.isNotEmpty() && index == messages.size-1) DateSeparator(date = messages.last().sendingTime)
+
                 }
             }
         }

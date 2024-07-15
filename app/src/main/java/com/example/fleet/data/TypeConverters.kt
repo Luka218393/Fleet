@@ -5,6 +5,8 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.TypeConverter
 import com.example.fleet.domain.Enums.Icono
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class TypeConverte {
@@ -26,6 +28,29 @@ class TypeConverte {
         return Icono.entries.find { icono -> icono.name == iconName }?.imageVector ?: Icons.Filled.ExitToApp
     }
 
+    @TypeConverter
+    fun intListToString(list: List<Int>?): String? {
+        return list?.joinToString(",")
+    }
+
+    @TypeConverter
+    fun stringToIntList(value: String?): List<Int>? {
+        return value?.let {string ->
+            string.split(",").filter { it != "" }.map { it.toInt() }
+        }
+    }
+
+    @TypeConverter
+    fun toLocalDate(value: String?): LocalDate? {
+        return value?.let {
+            LocalDate.parse(it, DateTimeFormatter.ISO_LOCAL_DATE)
+        }
+    }
+
+    @TypeConverter
+    fun fromLocalDate(date: LocalDate?): String? {
+        return date?.format(DateTimeFormatter.ISO_LOCAL_DATE)
+    }
 }
 
 

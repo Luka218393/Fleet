@@ -1,4 +1,4 @@
-package com.example.fleet.data.daos
+/*package com.example.fleet.data.daos
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -24,4 +24,4 @@ interface TenantPollOptionDao {
 
     @Query("SELECT * FROM tenant_pollOption WHERE tenantId = :tenantId")
     fun getByTenantId(tenantId: Int): Flow<List<TenantPollOption>>
-}
+}*/

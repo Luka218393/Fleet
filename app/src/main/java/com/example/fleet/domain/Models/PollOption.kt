@@ -20,6 +20,6 @@ data class PollOption (
     @PrimaryKey (autoGenerate = true)
     val id: Int = 0,
     val value: String = "NO VALUE",
-    var votes: Int = 0,
+    var votes: List<Int> = emptyList(),
     val pollId: Int //
 )

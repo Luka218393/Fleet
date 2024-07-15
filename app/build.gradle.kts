@@ -86,4 +86,6 @@ dependencies {
     //Color picker
     implementation("com.github.skydoves:colorpicker-compose:1.1.0")
 
+    implementation ("com.github.zj565061763:compose-wheel-picker:1.0.0-beta05")
+
 }

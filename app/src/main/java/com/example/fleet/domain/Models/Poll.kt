@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.fleet.domain.Enums.PollType
+import java.time.LocalDate
 import java.util.Date
 
 @Entity(
@@ -31,6 +32,8 @@ data class Poll (
     val dateCreated: Date = Date(),
     val title: String,
     val pollType: PollType,
-    val voteEndDate: Date = Date(),
+    val voteEndDate: LocalDate = LocalDate.now().plusDays(2),
     val isPublic: Boolean = true,
+    var resultsVisible: Boolean = false
 )
+//Todo rename voteEndDate to endDate

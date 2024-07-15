@@ -17,7 +17,6 @@ import com.example.fleet.data.daos.SubTaskDao
 import com.example.fleet.data.daos.TaskDao
 import com.example.fleet.data.daos.TenantChatDao
 import com.example.fleet.data.daos.TenantDao
-import com.example.fleet.data.daos.TenantPollOptionDao
 import com.example.fleet.domain.Models.Apartment
 import com.example.fleet.domain.Models.Building
 import com.example.fleet.domain.Models.Chat
@@ -30,7 +29,6 @@ import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
-import com.example.fleet.domain.Models.TenantPollOption
 
 @Database(entities = [
     Apartment::class,
@@ -44,9 +42,8 @@ import com.example.fleet.domain.Models.TenantPollOption
     Task::class,
     TenantChat::class,
     Tenant::class,
-    SubTask::class,
-    TenantPollOption::class],
-    version = 18,
+    SubTask::class],
+    version = 20,
     exportSchema = false,
 )
 @TypeConverters(TypeConverte::class)
@@ -64,7 +61,6 @@ abstract class FleetDatabase : RoomDatabase() {
     abstract fun tenantChatDao(): TenantChatDao
     abstract fun tenantDao(): TenantDao
     abstract fun subTaskDao(): SubTaskDao
-    abstract fun TenantPollOptionDao(): TenantPollOptionDao
 
     companion object {
         @Volatile

@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.fleet.FleetApplication
@@ -61,6 +63,28 @@ abstract class BaseCard(//TODo fix empty card
             }
         }
     }
+}
+
+@Composable
+fun Title(title: String, modifier: Modifier = Modifier){
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+    ) {
+
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge
+        )
+    }
+    HorizontalDivider(
+        modifier = modifier.fillMaxWidth(),
+        thickness = 0.4.dp,
+        color = MaterialTheme.colorScheme.secondary
+    )
 }
 
 /*

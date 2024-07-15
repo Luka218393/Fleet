@@ -19,7 +19,49 @@ import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
+import kotlinx.coroutines.runBlocking
 import java.util.Date
+
+
+
+fun seed(db: FleetDatabase){
+    runBlocking{
+        for (i in buildings) {
+            db.buildingDao().upsert(i)
+        }
+        for ( i in apartments){
+            db.apartmentDao().upsert(i)
+        }
+        for ( i in tenants){
+            db.tenantDao().upsert(i)
+        }
+        db.settingsDao().upsert(settings1)
+        for (i in notifications) {
+            db.notificationDao().upsert(i)
+        }
+        for (i in polls){
+            db.pollDao().upsert(i)
+        }
+        for (i in pollOptions) {
+            db.pollOptionDao().upsert(i)
+        }
+        for (i in tasks){
+            db.taskDao().upsert(i)
+        }
+        for (i in chats){
+            db.chatDao().upsert(i)
+        }
+        for (i in tenantChat){
+            db.tenantChatDao().upsert(i)
+        }
+        for (i  in messages){
+            db.messageDao().upsert(i)
+        }
+        for (i in subTasks){
+            db.subTaskDao().upsert(i)
+        }
+    }
+}
 
 val tenants = listOf(
 
@@ -106,43 +148,43 @@ var pollOptions: List<PollOption> = listOf(
     PollOption(
         id = 1,
         value = "Option 1",
-        votes = 2,
+        votes = listOf(),
         pollId = 1
     ),
     PollOption(
         id = 2,
         value = "Option 2",
-        votes = 1,
+        votes = listOf(4),
         pollId = 1
     ),
     PollOption(
         id = 3,
         value = "Option 3",
-        votes = 1,
+        votes = listOf(3),
         pollId = 1
     ),
     PollOption(
         id = 4,
         value = "Option 4",
-        votes = 4,
+        votes = listOf(),
         pollId = 1
     ),
     PollOption(
         id = 5,
         value = "Option 1",
-        votes = 2,
+        votes = listOf(2),
         pollId = 1
     ),
     PollOption(
         id = 6,
         value = "Da",
-        votes = 1,
+        votes = listOf(1),
         pollId = 2
     ),
     PollOption(
         id = 7,
         value = "Ne",
-        votes = 0,
+        votes = listOf(5,6),
         pollId = 2
     ),
 )

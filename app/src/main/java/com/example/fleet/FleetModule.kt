@@ -9,12 +9,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.data.daos.TenantIdAndName
 import com.example.fleet.domain.Models.Settings
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-@OptIn(DelicateCoroutinesApi::class)
 
 class FleetModule(
     val context: Context
@@ -25,6 +23,7 @@ class FleetModule(
 
     init{
         //seed(fleetDatabase)
+
         viewModelScope.launch {
             fleetDatabase.settingsDao().get().collect{
                 //The recomposition probably has something to do with Primary key of Settings, That is why i have to change it two times
@@ -33,6 +32,8 @@ class FleetModule(
             }
         }
     }
+
+
     private var tenantNames: List<TenantIdAndName> = runBlocking { fleetDatabase.tenantDao().getTenantsIdAndName().first()}
     fun getTenantNameAndSurname(id: Int): String? = tenantNames.find { it.id == id }?.let { it.name + " " + it.surname }
 }

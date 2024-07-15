@@ -1,9 +1,13 @@
 package com.example.fleet.presentation.fragments.cards.card_dialogs
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -30,22 +34,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.fleet.presentation.fragments.InputField
+import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
+import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 
-
+//Todo make max of ten options
+//Todo add end date ( show results )
 @Composable
 fun PollDialog(
     onDismiss: () -> Unit,
-    onConfirm: (String, List<String>) -> Unit,
+    onConfirm: (String, List<String>, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var title = remember { mutableStateOf("") }
+    val title = remember { mutableStateOf("") }
     var pollOptions by remember { mutableStateOf(listOf<PollOptionTab>()) }
     var id  by remember { mutableIntStateOf(1) }
+    val endDate = rememberFWheelPickerState()
 
     Dialog(
         onDismissRequest = onDismiss
@@ -59,7 +68,7 @@ fun PollDialog(
                 modifier = modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
-            Card() {
+            Card {
                 Column(
                 horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -97,17 +106,40 @@ fun PollDialog(
                     }) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Create option")
                     }
-
-                    //Todo make polloption removeable
                 }
 
             }
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(
+                    "Days till end of the vote: "
+                )
+                FVerticalWheelPicker(
+                    modifier = Modifier.width(60.dp),
+                    // Specified item count.
+                    count = 366,
+                    focus = {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .border(width = 1.dp, color = Color.Gray)
+                        )
+                    },
+                    state = endDate
+                ) { index ->
+                    Text(index.toString())
+                }
+            }
             IconButton(
-                onClick = {onConfirm(title.value, pollOptions.map {it.optionValue.value})},
-                modifier = modifier.padding(12.dp)
+                onClick = {onConfirm(title.value, pollOptions.map {it.optionValue.value}, endDate.currentIndex)},
+                modifier = modifier
+                    .padding(12.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(color = if(title.value.isNotEmpty() && pollOptions.isNotEmpty()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
-                enabled = title.value.isNotEmpty() && pollOptions.isNotEmpty()
+                    .background(color = if (title.value.isNotEmpty() && pollOptions.isNotEmpty()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
+                enabled = title.value.isNotEmpty() && pollOptions.isNotEmpty() && endDate.currentIndex != 0
             ) {
                 Icon(imageVector = Icons.Default.Check, contentDescription = "Create Poll")
             }
@@ -138,7 +170,7 @@ class PollOptionTab (
 @Preview
 @Composable
 fun PollCreationPreview(){
-    PollDialog(onDismiss = { }, { a, b -> })
+    PollDialog(onDismiss = { }, { a, b ,c -> })
 }
 @Preview
 @Composable

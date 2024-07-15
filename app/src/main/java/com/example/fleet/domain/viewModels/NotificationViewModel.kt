@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.time.LocalDate
 import java.util.Date
 import kotlin.random.Random
 
@@ -50,52 +51,6 @@ class NotificationViewModel (
             insertNotificationToCards()
         }
     }
-
-
-
-    fun createPoll(title: String, options: List<String>){
-        val poll = Poll(
-            id = Random.nextLong(999999999999999999).toInt(),
-            creatorId = FleetApplication.fleetModule.settings.value.tenantId,
-            buildingId = FleetApplication.fleetModule.settings.value.buildingId,
-            title = title,
-            pollType = PollType.SINGLE_CHOICE
-        )
-        viewModelScope.launch {
-            db.pollDao().upsert(
-                poll
-            )
-            for (i in options) {
-                db.pollOptionDao().upsert(
-                    PollOption(
-                        value = i,
-                        pollId = poll.id
-                    )
-                )
-            }
-        }
-    }
-
-    fun createTask(title: String, subTasks: List<String>){
-        val task = Task(
-            id = Random.nextLong(999999999999999999).toInt(),
-            creatorId = FleetApplication.fleetModule.settings.value.tenantId,
-            buildingId = FleetApplication.fleetModule.settings.value.buildingId,
-            title = title,
-        )
-        viewModelScope.launch {
-            db.taskDao().upsert(task)
-            for (i in subTasks) {
-                db.subTaskDao().upsert(
-                    SubTask(
-                        text = i,
-                        taskId = task.id,
-                    )
-                )
-            }
-        }
-    }
-
     //Todo make this smarter
     private fun changePollOption(pollOptionSelected: PollOption, pollOptionUnselected: PollOption?){
         if (pollOptionUnselected == pollOptionSelected){
@@ -151,15 +106,6 @@ class NotificationViewModel (
             }
         }
     }
-    //Todo implement this
-    fun getTenantName(id: Int): String = runBlocking{db.tenantDao().getNameById(id)}
-
-
-
-    private fun completeSubTask(subTask: SubTask){
-        subTask.completed = !subTask.completed
-        runBlocking { db.subTaskDao().upsert(subTask)}
-    }
 
     //Todo totally remodel poll creation
     // i don't have nerves to do this anymore
@@ -172,6 +118,7 @@ class NotificationViewModel (
                     polls.map { poll ->
                         PollCard(
                             poll, pollOptions.filter { it.pollId == poll.id },
+                            showResult = true,
                             onPollOptionChange =  {poll1, poll2 -> changePollOption(poll1, poll2)}
                         )
                     }
@@ -188,24 +135,26 @@ class NotificationViewModel (
 
         viewModelScope.launch {
             db.pollDao().getAll().collect {
-                Log.i("NotificationViewModel", "Poll collection")
                 polls = it
                 update()
             }
         }
     }
-
+    //Todo make notifications use only ones that have building id (Same with tasks and polls)
     private fun insertNotificationToCards(){
         viewModelScope.launch {
-            db.notificationDao().getByBuildingId(FleetApplication.fleetModule.settings.value.buildingId).collect { notifications ->
+            db.notificationDao().getAll().collect { notifications ->
                 _cards.update {prev -> prev.filterNot{"Notification" in (it?.id ?: "") } + notifications.map { NotificationCard(it) }}
                 _cards.update { prev -> prev.sortedByDescending { it?.createdAt ?: Date(1, 1, 1)  } }
-
+                Log.i("NotificationViewModel", notifications.toString() + FleetApplication.fleetModule.settings.value.buildingId.toString())
             }
         }
     }
 
-
+    private fun completeSubTask(subTask: SubTask){
+        subTask.completed = !subTask.completed
+        runBlocking { db.subTaskDao().upsert(subTask)}
+    }
 
     fun createNotification(title: String, text: String){
         viewModelScope.launch {
@@ -219,6 +168,51 @@ class NotificationViewModel (
                     creatorId = FleetApplication.fleetModule.settings.value.tenantId
                 )
             )
+        }
+    }
+
+    fun createPoll(title: String, options: List<String>, endDate: Int){
+        val poll = Poll(
+            id = Random.nextLong(999999999999999999).toInt(),
+            creatorId = FleetApplication.fleetModule.settings.value.tenantId,
+            buildingId = FleetApplication.fleetModule.settings.value.buildingId,
+            title = title,
+            pollType = PollType.SINGLE_CHOICE,
+            voteEndDate = LocalDate.now().plusDays(endDate.toLong())
+        )
+        Log.i("NotificationViewModel",poll.voteEndDate.toString())
+        viewModelScope.launch {
+            db.pollDao().upsert(
+                poll
+            )
+            for (i in options) {
+                db.pollOptionDao().upsert(
+                    PollOption(
+                        value = i,
+                        pollId = poll.id
+                    )
+                )
+            }
+        }
+    }
+
+    fun createTask(title: String, subTasks: List<String>){
+        val task = Task(
+            id = Random.nextLong(999999999999999999).toInt(),
+            creatorId = FleetApplication.fleetModule.settings.value.tenantId,
+            buildingId = FleetApplication.fleetModule.settings.value.buildingId,
+            title = title,
+        )
+        viewModelScope.launch {
+            db.taskDao().upsert(task)
+            for (i in subTasks) {
+                db.subTaskDao().upsert(
+                    SubTask(
+                        text = i,
+                        taskId = task.id,
+                    )
+                )
+            }
         }
     }
     fun toggleNotificationDialog(){isNotificationDialogShown = !isNotificationDialogShown}
