@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.fleet.presentation.fragments.InputField
+import com.example.fleet.presentation.fragments.input_fields.InputField
 
 //Todo make all of theese functions objects
 @Composable
@@ -70,7 +70,7 @@ fun NotificationDialog(
                             )
                             Spacer(modifier = modifier.width(12.dp))
                             // Title text field
-                            InputField(title, "Title")
+                            InputField(title, "Title"){title.value = it}
                             //https://developer.android.com/develop/ui/compose/text/user-input
                         }
 
@@ -82,7 +82,7 @@ fun NotificationDialog(
                         Column (
                             modifier = modifier.padding(12.dp)
                         ){
-                            InputField(text, "Text", 10)
+                            InputField(text, "Text", 10){text.value = it}
                         }
 
                     }

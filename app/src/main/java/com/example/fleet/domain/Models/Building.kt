@@ -1,12 +1,8 @@
 package com.example.fleet.domain.Models
 
-import android.location.Location
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.fleet.domain.Enums.Countries
-import org.intellij.lang.annotations.Language
-import java.time.LocalDate
 import java.util.Date
 
 @Entity(tableName = "buildings")
@@ -23,4 +19,4 @@ data class Building (
     val country: Countries? = null,
     val city: String? = null,
     var tenantLeaderContact: String? = null
-)
+)//Todo add region

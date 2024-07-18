@@ -20,7 +20,6 @@ class FleetModule(
 
     val fleetDatabase: FleetDatabase = FleetDatabase.getDatabase(context)
     var settings: MutableState<Settings> = mutableStateOf(Settings())
-
     init{
         //seed(fleetDatabase)
 

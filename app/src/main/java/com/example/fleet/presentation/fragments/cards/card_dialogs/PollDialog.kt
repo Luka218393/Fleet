@@ -39,12 +39,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.fleet.presentation.fragments.InputField
+import com.example.fleet.presentation.fragments.input_fields.InputField
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 
 //Todo make max of ten options
-//Todo add end date ( show results )
 @Composable
 fun PollDialog(
     onDismiss: () -> Unit,
@@ -82,7 +81,7 @@ fun PollDialog(
 
                         Spacer(modifier = modifier.width(12.dp))
 
-                        InputField(value = title, placeholder = "Question", maxLines = 3)
+                        InputField(value = title, placeholder = "Question", maxLines = 3){title.value = it}
                     }
 
                     HorizontalDivider(
@@ -160,7 +159,7 @@ class PollOptionTab (
             IconButton(onClick = { removePollOption(id) }) {
                 Icon(imageVector = Icons.Default.Clear, contentDescription = "Remove option")
             }
-            InputField(value = optionValue, placeholder = "Option $id")
+            InputField(value = optionValue, placeholder = "Option $id"){optionValue.value = it}
 
         }
     }

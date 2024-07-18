@@ -45,17 +45,14 @@ import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.fragments.Create_ChatBar
-import com.example.fleet.presentation.fragments.InputField
+import com.example.fleet.presentation.fragments.input_fields.InputField
 import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.NewChatTopBar
 import com.example.fleet.presentation.fragments.scaffold_elements.SimpleFloatingButton
 
 class ChatCreationScreen: Screen {
     @Transient
-    private val viewModel: ChatViewModel = ViewModelProvider(
-        FleetApplication.viewModelStore,
-        ChatViewModelFactory()
-    )[ChatViewModel::class.java]
+    private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 
     //Todo filter chats you already have private chat with
     //Todo add filter
@@ -170,7 +167,7 @@ fun ChatDialog(
                 Card {
                     Column{
 
-                        InputField(title, "Title")
+                        InputField(title, "Title"){title.value = it}
 
                     }
                 }

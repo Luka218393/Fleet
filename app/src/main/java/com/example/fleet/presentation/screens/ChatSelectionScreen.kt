@@ -36,16 +36,10 @@ class ChatSelectionScreen: Screen{
 
         Scaffold(
             bottomBar = { BottomBar() },
-            floatingActionButton = {
-                SimpleFloatingButton ({
-                    Navigation.goTo(
-                        Screens.CHAT_CREATION,
-                        nav
-                    )
-                },
-                Icons.Default.Add)
-            }
+            floatingActionButton = { SimpleFloatingButton ({ Navigation.goTo(Screens.CHAT_CREATION, nav) }, Icons.Default.Add) }
         ) { padding ->
+
+
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()

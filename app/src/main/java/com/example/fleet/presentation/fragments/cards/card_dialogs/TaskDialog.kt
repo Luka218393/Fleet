@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.fleet.presentation.fragments.InputField
+import com.example.fleet.presentation.fragments.input_fields.InputField
 
 
 @Composable
@@ -71,7 +71,7 @@ fun TaskDialog(
 
                         Spacer(modifier = modifier.width(12.dp))
 
-                        InputField(value = title, placeholder = "Title", maxLines = 1)
+                        InputField(value = title, placeholder = "Title", maxLines = 1){title.value = it}
                     }
 
                     HorizontalDivider(
@@ -123,7 +123,7 @@ class SubTaskTab (
             IconButton(onClick = { removePollOption(id) }) {
                 Icon(imageVector = Icons.Default.Clear, contentDescription = "Remove subtask")
             }
-            InputField(value = value, placeholder = "Task $id")
+            InputField(value = value, placeholder = "Task $id"){value.value = it}
 
         }
     }

@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.Models.Settings
 
 var Black = Color(0,0,0)
 @Composable
@@ -21,8 +20,8 @@ fun FleetTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
-    settings: Settings
 ) {
+    val settings = FleetApplication.fleetModule.settings.value
 
     val darkScheme = remember(settings.appColor) { // Recalculate when appColor changes
         darkColorScheme(

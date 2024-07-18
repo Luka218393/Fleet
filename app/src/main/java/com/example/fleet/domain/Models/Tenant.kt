@@ -30,7 +30,7 @@ data class Tenant(
     val birthday: Date? = null,
     val createdAt: Date = Date(),
     var profession: String? = null,
-    var aboutMe: String? = null,
+    var aboutMe: String? = null,//Todo Rename this to description
     var isOnline: Boolean = true,
     var isApartmentHead: Boolean = false,
     var isTenantLeader: Boolean = false,

@@ -8,17 +8,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -35,13 +36,14 @@ import com.example.fleet.FleetApplication
 import com.example.fleet.R
 import com.example.fleet.domain.viewModels.DisplayViewModel
 import com.example.fleet.domain.viewModels.DisplayViewModelFactory
-import com.example.fleet.presentation.fragments.UnderlinedInputField
-import com.example.fleet.presentation.fragments.UnderlinedInputField_Int
+import com.example.fleet.presentation.fragments.input_fields.AttributeDisplay
+import com.example.fleet.presentation.fragments.input_fields.EditableTextField
 import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.SimpleFloatingButton
 
 //Todo change text styles
-data class DisplayScreen(
+//Todo add typechange to be able to differrentiate between tenant, apartment and building ids <T>
+data class  DisplayScreen(
     @Transient
     private val viewModel: DisplayViewModel = ViewModelProvider(FleetApplication.viewModelStore, DisplayViewModelFactory())[DisplayViewModel::class.java],
     @Transient
@@ -56,7 +58,17 @@ data class DisplayScreen(
 
         Scaffold(
             bottomBar = {BottomBar()},
-            floatingActionButton = { SimpleFloatingButton(onclick = { editMode = !editMode }, icon = Icons.Default.Create)}
+            floatingActionButton = {
+                SimpleFloatingButton(
+                    onclick = {
+                        if (!editMode) editMode = !editMode
+                        else {
+                            viewModel.changeTenant()
+                            editMode = !editMode
+                        }
+                        },
+                    icon = Icons.Default.Create)
+            }
         ) { padding ->
             Box(modifier = Modifier.padding(padding)) {
                 DisplayTenant(tenantId, editMode)
@@ -70,126 +82,82 @@ data class DisplayScreen(
         tenantId: Int,
         editMode: Boolean
     ) {
-        //viewModel.getTenantById(tenantId)
-        val tenant = viewModel.getTenantById(tenantId)//viewModel.displayTenant.collectAsState(null).value
-        if (tenant != null) {
-            Column(
-                modifier = modifier.fillMaxSize()
+        LaunchedEffect(key1 = tenantId) {
+            viewModel.getTenantAttributes(tenantId)
+
+        }
+        //Todo add snackbars to int inputs
+        val snackbarHostState = remember { SnackbarHostState() }
+
+        Column(
+            modifier = modifier.fillMaxSize()
+        ) {
+            Row(
+                modifier = modifier.fillMaxHeight(0.2f),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
+                //Todo make image cropable and fit this space (all images should have sam dimensions)
+                Image(
+                    painter = painterResource(id = viewModel.profileImageRes.value ?: R.drawable.lukinaikona),
+                    contentDescription = viewModel.name.value,
+                    modifier = Modifier.weight(2f)
+                )
+                Spacer(modifier = modifier.width(20.dp))
+                Column(
+                    verticalArrangement = Arrangement.SpaceEvenly,
                     modifier = modifier
-                        .fillMaxHeight(0.2f),
-                    verticalAlignment = Alignment.CenterVertically
+                        .fillMaxHeight()
+                        .weight(3f)
                 ) {
-                    //Todo make image cropable and fit this space (all images should have sam dimensions)
-                    Image(
-                        painter = painterResource(id = tenant.profileImageRes ?: R.drawable.lukinaikona),
-                        contentDescription = tenant.name,
-                        modifier = Modifier.weight(2f)
-                    )
-                    Spacer(modifier = modifier.width(20.dp))
-                    Column(
-                        verticalArrangement = Arrangement.SpaceBetween,
-                        modifier = modifier
-                            .fillMaxHeight()
-                            .weight(3f)
+                    //Todo Make every tenants attribute changable
+                    EditableTextField(
+                        editMode,
+                        value = viewModel.name,
+                        placeholder = "Name",
+                        textStyle = MaterialTheme.typography.displaySmall)
+                    {
+                        viewModel.name.value = it
+                    }
 
-                    ) {
-                        //Todo add remaining fields
-                        EditableTextField( editMode = editMode, value = remember { mutableStateOf(tenant.name) }, "Name", textStyle = MaterialTheme.typography.displaySmall)
+                    EditableTextField( editMode = editMode, value = viewModel.surname, "Surname", textStyle = MaterialTheme.typography.displaySmall){
+                        viewModel.surname.value = it
+                    }
 
-                        EditableTextField( editMode = editMode, value = remember { mutableStateOf(tenant.surname)}, "Surname", textStyle = MaterialTheme.typography.displaySmall)
-
-                        EditableTextField( editMode = editMode, value = remember { mutableStateOf(tenant.age.toString())},"Age", textStyle = MaterialTheme.typography.displaySmall )
-
-
+                    EditableTextField( editMode = editMode, value = viewModel.age,"Age", textStyle = MaterialTheme.typography.displaySmall, snackbarHostState = snackbarHostState ){
+                        try {
+                            viewModel.age.value = it.toInt()
+                        }catch (e: Error){}
                     }
                 }
-                HorizontalDivider(modifier.padding(8.dp), thickness = 2.dp)
-                Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 12.dp),
-                    verticalArrangement = Arrangement.SpaceEvenly
-                ) {
+            }
+            HorizontalDivider(thickness = 2.dp)
+            SnackbarHost(hostState = snackbarHostState)
 
-                    AttributeDisplay(attribute = "About me", value = remember { mutableStateOf(tenant.aboutMe.toString())}, editMode = editMode)
-                    AttributeDisplay(attribute = "Profession", value = remember { mutableStateOf(tenant.profession.toString())}, editMode = editMode)
-                    AttributeDisplay(attribute = "Apartment number", value = remember { mutableStateOf(tenant.apartmentId.toString())}, editMode = editMode)
-                    AttributeDisplay(attribute = "Birthday", value = remember { mutableStateOf(tenant.birthday.toString())}, editMode = editMode)
-                    AttributeDisplay(attribute = "E-mail", value = remember { mutableStateOf(tenant.email.toString())}, editMode = editMode)
-                    AttributeDisplay(attribute = "Phone number", value = remember { mutableStateOf(tenant.phoneNumber.toString())}, editMode = editMode)
-                    AttributeDisplay(attribute = "Joined", value = remember { mutableStateOf(tenant.createdAt.toString())}, editMode = editMode)
-                }
+            val scrollState = rememberScrollState()
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 12.dp)
+                    .verticalScroll(scrollState),
+            ) {
+                //Todo nota all attributes should be changable
+                //Todo add inputs for Date and predeclared list (ApartmentId)
+                AttributeDisplay(attribute = "About me", value = viewModel.description, editMode = editMode, maxLines = 4){viewModel.description.value = it}
+                AttributeDisplay(attribute = "Profession", value = viewModel.profession, editMode = editMode){viewModel.profession.value = it}
+                AttributeDisplay(attribute = "Apartment number", value = viewModel.apartmentId, editMode = editMode){viewModel.apartmentId.value = it.toInt()}//Todo fix this
+                AttributeDisplay(attribute = "Birthday", value = viewModel.birthday, editMode = editMode){viewModel.birthday.value = it}
+                AttributeDisplay(attribute = "E-mail", value = viewModel.email, editMode = editMode){viewModel.email.value = it}
+                AttributeDisplay(attribute = "Phone number", value = viewModel.phoneNumber, editMode = editMode){viewModel.phoneNumber.value = it}
+
+                //Todo add contact button
+                ///AttributeDisplay(attribute = "Joined", value = viewModel., editMode = editMode)
             }
         }
     }
 }
 
-@Composable
-fun AttributeDisplay(
-    attribute: String,
-    value: MutableState<String>,
-    editMode: Boolean,
-){
-    Column(
-        horizontalAlignment = Alignment.Start
-    ){
-        Text(
-            text = attribute,
-            style = MaterialTheme.typography.titleMedium
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp)
-        ){
-            EditableTextField(editMode = editMode, value = value, placeholder = attribute)
-        }
-    }
-}
 
 
-
-
-
-
-//Todo make text color not change on edit
-@Composable
-fun EditableTextField(
-    editMode: Boolean,
-    value: MutableState<String>,
-    placeholder: String,
-    maxLines: Int = 1,
-    textStyle: TextStyle = MaterialTheme.typography.bodyMedium
-){
-    if (editMode) {
-        UnderlinedInputField(value = value, placeholder = placeholder, maxLines = maxLines, textStyle = textStyle)
-    } else {
-        Text(
-            text = value.value,
-            style = textStyle
-        )
-    }
-}
-
-//Todo this doesn't work
-@Composable
-fun EditableTextField_Int(
-    editMode: Boolean,
-    value: MutableState<Int>,
-    placeholder: String,
-    maxLines: Int = 1
-){
-    if (editMode) {
-        UnderlinedInputField_Int(value = value, placeholder = placeholder, maxLines = maxLines)
-    } else {
-        Text(
-            text = value.value.toString(),
-            style = MaterialTheme.typography.titleLarge
-        )
-    }
-}
 
 @Preview
 @Composable

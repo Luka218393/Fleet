@@ -45,7 +45,7 @@ class PollCard (
     override fun Content() {
 
         if (options.isEmpty()) {
-            return //todo throw error("Poll has no options to display")
+            return // throw error("Poll has no options to display")
         }
 
         val selectedOption = rememberSaveable{ mutableIntStateOf(options.indexOf(options.find{it.votes.contains(FleetApplication.fleetModule.settings.value.tenantId)})) }
@@ -169,7 +169,7 @@ fun ResultOptions(
                 Row(
                     modifier = modifier.fillMaxWidth()
                 ) {
-                    LinearProgressIndicator(//TODO make this sometimes visible
+                    LinearProgressIndicator(
                         progress = { (options[index].votes.size.toFloat() / allVotes.intValue.toFloat()) },//Todo make this update
                         modifier = modifier
                             .weight(6f)
