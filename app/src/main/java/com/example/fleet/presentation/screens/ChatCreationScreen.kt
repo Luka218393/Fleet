@@ -1,6 +1,5 @@
 package com.example.fleet.presentation.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,22 +43,21 @@ import com.example.fleet.FleetApplication
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
-import com.example.fleet.presentation.fragments.Create_ChatBar
+import com.example.fleet.presentation.fragments.SimplifiedChatBar
 import com.example.fleet.presentation.fragments.input_fields.InputField
-import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.NewChatTopBar
 import com.example.fleet.presentation.fragments.scaffold_elements.SimpleFloatingButton
 
+//
 class ChatCreationScreen: Screen {
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 
-    //Todo filter chats you already have private chat with
+    //Todo rename all chat types to is personal / group
     //Todo add filter
-    //Todo Create Chat
-    //Todo remove yourself
-    //Todo make floating button unclickable if no chats are selected
+    //Todo make floating button change color if no chats are selected
     //Todo Remove floating button?
+    //Todo Add everyone to chat button
     @Composable
     override fun Content() {
         val modifier = Modifier
@@ -72,66 +70,43 @@ class ChatCreationScreen: Screen {
         Scaffold(
             modifier = modifier.fillMaxSize(),
             topBar = { NewChatTopBar() },
-            floatingActionButton = {
-                SimpleFloatingButton(onclick = { displayChatDialog = !displayChatDialog }, icon = Icons.Default.Add)
-            },
-            bottomBar = { BottomBar() },
+            floatingActionButton = { SimpleFloatingButton(onclick = {if(selectedTenants.isNotEmpty()) displayChatDialog = !displayChatDialog }, icon = Icons.Default.Add) },
+            bottomBar = { },
         ) { padding ->
             Column(
                 modifier = modifier.padding(padding)
             ) {
+
                 Row(
                     modifier = modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Button(
-                        onClick = { isPrivate = true; selectedTenants.clear() },
-                        colors = if (isPrivate) ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.secondary,
-                            contentColor = MaterialTheme.colorScheme.onSecondary
-                        ) else ButtonDefaults.buttonColors()
-                    ) {
-                        Text(text = "Private")
-                    }
-                    Spacer(modifier.width(20.dp))
-                    Button(
-                        onClick = { isPrivate = false; selectedTenants.clear() },
-                        colors = if (!isPrivate) ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.secondary,
-                            contentColor = MaterialTheme.colorScheme.onSecondary
-                        ) else ButtonDefaults.buttonColors()
-
-                    ) {
-                        Text(text = "Group")
+                    ChatPrivacyButtons(isPrivate = isPrivate, clearSelectedTenants = { selectedTenants.clear() }, toggleChatPrivacy = {isPrivate = it}){
+                        if (it) viewModel.insertTenantsForChatCreationPrivate()
+                        else viewModel.insertTenantsForChatCreationPublic()
                     }
                 }
+
                 LazyColumn(
-                    modifier = modifier
-                        .fillMaxSize(),
+                    modifier = modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     items(tenantsToDisplay, key = { it.id }) { tenant ->
-                        Create_ChatBar(
+                        SimplifiedChatBar(
                             tenant = tenant,
                             onClick = {
                                 if (isPrivate) selectedTenants.clear()
                                 selectedTenants.add(it)
-                                Log.i("ChatCreationScreen", selectedTenants.toString())
                             },
-                            onDismiss = {
-                                selectedTenants.remove(it);
-
-                                Log.i("ChatCreationScreen", selectedTenants.toString())
-                            },
+                            onDismiss = { selectedTenants.remove(it) },
                             isBarSelected = { it in selectedTenants }
-
                         )
                     }
                 }
             }
-            //Todo remove this dialog from private chats and give them persons name
-            if (displayChatDialog) {
+
+            if (displayChatDialog && !isPrivate) {
                 ChatDialog({
                            displayChatDialog = !displayChatDialog
                 }, { title ->
@@ -140,7 +115,43 @@ class ChatCreationScreen: Screen {
                     Navigation.pop(nav)
                 })
             }
+            else if(displayChatDialog){
+                viewModel.createChat(selectedTenants, true)
+                selectedTenants.clear()
+                Navigation.pop(nav)
+            }
         }
+    }
+}
+
+//
+@Composable
+fun ChatPrivacyButtons(
+    isPrivate: Boolean,
+    clearSelectedTenants: ()->Unit,
+    modifier: Modifier = Modifier,
+    toggleChatPrivacy:(Boolean)->Unit,
+    updateTenantsToDisplay: (Boolean)->Unit
+){
+    Button(
+        onClick = { toggleChatPrivacy(true); clearSelectedTenants();updateTenantsToDisplay(true) },
+        colors = if (isPrivate) ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.secondary,
+            contentColor = MaterialTheme.colorScheme.onSecondary
+        ) else ButtonDefaults.buttonColors()
+    ) {
+        Text(text = "Private")
+    }
+    Spacer(modifier.width(20.dp))
+    Button(
+        onClick = { toggleChatPrivacy(false); clearSelectedTenants(); updateTenantsToDisplay(false) },
+        colors = if (!isPrivate) ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.secondary,
+            contentColor = MaterialTheme.colorScheme.onSecondary
+        ) else ButtonDefaults.buttonColors()
+
+    ) {
+        Text(text = "Group")
     }
 }
 
@@ -164,13 +175,13 @@ fun ChatDialog(
                     modifier = modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
+
                 Card {
-                    Column{
-
+                    Column(modifier = Modifier.padding(4.dp)){
                         InputField(title, "Title"){title.value = it}
-
                     }
                 }
+
                 IconButton(
                     onClick = {onConfirm(title.value)},
                     modifier = modifier

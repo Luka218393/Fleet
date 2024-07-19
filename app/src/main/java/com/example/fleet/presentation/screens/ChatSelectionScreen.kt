@@ -9,7 +9,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
@@ -23,12 +26,13 @@ import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.fragments.Select_ChatBar
 import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
 import com.example.fleet.presentation.fragments.scaffold_elements.SimpleFloatingButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-
+//
 class ChatSelectionScreen: Screen{
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
-
     @Composable
     override fun Content() {
         val nav = LocalNavigator.current
@@ -40,26 +44,34 @@ class ChatSelectionScreen: Screen{
         ) { padding ->
 
 
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    items(chats, key = {it.id}) { chat ->
-                        Select_ChatBar(
-                            navigateToChatScreen = {
-                                Navigation.goTo( Screens.CHAT, nav, chat.id)
-                                viewModel.changeMessageCollectorJob(chat.id)
-                            }, chat = chat,
-                            lastMessageText = viewModel.getLastMessage(chat.id)
-                        )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                //this could be faster
+                items(chats, key = {it.id}) { chat ->
+                    val lastMessage = rememberSaveable{mutableStateOf("")}
+                    LaunchedEffect(key1 = lastMessage) {
+                        withContext(Dispatchers.IO){
+                            lastMessage.value = viewModel.getLastMessage(chat.id)
+                        }
                     }
+                    Select_ChatBar(
+                        navigateToChatScreen = {
+                            Navigation.goTo( Screens.CHAT, nav, chat.id)
+                            viewModel.changeMessageCollectorJob(chat.id)
+                        },
+                        chat = chat,
+                        lastMessageText = lastMessage.value
+                    )
                 }
             }
         }
     }
+}
 
 
 

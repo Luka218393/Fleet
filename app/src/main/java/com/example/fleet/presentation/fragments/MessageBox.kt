@@ -16,13 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.fleet.FleetApplication
 import com.example.fleet.data.messages
 import com.example.fleet.domain.Models.Message
 import com.example.fleet.presentation.HelperFunctions
 
 
 //Todo make message boxes if
-// 1) you sent message
 // 2) second tenant sent it
 // 3) You are in a group
 //Todo Send images
@@ -31,13 +31,11 @@ import com.example.fleet.presentation.HelperFunctions
 fun CreateMessageBox(
     modifier: Modifier = Modifier,
     message: Message,
-    tenantId: Int,
-
 ){
     Box(
         modifier = modifier.fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp)),
-        contentAlignment = if(tenantId == message.senderId) Alignment.TopEnd else Alignment.TopStart
+        contentAlignment = if(FleetApplication.fleetModule.settings.value.tenantId == message.senderId) Alignment.TopEnd else Alignment.TopStart
     ){
         Card(
             modifier = modifier.padding(4.dp)
@@ -48,9 +46,9 @@ fun CreateMessageBox(
                 verticalArrangement = Arrangement.SpaceBetween,
                 modifier = modifier.padding(4.dp)
             ){
-                if (message.senderId != tenantId) {
+                if (message.senderId != FleetApplication.fleetModule.settings.value.tenantId) {
                     Text(
-                        text = /*FleetApplication.fleetModule.getTenantName(message.senderId) ?:*/ "No name",//Todo This greatly slows down the app
+                        text = FleetApplication.fleetModule.getTenantNameAndSurname(message.senderId) ?: "No name",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -73,5 +71,5 @@ fun CreateMessageBox(
 @Preview
 @Composable
 fun MessageBoxPreview(){
-    CreateMessageBox(message = messages[0], tenantId = 2)
+    CreateMessageBox(message = messages[0])
 }

@@ -51,7 +51,7 @@ class ChatScreen(
             ) {//Todo make so on new message you scroll to the bottom of the chat
 
                 items(messages.size, key = { messages[it].id }) { index ->
-                    CreateMessageBox(message = messages[index], tenantId = viewModel.getTenantId() )
+                    CreateMessageBox(message = messages[index])
                     if (index + 1 < messages.size){
                         if (messages[index + 1].sendingTime.day != messages[index].sendingTime.day){
                             DateSeparator(date = messages[index].sendingTime)

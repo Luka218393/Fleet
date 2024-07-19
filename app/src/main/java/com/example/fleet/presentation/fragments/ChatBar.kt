@@ -17,7 +17,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -33,7 +32,7 @@ import com.example.fleet.presentation.HelperFunctions
 fun Select_ChatBar(
     navigateToChatScreen:(Int)->Unit,
     chat: Chat,
-    lastMessageText: MutableState<String>
+    lastMessageText: String
 ) {
     val modifier = Modifier
     /*TODO add color change based on discussion type -> ViewModel*/
@@ -75,7 +74,7 @@ fun Select_ChatBar(
                     color = if (chat.isPrivate) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = HelperFunctions.cutString(text = lastMessageText.value),
+                    text = HelperFunctions.cutString(text = lastMessageText),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = modifier.align(Alignment.Start),
                     maxLines = 1
@@ -88,30 +87,23 @@ fun Select_ChatBar(
     }
 }
 
-
+//
 @Composable
-fun Create_ChatBar(
+fun SimplifiedChatBar(
     tenant: Tenant,
-    isBarSelected: (Int)->Boolean,
+    isBarSelected: (Int) -> Boolean,
     onClick:(Int) -> Unit,
     onDismiss: (Int) -> Unit
 ) {
     val modifier = Modifier
-    /*TODO add color change based on discussion type -> ViewModel*/
-
     Card(
         modifier = modifier
             .fillMaxWidth()
             .height(72.dp)
             .padding(1.dp)
-            .clickable {
-                if(isBarSelected(tenant.id)) onDismiss(tenant.id) else onClick(tenant.id)
-//                Log.i("Create_ChatBar",isBarSelected(id).toString()+ id.toString())
-                },
+            .clickable { if(isBarSelected(tenant.id)) onDismiss(tenant.id) else onClick(tenant.id) },
         shape = RoundedCornerShape(2.dp),
         colors = if(isBarSelected(tenant.id)) CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary) else CardDefaults.cardColors()
-
-
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

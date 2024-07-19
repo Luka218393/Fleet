@@ -290,9 +290,9 @@ var apartments = listOf(
 
 val settings1 = Settings(
     id = 1,
-    tenantId = 1,
-    apartmentId = 1,
-    buildingId = 1
+    tenantId = 7,
+    apartmentId = 2,
+    buildingId = 2
 )
 
 
