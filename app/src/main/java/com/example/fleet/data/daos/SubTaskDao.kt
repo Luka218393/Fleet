@@ -24,4 +24,10 @@ interface SubTaskDao {
 
     @Query("SELECT * from SubTasks WHERE taskId = :taskId")
     fun getByTaskId(taskId: Int): Flow<List<SubTask>>
+
+    @Query("""
+        SELECT * FROM subtasks WHERE subtasks.taskid IN
+            (SELECT tasks.id FROM tasks WHERE tasks.buildingId == :buildingId)
+    """)
+    fun getByBuildingId(buildingId: Int): Flow<List<SubTask>>
 }

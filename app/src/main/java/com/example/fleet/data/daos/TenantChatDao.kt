@@ -50,7 +50,7 @@ interface TenantChatDao {
         )
     )           
     """)
-    fun getTenantsForNewPrivateChats(tenantId: Int): List<Tenant>
+    fun getTenantsForNewPersonalChat(tenantId: Int): List<Tenant>
 }
 
 

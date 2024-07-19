@@ -48,7 +48,7 @@ class PollCard (
             return // throw error("Poll has no options to display")
         }
 
-        val selectedOption = rememberSaveable{ mutableIntStateOf(options.indexOf(options.find{it.votes.contains(FleetApplication.fleetModule.settings.value.tenantId)})) }
+        val selectedOption = rememberSaveable{ mutableIntStateOf(options.indexOf(options.find{it.votes.contains(FleetApplication.fleetModule.tenantId)})) }
         val allVotes = remember { mutableIntStateOf(options.sumOf { it.votes.size }) }
         //People are able to vote
         if (poll.voteEndDate > LocalDate.now()) {

@@ -27,13 +27,12 @@ class NotificationScreen(
     private val modifier: Modifier = Modifier,
     @Transient
     private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
-)
-    : Screen{
+): Screen{
 
     @Composable
     override fun Content() {
         //Todo remove empty tasks
-        val cards = viewModel.cards.collectAsState().value.filterNotNull()//Todo remove this filter not null
+        val cards = viewModel.cards.collectAsState().value
 
         Scaffold(
             bottomBar = {BottomBar()},

@@ -21,13 +21,12 @@ fun FleetTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    val settings = FleetApplication.fleetModule.settings.value
 
-    val darkScheme = remember(settings.appColor) { // Recalculate when appColor changes
+    val darkScheme = remember(FleetApplication.fleetModule.appColor) { // Recalculate when appColor changes
         darkColorScheme(
             primary = Color(0xFF34113F),
             onPrimary = White,
-            secondary = Color(settings.appColor.toULong()),
+            secondary = FleetApplication.fleetModule.appColor,
             onSecondary = Black,
             tertiary = Color(0xff8E8E8E),
             onTertiary = Black,
@@ -35,11 +34,11 @@ fun FleetTheme(
         )
     }
 
-    val lightScheme = remember(settings.appColor) { // Recalculate when appColor changes
+    val lightScheme = remember(FleetApplication.fleetModule.appColor) { // Recalculate when appColor changes
         lightColorScheme(
             primary = Color(0xFF34113F),
             onPrimary = Black,
-            secondary = Color(settings.appColor.toULong()),
+            secondary = FleetApplication.fleetModule.appColor,
             onSecondary = White,
             tertiary = Color(0xff8E8E8E),
             onTertiary = Black,
@@ -62,7 +61,7 @@ fun FleetTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography(settings = settings),
+        typography = Typography(),
         content = content,
     )
 }

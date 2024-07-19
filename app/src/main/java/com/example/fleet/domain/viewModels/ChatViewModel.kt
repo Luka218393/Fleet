@@ -1,6 +1,7 @@
 package com.example.fleet.domain.viewModels
 
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -37,7 +38,6 @@ class ChatViewModel (
     init {
         Log.i("ChatViewModel", "ChatViewModel init")
         chatsCollector()
-        insertTenantsForChatCreationPublic()
     }
 
     //
@@ -56,7 +56,7 @@ class ChatViewModel (
                 )
             )
 
-            for (i in tenantIds + FleetApplication.fleetModule.settings.value.tenantId) {
+            for (i in tenantIds + FleetApplication.fleetModule.tenantId) {
                 db.tenantChatDao().upsert(
                     TenantChat(
                         tenantId = i,
@@ -73,28 +73,24 @@ class ChatViewModel (
     private fun chatsCollector() {
         viewModelScope.launch {
             db.tenantChatDao()
-                .getChatsOfATenant(FleetApplication.fleetModule.settings.value.tenantId).collect {
+                .getChatsOfATenant(FleetApplication.fleetModule.tenantId).collect {
                 _chats.value = it
             }
         }
     }
 
     //
-    fun insertTenantsForChatCreationPublic() {
+    fun insertTenantsForChatCreation(isPersonal: Boolean) {
         runBlocking {
             withContext(Dispatchers.IO) {
-                _tenants.value = db.tenantDao()
-                    .getTenantsByBuildingId(FleetApplication.fleetModule.settings.value.buildingId)
-                    .filterNot { it.id == FleetApplication.fleetModule.settings.value.tenantId }
-            }
-        }
-    }
-
-    fun insertTenantsForChatCreationPrivate(){
-        runBlocking {
-            withContext(Dispatchers.IO) {
-                _tenants.value = db.tenantChatDao().getTenantsForNewPrivateChats(FleetApplication.fleetModule.settings.value.tenantId)
-                Log.i("ChatViewModel", _tenants.value.map { it.id }.toString())
+                if(!isPersonal) {
+                    _tenants.value = db.tenantDao()
+                        .getTenantsByBuildingId(FleetApplication.fleetModule.buildingId)
+                        .filterNot { it.id == FleetApplication.fleetModule.tenantId }
+                }
+                else{
+                    _tenants.value = db.tenantChatDao().getTenantsForNewPersonalChat(FleetApplication.fleetModule.tenantId)
+                }
             }
         }
     }
@@ -117,7 +113,7 @@ class ChatViewModel (
             db.messageDao().upsert(
                 Message(
                     chatId = chatId,
-                    senderId = FleetApplication.fleetModule.settings.value.tenantId,
+                    senderId = FleetApplication.fleetModule.tenantId,
                     text = text,
                 )
             )
@@ -129,6 +125,9 @@ class ChatViewModel (
 
     fun getChat(id: Int): Chat = runBlocking { db.chatDao().getById(id).first() }
 
+    fun scrollToLast(lazyState: LazyListState){
+        viewModelScope.launch { lazyState.scrollToItem(0) }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")

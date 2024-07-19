@@ -35,7 +35,7 @@ fun CreateMessageBox(
     Box(
         modifier = modifier.fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp)),
-        contentAlignment = if(FleetApplication.fleetModule.settings.value.tenantId == message.senderId) Alignment.TopEnd else Alignment.TopStart
+        contentAlignment = if(FleetApplication.fleetModule.tenantId == message.senderId) Alignment.TopEnd else Alignment.TopStart
     ){
         Card(
             modifier = modifier.padding(4.dp)
@@ -46,7 +46,7 @@ fun CreateMessageBox(
                 verticalArrangement = Arrangement.SpaceBetween,
                 modifier = modifier.padding(4.dp)
             ){
-                if (message.senderId != FleetApplication.fleetModule.settings.value.tenantId) {
+                if (message.senderId != FleetApplication.fleetModule.tenantId) {
                     Text(
                         text = FleetApplication.fleetModule.getTenantNameAndSurname(message.senderId) ?: "No name",
                         style = MaterialTheme.typography.bodySmall

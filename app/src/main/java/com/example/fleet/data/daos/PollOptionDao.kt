@@ -23,4 +23,11 @@ interface PollOptionDao {
 
     @Query("SELECT * from poll_options WHERE pollid = :id")
     fun getByPollId(id: Int): Flow<List<PollOption>>
+
+    @Query("""
+        SELECT * FROM poll_options WHERE pollId IN(
+            SELECT polls.id FROM polls WHERE polls.buildingId == :buildingId
+        )
+    """)
+    fun getByBuildingId(buildingId: Int): Flow<List<PollOption>>
 }

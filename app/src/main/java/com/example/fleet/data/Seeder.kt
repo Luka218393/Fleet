@@ -309,12 +309,6 @@ val tasks = listOf(
         title = "I am the best Task",
         buildingId = 1,
         creatorId = 2
-    ),
-    Task(
-        id = 3,
-        title = "Task from another Buiilding",
-        buildingId = 2,
-        creatorId = 1
     )
 )
 

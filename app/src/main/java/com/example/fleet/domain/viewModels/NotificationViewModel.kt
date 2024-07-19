@@ -25,18 +25,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
-import java.util.Date
 import kotlin.random.Random
 
+//Todo change all ID to some strong value
 class NotificationViewModel (
     private val db: FleetDatabase = FleetApplication.fleetModule.fleetDatabase,
 ): ViewModel() {
 
-    private var _cards: MutableStateFlow<List<BaseCard?>> = MutableStateFlow(mutableListOf())
+    //
+    private var _cards: MutableStateFlow<List<BaseCard>> = MutableStateFlow(mutableListOf())
     var cards = _cards.asStateFlow()
 
+    //
     var isNotificationDialogShown by mutableStateOf(false)
         private set
     var isTaskDialogShown by mutableStateOf(false)
@@ -45,11 +46,10 @@ class NotificationViewModel (
         private set
 
     init {
-        runBlocking{
-            insertTaskToCards()
-            insertPollToCards()
-            insertNotificationToCards()
-        }
+        tasksCollector()
+        pollCollector()
+        notificationCollector()
+
     }
     //Todo make this smarter
     private fun changePollOption(pollOptionSelected: PollOption, pollOptionUnselected: PollOption?){
@@ -75,46 +75,50 @@ class NotificationViewModel (
 
 
 
-    private fun insertTaskToCards(){
+    private fun tasksCollector(){
         var tasks = emptyList<Task>()
         var subTasks = emptyList<SubTask>()
-
+        //Todo this updates all tasks make it update only ones that have changed
         fun update(){
             _cards.update {prev ->
-                prev.filterNot{ "Task" in (it?.id ?: "") } + //Deletes all tasks from cards
-                    tasks.map { task ->
-                        TaskCard(
-                            task,
-                            subTasks = subTasks.filter{it.taskId == task.id},
-                            onTaskCompletion = {subTaskId -> subTasks.find {it.id == subTaskId}?.let { completeSubTask(it) } }
-                        )
-                    }
+                prev.filterNot{ "Task" in it.id } + //Deletes all tasks from cards
+                tasks.map { task ->
+                    TaskCard(
+                        task,
+                        subTasks = subTasks.filter{it.taskId == task.id},
+                        onTaskCompletion = {subTaskId -> subTasks.find {it.id == subTaskId}?.let { completeSubTask(it) } }
+                    )
+                }
             }
-            _cards.update { prev -> prev.sortedByDescending {  it?.createdAt ?: Date(1, 1, 1)  } }
+            _cards.update { prev -> prev.sortedByDescending {  it.createdAt } }
         }
+
+        //
         viewModelScope.launch {
-            db.taskDao().getAll().collect {
+            db.taskDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect {
+                Log.i("NotificationViewModel", it.map{a-> a.id}.toString() + " Tasks")
                 tasks = it
                 update()
             }
         }
-
         viewModelScope.launch {
-            db.subTaskDao().getAll().collect {
+            db.subTaskDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect {
                 subTasks = it
+                Log.i("NotificationViewModel", it.map{a ->a.id}.toString() + " SubTasks")
+
                 update()
             }
         }
     }
 
-    //Todo totally remodel poll creation
-    // i don't have nerves to do this anymore
-    private fun insertPollToCards(){
+    private fun pollCollector(){
         var polls = emptyList<Poll>()
         var pollOptions = emptyList<PollOption>()
+
+        //Todo same with previous collector
         fun update(){
             _cards.update {prev ->
-                prev.filterNot{ "Poll" in (it?.id ?: "") } + //Deletes all polls from cards
+                prev.filterNot{ "Poll" in it.id } + //Deletes all polls from cards
                     polls.map { poll ->
                         PollCard(
                             poll, pollOptions.filter { it.pollId == poll.id },
@@ -123,68 +127,69 @@ class NotificationViewModel (
                         )
                     }
             }
-            _cards.update { prev -> prev.sortedByDescending {  it?.createdAt ?: Date(1, 1, 1)  } }
-        }
-        viewModelScope.launch {
-            db.pollOptionDao().getAll().collect {
-                //Todo make so that poll cannot be created without any options and than remove if statement
-                pollOptions = it
-                update()
-            }
+            _cards.update { prev -> prev.sortedByDescending {  it.createdAt } }
         }
 
+        //
         viewModelScope.launch {
-            db.pollDao().getAll().collect {
+            db.pollDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect {
                 polls = it
                 update()
             }
         }
-    }
-    //Todo make notifications use only ones that have building id (Same with tasks and polls)
-    private fun insertNotificationToCards(){
         viewModelScope.launch {
-            db.notificationDao().getAll().collect { notifications ->
-                _cards.update {prev -> prev.filterNot{"Notification" in (it?.id ?: "") } + notifications.map { NotificationCard(it) }}
-                _cards.update { prev -> prev.sortedByDescending { it?.createdAt ?: Date(1, 1, 1)  } }
-                Log.i("NotificationViewModel", notifications.toString() + FleetApplication.fleetModule.settings.value.buildingId.toString())
+            db.pollOptionDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect {
+                pollOptions = it
+                update()
             }
         }
     }
 
-    private fun completeSubTask(subTask: SubTask){
-        subTask.completed = !subTask.completed
-        runBlocking { db.subTaskDao().upsert(subTask)}
+    private fun notificationCollector(){
+        //Todo again same - make update only ones that have changed
+        viewModelScope.launch {
+            db.notificationDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect { notifications ->
+                _cards.update {prev -> prev.filterNot{"Notification" in it.id } + notifications.map { NotificationCard(it) }}
+                _cards.update { prev -> prev.sortedByDescending { it.createdAt  } }
+            }
+        }
     }
 
+    //
+    private fun completeSubTask(subTask: SubTask){
+        subTask.completed = !subTask.completed
+        viewModelScope.launch { db.subTaskDao().upsert(subTask)}
+    }
+
+    //
     fun createNotification(title: String, text: String){
         viewModelScope.launch {
             db.notificationDao().upsert(
                 Notification(
-                    buildingId = FleetApplication.fleetModule.settings.value.buildingId,
+                    buildingId = FleetApplication.fleetModule.buildingId,
                     title = title,
                     text = text,
                     imageResId = null,
                     iconResId = Icons.Default.Favorite,
-                    creatorId = FleetApplication.fleetModule.settings.value.tenantId
+                    creatorId = FleetApplication.fleetModule.tenantId
                 )
             )
         }
     }
 
+    //
     fun createPoll(title: String, options: List<String>, endDate: Int){
         val poll = Poll(
-            id = Random.nextLong(999999999999999999).toInt(),
-            creatorId = FleetApplication.fleetModule.settings.value.tenantId,
-            buildingId = FleetApplication.fleetModule.settings.value.buildingId,
+            id = Random.nextInt(Int.MAX_VALUE),
+            creatorId = FleetApplication.fleetModule.tenantId,
+            buildingId = FleetApplication.fleetModule.buildingId,
             title = title,
             pollType = PollType.SINGLE_CHOICE,
             voteEndDate = LocalDate.now().plusDays(endDate.toLong())
         )
-        Log.i("NotificationViewModel",poll.voteEndDate.toString())
+
         viewModelScope.launch {
-            db.pollDao().upsert(
-                poll
-            )
+            db.pollDao().upsert(poll)
             for (i in options) {
                 db.pollOptionDao().upsert(
                     PollOption(
@@ -196,11 +201,12 @@ class NotificationViewModel (
         }
     }
 
+    //
     fun createTask(title: String, subTasks: List<String>){
         val task = Task(
-            id = Random.nextLong(999999999999999999).toInt(),
-            creatorId = FleetApplication.fleetModule.settings.value.tenantId,
-            buildingId = FleetApplication.fleetModule.settings.value.buildingId,
+            id = Random.nextInt(Int.MAX_VALUE),
+            creatorId = FleetApplication.fleetModule.tenantId,
+            buildingId = FleetApplication.fleetModule.buildingId,
             title = title,
         )
         viewModelScope.launch {
@@ -215,6 +221,7 @@ class NotificationViewModel (
             }
         }
     }
+    //
     fun toggleNotificationDialog(){isNotificationDialogShown = !isNotificationDialogShown}
     fun toggleTaskDialog(){isTaskDialogShown = !isTaskDialogShown}
     fun togglePollDialog(){isPollDialogShown = !isPollDialogShown}
