@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,9 +32,10 @@ class NotificationScreen(
 
     @Composable
     override fun Content() {
-        //Todo remove empty tasks
-        val cards = viewModel.cards.collectAsState().value
 
+        //
+        val cards = viewModel.cards.collectAsState().value
+        val lazyState = rememberLazyListState()
         Scaffold(
             bottomBar = {BottomBar()},
             floatingActionButton = {
@@ -44,31 +46,27 @@ class NotificationScreen(
                     )
                 },
         ) { padding ->
-            
+
+            //
             LazyColumn(
                 modifier = modifier
                     .fillMaxSize()
                     .padding(padding),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
+                state = lazyState
             ) {
                 items(cards.size, key = { cards[it].id }) { index ->
 
                     cards[index].Create()
 
-                    if (index + 1 < cards.size){
-                        if (cards[index + 1].createdAt.day != cards[index].createdAt.day){
-                            DateSeparator(date = cards[index].createdAt)
-                        }
+                    if (index + 1 < cards.size && cards[index + 1].createdAt.day != cards[index].createdAt.day || index == cards.size - 1) {
+                        DateSeparator(date = cards[index].createdAt)
                     }
-                    //Todo make this smarter also on chat screen
-
-                    if (cards.isNotEmpty() && index == cards.size-1) DateSeparator(date = cards.last().createdAt)
-
                 }
-
             }
 
+            //Todo make them scroll to the last when notificaions are created
             if (viewModel.isNotificationDialogShown){ NotificationDialog( onDismiss = {viewModel.toggleNotificationDialog()}, onConfirm = { a,b -> viewModel.createNotification(a,b);viewModel.toggleNotificationDialog() }) }
             if (viewModel.isPollDialogShown){ PollDialog(onDismiss = {viewModel.togglePollDialog()}, onConfirm = { a, b, c-> viewModel.createPoll(a,b,c); viewModel.togglePollDialog()}) }
             if (viewModel.isTaskDialogShown){ TaskDialog(onDismiss = {viewModel.toggleTaskDialog()}, onConfirm = { a, b -> viewModel.createTask(a,b); viewModel.toggleTaskDialog()}) }

@@ -34,6 +34,6 @@ data class Poll (
     val pollType: PollType,
     val voteEndDate: LocalDate = LocalDate.now().plusDays(2),
     val isPublic: Boolean = true,
-    var resultsVisible: Boolean = false
+    var resultsVisible: Boolean = true
 )
 //Todo rename voteEndDate to endDate

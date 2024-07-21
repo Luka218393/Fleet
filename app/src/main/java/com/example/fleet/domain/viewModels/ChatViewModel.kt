@@ -125,7 +125,8 @@ class ChatViewModel (
 
     fun getChat(id: Int): Chat = runBlocking { db.chatDao().getById(id).first() }
 
-    fun scrollToLast(lazyState: LazyListState){
+    fun scrollToLastMessage(lazyState: LazyListState){
+        //Make it scroll to the bottom not top of the last item
         viewModelScope.launch { lazyState.scrollToItem(0) }
     }
 }

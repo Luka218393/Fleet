@@ -37,7 +37,7 @@ class ChatScreen(
         Scaffold(
             topBar = {ChatTopBar(Modifier, chat.title, chatId = chat.id) },
             bottomBar = {
-                InputBottomBar( modifier = Modifier, send = { viewModel.sendMessage(it, chatId); viewModel.scrollToLast(lazyState) } ) } ,
+                InputBottomBar( modifier = Modifier, send = { viewModel.sendMessage(it, chatId); viewModel.scrollToLastMessage(lazyState) } ) } ,
         ) { padding ->
 
             LazyColumn(
@@ -49,13 +49,12 @@ class ChatScreen(
             ) {
 
                 items(messages.size, key = { messages[it].id }) { index ->
+
                     CreateMessageBox(message = messages[index])
-                    if (index + 1 < messages.size){
-                        if (messages[index + 1].sendingTime.day != messages[index].sendingTime.day){
-                            DateSeparator(date = messages[index].sendingTime)
-                        }
+
+                    if (index + 1 < messages.size && messages[index + 1].sendingTime.day != messages[index].sendingTime.day || index == messages.size - 1) {
+                        DateSeparator(date = messages[index].sendingTime)
                     }
-                    if (messages.isNotEmpty() && index == messages.size-1) DateSeparator(date = messages.last().sendingTime)
                 }
             }
         }

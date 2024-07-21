@@ -23,8 +23,8 @@ Base class for event cards and poll cards;
 Other cards must inherit from it
 */
 abstract class BaseCard(//TODo fix empty card
-    val createdAt: Date,//ToDo make this time format properly
-    private val createdBy: Int,//TODO make this reference tenant name
+    val createdAt: Date,
+    private val createdBy: Int,
     val id: String
 ){
 
@@ -47,13 +47,13 @@ abstract class BaseCard(//TODo fix empty card
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(4.dp),
-                horizontalArrangement = Arrangement.Absolute.SpaceAround
+                    .padding(horizontal = 32.dp, vertical = 2.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(
                     text = FleetApplication.fleetModule.getTenantNameAndSurname(createdBy)?: "Unknown author",
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.tertiary
+                    color = MaterialTheme.colorScheme.tertiary,
                 )
                 Text(
                     text = HelperFunctions.getMinAndHour(createdAt),

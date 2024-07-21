@@ -23,17 +23,6 @@ class FleetModule(
 ): ViewModel() {
 
     val fleetDatabase: FleetDatabase = FleetDatabase.getDatabase(context)
-    private var settings: MutableState<Settings> = mutableStateOf(runBlocking { fleetDatabase.settingsDao().get().first() })
-
-    var appColor by mutableStateOf(Color(settings.value.appColor.toULong()))
-    var buildingId by mutableIntStateOf(settings.value.buildingId)
-    var apartmentId by mutableIntStateOf(settings.value.apartmentId)
-    var tenantId by mutableIntStateOf(settings.value.tenantId)
-    var theme by mutableStateOf(settings.value.theme)
-    var font by mutableStateOf(settings.value.font)
-    var showAnimation by mutableStateOf(settings.value.showAnimation)
-    var showNotifications by mutableStateOf(settings.value.showNotifications)
-    var language by mutableStateOf(settings.value.language)
 
     init{
         //seed(fleetDatabase)
@@ -54,6 +43,17 @@ class FleetModule(
             }
         }
     }
+    private var settings: MutableState<Settings> = mutableStateOf(runBlocking { fleetDatabase.settingsDao().get().first() })
+
+    var appColor by mutableStateOf(Color(settings.value.appColor.toULong()))
+    var buildingId by mutableIntStateOf(settings.value.buildingId)
+    var apartmentId by mutableIntStateOf(settings.value.apartmentId)
+    var tenantId by mutableIntStateOf(settings.value.tenantId)
+    var theme by mutableStateOf(settings.value.theme)
+    var font by mutableStateOf(settings.value.font)
+    var showAnimation by mutableStateOf(settings.value.showAnimation)
+    var showNotifications by mutableStateOf(settings.value.showNotifications)
+    var language by mutableStateOf(settings.value.language)
 
     fun upsertSettingsColor(newColor: Color){
         runBlocking { fleetDatabase.settingsDao().upsert(settings.value.copy(appColor = newColor.value.toString())) }

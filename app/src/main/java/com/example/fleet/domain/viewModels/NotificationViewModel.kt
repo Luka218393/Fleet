@@ -1,6 +1,7 @@
 package com.example.fleet.domain.viewModels
 
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.getValue
@@ -49,28 +50,27 @@ class NotificationViewModel (
         tasksCollector()
         pollCollector()
         notificationCollector()
-
     }
+
     //Todo make this smarter
     private fun changePollOption(pollOptionSelected: PollOption, pollOptionUnselected: PollOption?){
         if (pollOptionUnselected == pollOptionSelected){
-            pollOptionSelected.votes -=1
+            pollOptionSelected.votes -= FleetApplication.fleetModule.tenantId
         }
-        pollOptionSelected.votes += 1
+        pollOptionSelected.votes += FleetApplication.fleetModule.tenantId
         viewModelScope.launch {
             db.pollOptionDao().upsert(
                 pollOptionSelected
             )
         }
         if (pollOptionUnselected != null) {
-            pollOptionUnselected.votes -= 1
+            pollOptionUnselected.votes -= FleetApplication.fleetModule.tenantId
             viewModelScope.launch {
                 db.pollOptionDao().upsert(
                     pollOptionUnselected
                 )
             }
         }
-
     }
 
 
@@ -121,8 +121,8 @@ class NotificationViewModel (
                 prev.filterNot{ "Poll" in it.id } + //Deletes all polls from cards
                     polls.map { poll ->
                         PollCard(
-                            poll, pollOptions.filter { it.pollId == poll.id },
-                            showResult = true,
+                            poll,
+                            pollOptions.filter { it.pollId == poll.id },
                             onPollOptionChange =  {poll1, poll2 -> changePollOption(poll1, poll2)}
                         )
                     }
@@ -225,6 +225,10 @@ class NotificationViewModel (
     fun toggleNotificationDialog(){isNotificationDialogShown = !isNotificationDialogShown}
     fun toggleTaskDialog(){isTaskDialogShown = !isTaskDialogShown}
     fun togglePollDialog(){isPollDialogShown = !isPollDialogShown}
+    fun scrollToLastNotification(lazyState: LazyListState){
+        //Make it scroll to the bottom not top of the last item
+        viewModelScope.launch { lazyState.scrollToItem(0) }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")

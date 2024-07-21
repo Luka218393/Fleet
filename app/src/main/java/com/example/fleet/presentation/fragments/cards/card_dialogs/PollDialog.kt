@@ -43,6 +43,7 @@ import com.example.fleet.presentation.fragments.input_fields.InputField
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 
+//Todo add show result
 //Todo make max of ten options
 @Composable
 fun PollDialog(

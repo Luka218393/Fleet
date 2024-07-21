@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.fleet.presentation.fragments.input_fields.InputField
 
-//Todo make all of theese functions objects
+//Todo make all baseCards one function
 @Composable
 fun NotificationDialog(
     onDismiss: () -> Unit,
