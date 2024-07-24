@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Entity(tableName = "SubTasks",
     foreignKeys = [
@@ -22,11 +23,11 @@ import java.time.LocalDateTime
         )]
 )
 data class SubTask(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val taskId: Int,
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
+    val taskId: String,
     var text: String,
     var completed: Boolean = false,
-    var completedBy: Int? = null,
+    var completedBy: String? = null,
     var completedAt: LocalDateTime? = LocalDateTime.now(),
 )

@@ -20,8 +20,8 @@ interface NotificationDao {
     fun getAll(): Flow<List<Notification>>
 
     @Query("SELECT * from notifications WHERE id = :id")
-    fun getById(id: Int): Flow<List<Notification>>
+    fun getById(id: String): Flow<List<Notification>>
 
     @Query("SELECT * from notifications WHERE buildingId = :id")
-    fun getByBuildingId(id: Int): Flow<List<Notification>>
+    fun getByBuildingId(id: String): Flow<List<Notification>>
 }

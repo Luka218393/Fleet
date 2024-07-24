@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.fleet.domain.Enums.Countries
 import com.example.fleet.domain.Enums.Theme
+import java.util.UUID
 
 
 @Entity(
@@ -20,9 +21,9 @@ import com.example.fleet.domain.Enums.Theme
     ],
 )
 data class Settings (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val tenantId: Int = 0,
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
+    val tenantId: String,
     var theme: Theme = Theme.DEFAULT,
     var showAnimation: Boolean = true,
     var language: Countries = Countries.ENGLAND,

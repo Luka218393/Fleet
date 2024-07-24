@@ -20,5 +20,5 @@ interface BuildingDao {
     fun getAll(): Flow<List<Building>>
 
     @Query("SELECT * from buildings WHERE id = :id")
-    fun getById(id: Int): Flow<Building>
+    fun getById(id: String): Flow<Building>
 }

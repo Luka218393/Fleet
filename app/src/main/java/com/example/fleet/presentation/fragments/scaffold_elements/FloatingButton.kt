@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun FloatingButton(
@@ -84,10 +83,4 @@ fun SimpleFloatingButton(
             tint = Color.White
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewFloatingMenuScreen() {
-    FloatingButton({},{},{})
 }

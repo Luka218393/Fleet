@@ -24,5 +24,5 @@ interface ApartmentDao {
     fun getAll(): Flow<List<Apartment>>
 
     @Query("SELECT * from apartments WHERE id = :id")
-    fun getById(id: Int): Flow<Apartment>
+    fun getById(id: String): Flow<Apartment>
 }

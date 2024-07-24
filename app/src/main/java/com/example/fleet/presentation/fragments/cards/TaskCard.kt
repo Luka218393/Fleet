@@ -19,11 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
-import com.example.fleet.data.subTasks
-import com.example.fleet.data.tasks
 import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 
@@ -32,8 +29,7 @@ import com.example.fleet.domain.Models.Task
 class TaskCard (
     private val task: Task,
     private val subTasks: List<SubTask>,
-    private val onTaskCompletion: (Int) -> Unit,//Todo Make muatble
-    private val modifier: Modifier = Modifier
+    private val onTaskCompletion: (String) -> Unit,//Todo Make mutable
 ): BaseCard(task.createdAt, task.creatorId,"Task id:" + task.id) {
     //
     @Composable
@@ -53,7 +49,7 @@ class TaskCard (
 @Composable
 fun SubTaskDisplay(
     subTask: SubTask,
-    onTaskCompletion: (Int) -> Unit,
+    onTaskCompletion: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
     Column {
@@ -100,11 +96,5 @@ fun SubTaskDisplay(
             color = MaterialTheme.colorScheme.secondary
         )
     }
-}
-
-@Composable
-@Preview
-fun TaskCardPreview(){
-    TaskCard(tasks[0], subTasks.subList(1,3),{}).Content()
 }
 

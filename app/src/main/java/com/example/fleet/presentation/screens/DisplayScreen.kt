@@ -49,7 +49,7 @@ data class  DisplayScreen(
     @Transient
     private val modifier: Modifier = Modifier,
     @Transient
-    private val tenantId: Int
+    private val tenantId: String
 ): Screen {
 
     @Composable
@@ -79,7 +79,7 @@ data class  DisplayScreen(
 
     @Composable
     private fun DisplayTenant(
-        tenantId: Int,
+        tenantId: String,
         editMode: Boolean
     ) {
         LaunchedEffect(key1 = tenantId) {
@@ -123,11 +123,6 @@ data class  DisplayScreen(
                         viewModel.surname.value = it
                     }
 
-                    EditableTextField( editMode = editMode, value = viewModel.age,"Age", textStyle = MaterialTheme.typography.displaySmall, snackbarHostState = snackbarHostState ){
-                        try {
-                            viewModel.age.value = it.toInt()
-                        }catch (e: Error){}
-                    }
                 }
             }
             HorizontalDivider(thickness = 2.dp)
@@ -144,7 +139,7 @@ data class  DisplayScreen(
                 //Todo add inputs for Date and predeclared list (ApartmentId)
                 AttributeDisplay(attribute = "About me", value = viewModel.description, editMode = editMode, maxLines = 4){viewModel.description.value = it}
                 AttributeDisplay(attribute = "Profession", value = viewModel.profession, editMode = editMode){viewModel.profession.value = it}
-                AttributeDisplay(attribute = "Apartment number", value = viewModel.apartmentId, editMode = editMode){viewModel.apartmentId.value = it.toInt()}//Todo fix this
+                AttributeDisplay(attribute = "Apartment number", value = viewModel.apartmentId, editMode = editMode){viewModel.apartmentId.value = it}//Todo fix this
                 AttributeDisplay(attribute = "Birthday", value = viewModel.birthday, editMode = editMode){viewModel.birthday.value = it}
                 AttributeDisplay(attribute = "E-mail", value = viewModel.email, editMode = editMode){viewModel.email.value = it}
                 AttributeDisplay(attribute = "Phone number", value = viewModel.phoneNumber, editMode = editMode){viewModel.phoneNumber.value = it}
@@ -162,5 +157,5 @@ data class  DisplayScreen(
 @Preview
 @Composable
 fun TenantDisplayScreen(){
-    DisplayScreen(tenantId = 7).Content()
+    DisplayScreen(tenantId = "7").Content()
 }

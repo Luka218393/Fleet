@@ -20,7 +20,7 @@ class SettingsViewModel(
 
     fun changeSettingsColor(newColor: Color) = runBlocking { db.settingsDao().upsert(FleetApplication.fleetModule.settings.value.copy(appColor = newColor.value.toString())) }
 
-    fun changeUserId(newId: Int) = runBlocking { db.settingsDao().upsert(FleetApplication.fleetModule.settings.value.copy(tenantId = newId)) }
+    fun changeUserId(newId: String) = runBlocking { db.settingsDao().upsert(FleetApplication.fleetModule.settings.value.copy(tenantId = newId)) }
 }
 
 @Suppress("UNCHECKED_CAST")

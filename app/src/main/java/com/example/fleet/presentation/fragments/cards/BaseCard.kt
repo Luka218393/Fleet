@@ -24,7 +24,7 @@ Other cards must inherit from it
 */
 abstract class BaseCard(//TODo fix empty card
     val createdAt: LocalDateTime,
-    private val createdBy: Int,
+    private val createdBy: String,
     val id: String
 ){
 

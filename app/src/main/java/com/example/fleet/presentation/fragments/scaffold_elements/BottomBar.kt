@@ -31,7 +31,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.domain.Enums.Screens
@@ -136,11 +135,4 @@ fun InputBottomBar(
         }
     }
 }
-}
-
-
-@Preview
-@Composable
-fun InputBottomBarPreview(){
-    InputBottomBar(modifier = Modifier, send = {})
 }

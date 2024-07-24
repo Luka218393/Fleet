@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import com.example.fleet.domain.Enums.PollType
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Entity(
     tableName = "polls",
@@ -25,10 +26,10 @@ import java.time.LocalDateTime
     ]
 )
 data class Poll (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val buildingId: Int,//
-    val creatorId: Int,//
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
+    val buildingId: String,//
+    val creatorId: String,//
     val title: String,
     val pollType: PollType,
     var resultsVisible: Boolean = true,

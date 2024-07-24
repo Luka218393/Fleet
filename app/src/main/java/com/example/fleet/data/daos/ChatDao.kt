@@ -20,8 +20,8 @@ interface ChatDao {
     fun getAll(): Flow<List<Chat>>
 
     @Query("SELECT * from chats WHERE id = :id")
-    fun getById(id: Int): Flow<Chat>
+    fun getById(id: String): Flow<Chat>
 
     @Query("SELECT * FROM chats WHERE id IN (:ids)")
-    fun getChatsByIds(ids: List<Int>): Flow<List<Chat>>
+    fun getChatsByIds(ids: List<String>): Flow<List<Chat>>
 }

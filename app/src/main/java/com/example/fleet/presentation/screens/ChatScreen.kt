@@ -22,7 +22,7 @@ import com.example.fleet.presentation.fragments.scaffold_elements.InputBottomBar
 //
 class ChatScreen(
     @Transient
-    private val chatId: Int,
+    private val chatId: String,
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java],
     @Transient

@@ -188,9 +188,3 @@ fun VotesCounter(
         )
     }
 }
-
-@Composable
-@Preview
-fun PollCardPreview(){
-    //PollCard(polls[0], pollOptions,Modifier, { a, b  ->}, false).Content()
-}

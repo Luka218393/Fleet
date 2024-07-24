@@ -13,7 +13,7 @@ import com.example.fleet.presentation.screens.creation_screens.SignInScreen
 
 
 object Navigation{
-    fun goTo(screen: Screens, navigator: Navigator?, componentId: Int = 1){
+    fun goTo(screen: Screens, navigator: Navigator?, componentId: String = "1"){
         // TODO make so that you cant push activity that you are already on
         when(screen){
             Screens.CHAT_SELECTION -> navigator?.push(ChatSelectionScreen())

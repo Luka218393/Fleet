@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 import java.util.Date
+import java.util.UUID
 
 @Entity(tableName = "tenants",
     foreignKeys = [
@@ -18,9 +19,9 @@ import java.util.Date
 )
 //Todo add color so that everyone can see your color
 data class Tenant(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    var apartmentId: Int, //
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
+    var apartmentId: String, //
     var name: String,
     var surname: String = "",
     val phoneNumber: String? = null,
@@ -29,10 +30,11 @@ data class Tenant(
     var profileImageRes: Int? = null,
     val birthday: Date? = null,
     var profession: String? = null,
-    var description: String? = null,//Todo Rename this to description
+    var description: String? = null,
     var isOnline: Boolean = true,
     var isApartmentHead: Boolean = false,
     var isTenantLeader: Boolean = false,
     val createdAt: LocalDate = LocalDate.now(),
+    var password: String
 )
 //Todo add password

@@ -20,11 +20,11 @@ interface MessageDao {
     fun getAll(): Flow<List<Message>>
 
     @Query("SELECT * from messages WHERE id = :id")
-    fun getById(id: Int): Flow<List<Message>>
+    fun getById(id: String): Flow<List<Message>>
 
     @Query("SELECT * from messages WHERE chatId = :chatId ORDER BY sendingTime DESC")
-    fun getByChatId(chatId: Int): Flow<List<Message>>
+    fun getByChatId(chatId: String): Flow<List<Message>>
 
     @Query("SELECT text from messages WHERE chatId = :chatId ORDER BY sendingTime DESC LIMIT 1")
-    fun getLastMessageFromChat(chatId: Int): String?
+    fun getLastMessageFromChat(chatId: String): String?
 }

@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Entity(
     tableName = "notifications",
@@ -25,10 +26,10 @@ import java.time.LocalDateTime
     ]
 )
 data class Notification (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val buildingId: Int,//
-    val creatorId: Int, //
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
+    val buildingId: String,//
+    val creatorId: String, //
     var title: String,
     var text: String,
     var imageResId: Int? = null,

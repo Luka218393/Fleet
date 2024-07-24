@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import kotlin.random.Random
+import java.util.UUID
 
 //Todo change all ID to some strong value
 class NotificationViewModel (
@@ -175,7 +175,7 @@ class NotificationViewModel (
     //
     fun createPoll(title: String, options: List<String>, endDate: Int){
         val poll = Poll(
-            id = Random.nextInt(Int.MAX_VALUE),
+            id = UUID.randomUUID().toString(),
             creatorId = FleetApplication.fleetModule.tenantId,
             buildingId = FleetApplication.fleetModule.building.value.id,
             title = title,
@@ -199,7 +199,7 @@ class NotificationViewModel (
     //
     fun createTask(title: String, subTasks: List<String>){
         val task = Task(
-            id = Random.nextInt(Int.MAX_VALUE),
+            id = UUID.randomUUID().toString(),
             creatorId = FleetApplication.fleetModule.tenantId,
             buildingId = FleetApplication.fleetModule.building.value.id,
             title = title,

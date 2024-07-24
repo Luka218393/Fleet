@@ -3,6 +3,7 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(
     tableName = "poll_options",
@@ -17,9 +18,9 @@ import androidx.room.PrimaryKey
     ]
 )
 data class PollOption (
-    @PrimaryKey (autoGenerate = true)
-    val id: Int = 0,
-    val pollId: Int, //
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
+    val pollId: String, //
     val value: String,
-    var votes: List<Int> = emptyList(),
+    var votes: List<String> = emptyList(),
 )

@@ -20,14 +20,14 @@ interface SubTaskDao {
     fun getAll(): Flow<List<SubTask>>
 
     @Query("SELECT * from SubTasks WHERE id = :id")
-    fun getById(id: Int): Flow<SubTask>
+    fun getById(id: String): Flow<SubTask>
 
     @Query("SELECT * from SubTasks WHERE taskId = :taskId")
-    fun getByTaskId(taskId: Int): Flow<List<SubTask>>
+    fun getByTaskId(taskId: String): Flow<List<SubTask>>
 
     @Query("""
         SELECT * FROM subtasks WHERE subtasks.taskid IN
             (SELECT tasks.id FROM tasks WHERE tasks.buildingId == :buildingId)
     """)
-    fun getByBuildingId(buildingId: Int): Flow<List<SubTask>>
+    fun getByBuildingId(buildingId: String): Flow<List<SubTask>>
 }

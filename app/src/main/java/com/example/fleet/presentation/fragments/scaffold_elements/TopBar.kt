@@ -35,7 +35,7 @@ fun ChatTopBar(
     modifier: Modifier,
     title: String,
     nav : Navigator = LocalNavigator.current!!,//Todo this may cause issues ?
-    chatId: Int
+    chatId: String
 ) {
     TopAppBar(
         modifier = modifier

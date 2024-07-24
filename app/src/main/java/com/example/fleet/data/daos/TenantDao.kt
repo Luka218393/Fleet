@@ -20,13 +20,13 @@ interface TenantDao {
     fun getAll(): Flow<List<Tenant>>
 
     @Query("SELECT * from tenants WHERE id = :id")
-    fun getById(id: Int): Flow<Tenant>
+    fun getById(id: String): Flow<Tenant>
 
     @Query("SELECT Name from tenants where id = :id ")
-    fun getNameById(id:Int): String
+    fun getNameById (id: String): String
 
     @Query("SELECT * FROM tenants WHERE apartmentId IN ( SELECT id FROM apartments WHERE buildingId = :buildingId) ")
-    fun getTenantsInSameBuilding(buildingId:Int): List<Tenant>
+    fun getTenantsInSameBuilding(buildingId: String): List<Tenant>
 
     @Query("SELECT id, name, surname  FROM tenants")
     fun getTenantsIdAndName(): Flow<List<TenantIdAndName>>
@@ -35,7 +35,7 @@ interface TenantDao {
 }
 
 data class TenantIdAndName(
-    val id: Int,
+    val id: String,
     val name: String,
     val surname: String
 )

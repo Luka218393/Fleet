@@ -64,6 +64,16 @@ class TypeConverte {
     fun fromLocalDateTime(date: LocalDateTime?): String? {
         return date?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
     }
+
+    @TypeConverter
+    fun fromString(value: String?): List<String>? {
+        return value?.split(",")?.map { it.trim() }
+    }
+
+    @TypeConverter
+    fun toString(list: List<String>?): String? {
+        return list?.joinToString(",")
+    }
 }
 
 

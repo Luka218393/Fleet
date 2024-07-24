@@ -20,8 +20,8 @@ interface PollDao {
     fun getAll(): Flow<List<Poll>>
 
     @Query("SELECT * from polls WHERE id = :id")
-    fun getById(id: Int): Flow<Poll>
+    fun getById(id: String): Flow<Poll>
 
     @Query("SELECT * from polls WHERE buildingid = :id")
-    fun getByBuildingId(id: Int): Flow<List<Poll>>
+    fun getByBuildingId(id: String): Flow<List<Poll>>
 }

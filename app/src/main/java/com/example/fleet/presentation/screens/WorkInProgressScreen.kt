@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.domain.Navigation
@@ -31,8 +32,9 @@ class WorkInProgressScreen: Screen {
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = "This part of the app still isn't finished",
-                    style = MaterialTheme.typography.displayMedium
+                    text = "This part of the app \n still isn't finished",
+                    style = MaterialTheme.typography.displaySmall,
+                    textAlign = TextAlign.Center
                 )
             }
         }

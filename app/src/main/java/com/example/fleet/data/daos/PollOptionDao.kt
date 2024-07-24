@@ -16,18 +16,18 @@ interface PollOptionDao {
     suspend fun delete(pollOption: PollOption)
 
     @Query("SELECT * from poll_options WHERE id = :id")
-    fun getById(id: Int): Flow<PollOption>
+    fun getById(id: String): Flow<PollOption>
 
     @Query("SELECT * from poll_options ORDER BY value ASC")
     fun getAll(): Flow<List<PollOption>>
 
     @Query("SELECT * from poll_options WHERE pollid = :id")
-    fun getByPollId(id: Int): Flow<List<PollOption>>
+    fun getByPollId(id: String): Flow<List<PollOption>>
 
     @Query("""
         SELECT * FROM poll_options WHERE pollId IN(
             SELECT polls.id FROM polls WHERE polls.buildingId == :buildingId
         )
     """)
-    fun getByBuildingId(buildingId: Int): Flow<List<PollOption>>
+    fun getByBuildingId(buildingId: String): Flow<List<PollOption>>
 }

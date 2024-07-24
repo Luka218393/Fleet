@@ -26,6 +26,6 @@ import androidx.room.PrimaryKey
 data class TenantChat(
     @PrimaryKey(autoGenerate = false)
     val id: String,// format is "tenantId,chatId" ("2,12")
-    val tenantId: Int,
-    val chatId: Int,
+    val tenantId: String,
+    val chatId: String,
 )

@@ -65,7 +65,7 @@ class ChatCreationScreen: Screen {
         val nav = LocalNavigator.current
         val tenantsToDisplay = viewModel.tenants.collectAsState(emptyList()).value
         var isPersonal by remember { mutableStateOf(false) }
-        val selectedTenants = remember { mutableStateListOf<Int>() }
+        val selectedTenants = remember { mutableStateListOf<String>() }
         var displayChatDialog by remember { mutableStateOf(false) }
         LaunchedEffect(key1 = modifier) {
             viewModel.insertTenantsForChatCreation(isPersonal)

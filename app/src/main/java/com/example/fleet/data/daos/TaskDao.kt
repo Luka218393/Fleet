@@ -20,8 +20,8 @@ interface TaskDao {
     fun getAll(): Flow<List<Task>>
 
     @Query("SELECT * from tasks WHERE id = :id")
-    fun getById(id: Int): Flow<Task>
+    fun getById(id: String): Flow<Task>
 
     @Query("SELECT * from tasks WHERE buildingid = :id")
-    fun getByBuildingId(id: Int): Flow<List<Task>>
+    fun getByBuildingId(id: String): Flow<List<Task>>
 }

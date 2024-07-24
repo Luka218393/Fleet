@@ -77,7 +77,7 @@ fun <T> InputField(
 
 @Composable
 fun <T> UnderlinedInputField(
-    value: State<T>,
+    value: State<T?>,
     placeholder: String = "",
     maxLines: Int = 1,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
@@ -85,7 +85,7 @@ fun <T> UnderlinedInputField(
     keyboardType: KeyboardType = KeyboardType.Text,
     onValueChange: (String) -> Unit,
 ) {
-    val displayValue by remember { derivedStateOf{value.value.toString()} }
+    val displayValue by remember { derivedStateOf{value.value?.toString() ?: ""} }
     var showSnackbar by remember { mutableStateOf(false) }
 
 

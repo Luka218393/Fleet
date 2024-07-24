@@ -2,7 +2,6 @@ package com.example.fleet.domain.viewModels
 
 import android.util.Log
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -16,28 +15,27 @@ import kotlinx.coroutines.runBlocking
 class DisplayViewModel(
     private val db: FleetDatabase,
 ): ViewModel() {
-    private fun getTenantById(id: Int) = runBlocking { db.tenantDao().getById(id).first() }
+    private fun getTenantById(id: String) = runBlocking { db.tenantDao().getById(id).first() }
 
     var tenant by mutableStateOf<Tenant?>(null)
     var name = mutableStateOf("123")
     var surname = mutableStateOf("")
-    var age = mutableIntStateOf(0)
     var description = mutableStateOf("")
     var profession = mutableStateOf("")
-    var apartmentId = mutableIntStateOf(0)
+    var apartmentId = mutableStateOf("")
     var phoneNumber = mutableStateOf("")
     var email = mutableStateOf("")
     var birthday = mutableStateOf("")
     var profileImageRes = mutableStateOf<Int?>(null)
 
-    fun getTenantAttributes(tenantId: Int){
+    fun getTenantAttributes(tenantId: String){
         tenant = getTenantById(tenantId)
         if (tenant != null) {
             name.value = tenant!!.name
             surname.value = tenant!!.surname
             description.value = tenant!!.description ?: ""
             profession.value = tenant!!.profession ?: ""
-            apartmentId.intValue = tenant!!.apartmentId ?: 1
+            apartmentId.value = tenant!!.apartmentId ?: ""
             phoneNumber.value = tenant!!.phoneNumber ?: ""
             email.value = tenant!!.email ?: ""
             birthday.value = tenant!!.birthday.toString() ?: ""

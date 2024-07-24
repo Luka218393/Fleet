@@ -3,6 +3,7 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(tableName = "apartments",
     foreignKeys = [
@@ -13,10 +14,13 @@ import androidx.room.PrimaryKey
         ),
     ]
 )
+/*Todo
+@PrimaryKey(autoGenerate = false)
+val id: String = UUID.randomUUID().toString(),*/
 data class Apartment (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val buildingId: Int,//
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
+    val buildingId: String,//
     val floor: Int = 0,
     val door: String = "1",
     val maxCapacity: Int? = null,

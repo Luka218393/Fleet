@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import kotlin.random.Random
+import java.util.UUID
 
 class ChatViewModel (
     val db: FleetDatabase,
@@ -40,8 +40,8 @@ class ChatViewModel (
     }
 
     //
-    fun createChat(tenantIds: List<Int>, isPrivate: Boolean, title: String? = null) {
-        val chatId = Random.nextInt(Int.MAX_VALUE)
+    fun createChat(tenantIds: List<String>, isPrivate: Boolean, title: String? = null) {
+        val chatId = UUID.randomUUID().toString()
         //Todo check if private chat already exists -> send message
         runBlocking {
             db.chatDao().upsert(
@@ -96,7 +96,7 @@ class ChatViewModel (
 
     //
     private var messageCollectorJob: Job? = null
-    fun changeMessageCollectorJob(chatId: Int) {
+    fun changeMessageCollectorJob(chatId: String) {
         messageCollectorJob?.cancel()
         messageCollectorJob = viewModelScope.launch {
                 db.messageDao().getByChatId(chatId).collect{ messages ->
@@ -106,7 +106,7 @@ class ChatViewModel (
     }
 
     //
-    fun sendMessage(text: String, chatId: Int){
+    fun sendMessage(text: String, chatId: String){
         runBlocking {
             db.messageDao().upsert(
                 Message(
@@ -119,9 +119,9 @@ class ChatViewModel (
     }
 
     //
-    fun getLastMessage(chatId: Int): String = runBlocking { db.messageDao().getLastMessageFromChat(chatId) ?: "No messages yet" }
+    fun getLastMessage(chatId: String): String = runBlocking { db.messageDao().getLastMessageFromChat(chatId) ?: "No messages yet" }
 
-    fun getChat(id: Int): Chat = runBlocking { db.chatDao().getById(id).first() }
+    fun getChat(id: String): Chat = runBlocking { db.chatDao().getById(id).first() }
 
     fun scrollToLastMessage(lazyState: LazyListState){
         //Make it scroll to the bottom not top of the last item

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
@@ -44,7 +43,7 @@ class FleetModule(
     var settings: MutableState<Settings> = mutableStateOf(runBlocking { fleetDatabase.settingsDao().get().first() })
 
     var appColor by mutableStateOf(Color(settings.value.appColor.toULong()))
-    var tenantId by mutableIntStateOf(settings.value.tenantId)
+    var tenantId by mutableStateOf(settings.value.tenantId)
     var theme by mutableStateOf(settings.value.theme)
     var showAnimation by mutableStateOf(settings.value.showAnimation)
     var showNotifications by mutableStateOf(settings.value.showNotifications)
@@ -57,7 +56,7 @@ class FleetModule(
 
 
     private var tenantNames: List<TenantIdAndName> = runBlocking { fleetDatabase.tenantDao().getTenantsIdAndName().first()}
-    fun getTenantNameAndSurname(id: Int): String? = tenantNames.find { it.id == id }?.let { it.name + " " + it.surname }
+    fun getTenantNameAndSurname(id: String): String? = tenantNames.find { it.id == id }?.let { it.name + " " + it.surname }
 }
 
 @Suppress("UNCHECKED_CAST")

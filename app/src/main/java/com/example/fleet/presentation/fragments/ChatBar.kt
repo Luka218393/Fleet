@@ -30,7 +30,7 @@ import com.example.fleet.presentation.HelperFunctions
 
 @Composable
 fun Select_ChatBar(
-    navigateToChatScreen:(Int)->Unit,
+    navigateToChatScreen:(String)->Unit,
     chat: Chat,
     lastMessageText: String
 ) {
@@ -91,9 +91,9 @@ fun Select_ChatBar(
 @Composable
 fun SimplifiedChatBar(
     tenant: Tenant,
-    isBarSelected: (Int) -> Boolean,
-    onClick:(Int) -> Unit,
-    onDismiss: (Int) -> Unit
+    isBarSelected: (String) -> Boolean,
+    onClick:(String) -> Unit,
+    onDismiss: (String) -> Unit
 ) {
     val modifier = Modifier
     Card(

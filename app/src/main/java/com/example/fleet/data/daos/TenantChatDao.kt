@@ -22,10 +22,10 @@ interface TenantChatDao {
     fun getAll(): Flow<List<TenantChat>>
 
     @Query("SELECT * FROM tenant_chat WHERE chatId = :chatId")
-    fun getByChatId(chatId: Int): Flow<List<TenantChat>>
+    fun getByChatId(chatId: String): Flow<List<TenantChat>>
 
     @Query("SELECT * from chats WHERE id in (SELECT chatId FROM tenant_chat WHERE tenantId = :tenantId)")
-    fun getChatsOfATenant(tenantId: Int): Flow<List<Chat>>
+    fun getChatsOfATenant(tenantId: String): Flow<List<Chat>>
 
     //Todo remove tenant that has original Id
     @Query("""
@@ -51,25 +51,9 @@ interface TenantChatDao {
         )
     )           
     """)
-    fun getTenantsForNewPersonalChat(tenantId: Int): List<Tenant>
+    fun getTenantsForNewPersonalChat(tenantId: String): List<Tenant>
 }
 
-
-/*
-SELECT * FROM tenants WHERE --Select tenants to display
-tenants.id NOT IN
-(SELECT tenantId FROM tenant_chat WHERE chatId IN--Finds tenants that are not in private chat with original tenant
-(SELECT chats.id from chats WHERE  isPrivate == 1 AND chats.id IN --Filters those chats only to those that are private
-(SELECT chatId FROM tenant_chat WHERE tenantId = :tenantId)))--Selects all chats that the tenant is in
-AND tenants.apartmentId IN (--Selects all tenants that live in those apartments
-SELECT apartments.id FROM apartments WHERE apartments.buildingId IN --Selects all apartments from taht building
-(SELECT buildingId FROM apartments WHERE apartments.id IN
-(SELECT apartmentId FROM tenants WHERE tenants.id == :tenantId LIMIT 1) LIMIT 1))--Selects Apartment and building that the tenant lives in
-
-
-
-
-*/
 
 
 

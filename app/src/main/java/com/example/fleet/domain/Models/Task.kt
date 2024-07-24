@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Entity(tableName = "tasks",
     foreignKeys = [
@@ -22,10 +23,10 @@ import java.time.LocalDateTime
         )]
 )
 data class Task(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val buildingId: Int,//
-    val creatorId: Int,//
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
+    val buildingId: String,//
+    val creatorId: String,//
     var title: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
 )

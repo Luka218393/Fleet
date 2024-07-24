@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import cafe.adriel.voyager.navigator.Navigator
-import com.example.fleet.presentation.screens.SettingsScreen
+import com.example.fleet.presentation.screens.NotificationScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
 
 /**
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FleetTheme (
                 content = {
-                    Navigator(SettingsScreen())
+                    Navigator(NotificationScreen())
                 }
             )
         }

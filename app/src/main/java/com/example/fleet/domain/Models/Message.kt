@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Entity(
     tableName = "messages",
@@ -25,10 +26,10 @@ import java.time.LocalDateTime
     ]
 )
 data class Message (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
     var text: String,
-    val chatId: Int,//
-    val senderId: Int,//
+    val chatId: String,//
+    val senderId: String,//
     var sendingTime: LocalDateTime = LocalDateTime.now(),
 )

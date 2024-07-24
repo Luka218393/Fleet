@@ -69,7 +69,7 @@ class SettingsScreen  : Screen{
                 SettingsBar(painterIcon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
 
                 SettingsSeparator(text = "Account")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.key_icon), text = "Change account", onClick = { viewModel.changeUserId(4) })//Todo make whole app restart or remake all Jobs
+                SettingsBar(painterIcon = painterResource(id = R.drawable.key_icon), text = "Change account", onClick = { Navigation.goTo(Screens.SIGN_IN, nav) })//Todo make whole app restart or remake all Jobs
                 SettingsBar(painterIcon = painterResource(id = R.drawable.lock_icon), text = "Privacy", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
                 SettingsBar(painterIcon = painterResource(id = R.drawable.list_icon), text = "Terms of service", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
 

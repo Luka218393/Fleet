@@ -4,11 +4,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.fleet.domain.Enums.Countries
 import java.time.LocalDate
+import java.util.UUID
 
 @Entity(tableName = "buildings")
 data class Building (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey(autoGenerate = false)
+    val id: String = UUID.randomUUID().toString(),
     val country: Countries? = null,
     val region: String? = null,
     val city: String? = null,
