@@ -1,6 +1,7 @@
 package com.example.fleet.presentation
 
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.Date
 
 object HelperFunctions {
@@ -12,10 +13,10 @@ object HelperFunctions {
         return if (text.length > length) text.slice(0..length) + " ..." else text
     }
 
-    fun getDayAndMonth(date: Date): String{
-        return formatDate(date).subList(1,3).joinToString (separator = "/")
+    fun getDayAndMonth(date: LocalDateTime): String{
+        return "Todo FIX ME HELPER FUNCTIONS MIN AND HOUR"
     }
-    fun getMinAndHour(date: Date):String{
-        return formatDate(date).subList(3,5).joinToString (separator = ":")
+    fun getMinAndHour(date: LocalDateTime):String{
+        return "Todo FIX ME HELPER FUNCTIONS MIN AND HOUR"
     }
 }

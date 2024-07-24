@@ -1,11 +1,14 @@
 package com.example.fleet.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -36,6 +39,7 @@ class NotificationScreen(
         //
         val cards = viewModel.cards.collectAsState().value
         val lazyState = rememberLazyListState()
+
         Scaffold(
             bottomBar = {BottomBar()},
             floatingActionButton = {
@@ -47,25 +51,38 @@ class NotificationScreen(
                 },
         ) { padding ->
 
-            //
-            LazyColumn(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(padding),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                state = lazyState
-            ) {
-                items(cards.size, key = { cards[it].id }) { index ->
+            if (cards.isEmpty()){
+                Box(
+                    modifier = Modifier.padding(padding)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ){
+                    Text(
+                        text = "No notifications yet",
+                        style = MaterialTheme.typography.displaySmall
+                    )
+                }
+            }
+            else {
+                //
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    state = lazyState
+                ) {
+                    items(cards.size, key = { cards[it].id }) { index ->
 
-                    cards[index].Create()
+                        cards[index].Create()
 
-                    if (index + 1 < cards.size && cards[index + 1].createdAt.day != cards[index].createdAt.day || index == cards.size - 1) {
-                        DateSeparator(date = cards[index].createdAt)
+                        if (index + 1 < cards.size && cards[index + 1].createdAt.dayOfYear != cards[index].createdAt.dayOfYear || index == cards.size - 1) {
+                            DateSeparator(date = cards[index].createdAt)
+                        }
                     }
                 }
             }
-
             //Todo make them scroll to the last when notificaions are created
             if (viewModel.isNotificationDialogShown){ NotificationDialog( onDismiss = {viewModel.toggleNotificationDialog()}, onConfirm = { a,b -> viewModel.createNotification(a,b);viewModel.toggleNotificationDialog() }) }
             if (viewModel.isPollDialogShown){ PollDialog(onDismiss = {viewModel.togglePollDialog()}, onConfirm = { a, b, c-> viewModel.createPoll(a,b,c); viewModel.togglePollDialog()}) }

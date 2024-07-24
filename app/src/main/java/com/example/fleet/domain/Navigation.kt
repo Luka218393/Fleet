@@ -8,6 +8,8 @@ import com.example.fleet.presentation.screens.ChatSelectionScreen
 import com.example.fleet.presentation.screens.DisplayScreen
 import com.example.fleet.presentation.screens.NotificationScreen
 import com.example.fleet.presentation.screens.SettingsScreen
+import com.example.fleet.presentation.screens.WorkInProgressScreen
+import com.example.fleet.presentation.screens.creation_screens.SignInScreen
 
 
 object Navigation{
@@ -20,6 +22,9 @@ object Navigation{
             Screens.CHAT -> navigator?.push(ChatScreen(chatId = componentId ))
             Screens.DISPLAY -> navigator?.push(DisplayScreen(tenantId = componentId))
             Screens.CHAT_CREATION -> navigator?.push((ChatCreationScreen()))
+            Screens.WORK_IN_PROGRESS -> navigator?.push(WorkInProgressScreen())
+
+            Screens.SIGN_IN -> navigator?.push(SignInScreen())
         }
     }
 

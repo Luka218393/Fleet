@@ -2,8 +2,6 @@ package com.example.fleet.domain.viewModels
 
 import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -73,8 +71,6 @@ class NotificationViewModel (
         }
     }
 
-
-
     private fun tasksCollector(){
         var tasks = emptyList<Task>()
         var subTasks = emptyList<SubTask>()
@@ -95,14 +91,14 @@ class NotificationViewModel (
 
         //
         viewModelScope.launch {
-            db.taskDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect {
+            db.taskDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect {
                 Log.i("NotificationViewModel", it.map{a-> a.id}.toString() + " Tasks")
                 tasks = it
                 update()
             }
         }
         viewModelScope.launch {
-            db.subTaskDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect {
+            db.subTaskDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect {
                 subTasks = it
                 Log.i("NotificationViewModel", it.map{a ->a.id}.toString() + " SubTasks")
 
@@ -132,13 +128,13 @@ class NotificationViewModel (
 
         //
         viewModelScope.launch {
-            db.pollDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect {
+            db.pollDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect {
                 polls = it
                 update()
             }
         }
         viewModelScope.launch {
-            db.pollOptionDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect {
+            db.pollOptionDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect {
                 pollOptions = it
                 update()
             }
@@ -148,7 +144,7 @@ class NotificationViewModel (
     private fun notificationCollector(){
         //Todo again same - make update only ones that have changed
         viewModelScope.launch {
-            db.notificationDao().getByBuildingId(FleetApplication.fleetModule.buildingId).collect { notifications ->
+            db.notificationDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect { notifications ->
                 _cards.update {prev -> prev.filterNot{"Notification" in it.id } + notifications.map { NotificationCard(it) }}
                 _cards.update { prev -> prev.sortedByDescending { it.createdAt  } }
             }
@@ -166,11 +162,10 @@ class NotificationViewModel (
         viewModelScope.launch {
             db.notificationDao().upsert(
                 Notification(
-                    buildingId = FleetApplication.fleetModule.buildingId,
+                    buildingId = FleetApplication.fleetModule.building.value.id,
                     title = title,
                     text = text,
                     imageResId = null,
-                    iconResId = Icons.Default.Favorite,
                     creatorId = FleetApplication.fleetModule.tenantId
                 )
             )
@@ -182,10 +177,10 @@ class NotificationViewModel (
         val poll = Poll(
             id = Random.nextInt(Int.MAX_VALUE),
             creatorId = FleetApplication.fleetModule.tenantId,
-            buildingId = FleetApplication.fleetModule.buildingId,
+            buildingId = FleetApplication.fleetModule.building.value.id,
             title = title,
             pollType = PollType.SINGLE_CHOICE,
-            voteEndDate = LocalDate.now().plusDays(endDate.toLong())
+            endDate = LocalDate.now().plusDays(endDate.toLong())
         )
 
         viewModelScope.launch {
@@ -206,7 +201,7 @@ class NotificationViewModel (
         val task = Task(
             id = Random.nextInt(Int.MAX_VALUE),
             creatorId = FleetApplication.fleetModule.tenantId,
-            buildingId = FleetApplication.fleetModule.buildingId,
+            buildingId = FleetApplication.fleetModule.building.value.id,
             title = title,
         )
         viewModelScope.launch {

@@ -12,12 +12,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.fleet.presentation.HelperFunctions
-import java.util.Date
+import java.time.LocalDateTime
 
 
 @Composable
 fun DateSeparator(
-    date: Date
+    date: LocalDateTime
 ){
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -38,5 +38,5 @@ fun DateSeparator(
 @Preview
 @Composable
 fun DateSeparatorPreview(){
-    DateSeparator(date = Date())
+    //DateSeparator(date = Date())
 }

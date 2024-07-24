@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
-import com.example.fleet.domain.Enums.ChatType
 import com.example.fleet.domain.Models.Chat
 import com.example.fleet.domain.Models.Message
 import com.example.fleet.domain.Models.Tenant
@@ -50,7 +49,6 @@ class ChatViewModel (
                     title = title
                         ?: FleetApplication.fleetModule.getTenantNameAndSurname(tenantIds.first())
                         ?: "Error",
-                    chatType = ChatType.TENANT_TO_TENANT,
                     isPrivate = isPrivate,
                     id = chatId
                 )
@@ -85,7 +83,7 @@ class ChatViewModel (
             withContext(Dispatchers.IO) {
                 if(!isPersonal) {
                     _tenants.value = db.tenantDao()
-                        .getTenantsByBuildingId(FleetApplication.fleetModule.buildingId)
+                        .getTenantsInSameBuilding(FleetApplication.fleetModule.building.value.id)
                         .filterNot { it.id == FleetApplication.fleetModule.tenantId }
                 }
                 else{

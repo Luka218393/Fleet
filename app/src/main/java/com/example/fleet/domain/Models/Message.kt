@@ -3,7 +3,7 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.util.Date
+import java.time.LocalDateTime
 
 @Entity(
     tableName = "messages",
@@ -27,10 +27,8 @@ import java.util.Date
 data class Message (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    var text: String,
     val chatId: Int,//
     val senderId: Int,//
-    var text: String,
-    var sendingTime: Date = Date(),
-    var profileImage: Int? = null,
-    var imageUrl: String? = null,//Todo ? what did i even think with this
+    var sendingTime: LocalDateTime = LocalDateTime.now(),
 )

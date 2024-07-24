@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.TypeConverter
 import com.example.fleet.domain.Enums.Icono
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Date
 
@@ -50,6 +51,18 @@ class TypeConverte {
     @TypeConverter
     fun fromLocalDate(date: LocalDate?): String? {
         return date?.format(DateTimeFormatter.ISO_LOCAL_DATE)
+    }
+
+    @TypeConverter
+    fun toLocalDateTime(value: String?): LocalDateTime? {
+        return value?.let {
+            LocalDateTime.parse(it, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        }
+    }
+
+    @TypeConverter
+    fun fromLocalDateTime(date: LocalDateTime?): String? {
+        return date?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
     }
 }
 

@@ -1,11 +1,6 @@
 package com.example.fleet.data
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.List
 import com.example.fleet.R
-import com.example.fleet.domain.Enums.ChatType
 import com.example.fleet.domain.Enums.PollType
 import com.example.fleet.domain.Models.Apartment
 import com.example.fleet.domain.Models.Building
@@ -21,7 +16,6 @@ import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
 import kotlinx.coroutines.runBlocking
 import java.util.Date
-
 
 
 fun seed(db: FleetDatabase){
@@ -100,7 +94,6 @@ val tenants = listOf(
         id = 7,
         name = "Luka",
         surname = "Brčić",
-        age = 18,
         apartmentId = 2,
         phoneNumber = "991247364540",//Todo fix phonwe number
         email = "zaskoluusegetu@gmail.com",
@@ -108,7 +101,7 @@ val tenants = listOf(
         profileImageRes = R.drawable.color_selector_image,
         birthday = Date(),
         profession = "Programmer",
-        aboutMe = "My name is Jonnas I am carrying the wheel, I dont care whatt they ll say about us anywhay i dont care about that. Yut taunge is twisting your lips are slick. I dont care about that anymore",
+        description = "My name is Jonnas I am carrying the wheel, I dont care whatt they ll say about us anywhay i dont care about that. Yut taunge is twisting your lips are slick. I dont care about that anymore",
         isOnline = false,
         isApartmentHead = true,
         isTenantLeader = true
@@ -119,18 +112,15 @@ val tenants = listOf(
         id = 1,
         title = "Notification 1",
         text = "Lorem ipsum dolor sit amet",
-        iconResId = Icons.Default.Favorite,
         creatorId = 1,
         imageResId = R.drawable.lukinaikona,
         buildingId = 1,
-        createdAt = Date()
     ),
 
     Notification(
         id = 2,
         title = "Notification 2",
         text = "Lorem ipsum dolor sit amet",
-        iconResId = Icons.Default.List,
         creatorId = 1,
         buildingId = 1,
     ),
@@ -138,7 +128,6 @@ val tenants = listOf(
         id = 3,
         title = "Notification 3",
         text = "My name is bearling Lino, i eat something nice everyday, is this what life is having expectations that i+ve built foe myself. i am letting loose, loooose, driftingall away, gonna end u somewhere anywhere letting loose",
-        iconResId = Icons.Default.Face,
         creatorId = 2,
         imageResId = R.drawable.flagicon,
         buildingId = 1
@@ -207,53 +196,20 @@ var polls: List<Poll> = listOf(
 
 val chats: List<Chat> = listOf(
     Chat(
-        id = 1,
-        title = "Luka",
-        profileImageResId = R.drawable.lukinaikona,
-        chatType = ChatType.TENANT_TO_TENANT
-    ),
-    Chat(
-        id = 2,
-        title = "Nina",
-        profileImageResId = R.drawable.lukinaikona,
-        chatType = ChatType.TENANT_TO_TENANT
-    ),
-    Chat(
         id = 3,
         title = "Buy new plants to decorate building",
         profileImageResId = R.drawable.lukinaikona,
-        chatType = ChatType.DISCUSSION
+        false
     ),
     Chat(
         id = 4,
         title = "All tenants",
         profileImageResId = R.drawable.lukinaikona,
-        chatType = ChatType.EVERYONE
+        true
     )
 )
 
-val tenantChat = listOf(
-    TenantChat(
-        tenantId = 1,
-        chatId = 1,
-        id = "1,1"
-    ),
-    TenantChat(
-        tenantId = 1,
-        chatId = 2,
-        id = "1,2"
-    ),
-    TenantChat(
-        tenantId = 2,
-        chatId = 2,
-        id = "2,2"
-    ),
-    TenantChat(
-        tenantId = 2,
-        chatId = 1,
-        id = "2,1"
-    )
-)
+val tenantChat = emptyList<TenantChat>()
 
 
 var buildings = listOf(
@@ -290,9 +246,7 @@ var apartments = listOf(
 
 val settings1 = Settings(
     id = 1,
-    tenantId = 7,
-    apartmentId = 2,
-    buildingId = 2
+    tenantId = 1,
 )
 
 

@@ -49,7 +49,7 @@ class PollCard (
 
 
         //People are able to vote
-        if (poll.voteEndDate > LocalDate.now()) {
+        if (poll.endDate > LocalDate.now()) {
             Column {
 
                 Title(poll.title)

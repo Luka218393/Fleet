@@ -1,13 +1,16 @@
 package com.example.fleet.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -43,30 +46,42 @@ class ChatSelectionScreen: Screen{
             floatingActionButton = { SimpleFloatingButton ({ Navigation.goTo(Screens.CHAT_CREATION, nav) }, Icons.Default.Add) }
         ) { padding ->
 
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                //this could be faster
-                items(chats, key = {it.id}) { chat ->
-                    val lastMessage = rememberSaveable{mutableStateOf("")}
-                    LaunchedEffect(key1 = lastMessage) {
-                        withContext(Dispatchers.IO){
-                            lastMessage.value = viewModel.getLastMessage(chat.id)
-                        }
-                    }
-                    Select_ChatBar(
-                        navigateToChatScreen = {
-                            Navigation.goTo( Screens.CHAT, nav, chat.id)
-                            viewModel.changeMessageCollectorJob(chat.id)
-                        },
-                        chat = chat,
-                        lastMessageText = lastMessage.value
+            if (chats.isEmpty()) {
+                Box(
+                    modifier = Modifier.padding(padding)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No chats yet",
+                        style = MaterialTheme.typography.displaySmall
                     )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    //this could be faster
+                    items(chats, key = { it.id }) { chat ->
+                        val lastMessage = rememberSaveable { mutableStateOf("") }
+                        LaunchedEffect(key1 = lastMessage) {
+                            withContext(Dispatchers.IO) {
+                                lastMessage.value = viewModel.getLastMessage(chat.id)
+                            }
+                        }
+                        Select_ChatBar(
+                            navigateToChatScreen = {
+                                Navigation.goTo(Screens.CHAT, nav, chat.id)
+                                viewModel.changeMessageCollectorJob(chat.id)
+                            },
+                            chat = chat,
+                            lastMessageText = lastMessage.value
+                        )
+                    }
                 }
             }
         }

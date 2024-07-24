@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
+import kotlinx.coroutines.runBlocking
 
 class SettingsViewModel(
     private val db: FleetDatabase,
@@ -17,12 +18,9 @@ class SettingsViewModel(
 
     fun toggleColorPalette(){showColorSelector = !showColorSelector}
 
+    fun changeSettingsColor(newColor: Color) = runBlocking { db.settingsDao().upsert(FleetApplication.fleetModule.settings.value.copy(appColor = newColor.value.toString())) }
 
-    //Todo this works but badly
-    fun changeSettingsColor(color: Color, isDarkTheme: Boolean){
-
-        FleetApplication.fleetModule.upsertSettingsColor(color)
-    }
+    fun changeUserId(newId: Int) = runBlocking { db.settingsDao().upsert(FleetApplication.fleetModule.settings.value.copy(tenantId = newId)) }
 }
 
 @Suppress("UNCHECKED_CAST")

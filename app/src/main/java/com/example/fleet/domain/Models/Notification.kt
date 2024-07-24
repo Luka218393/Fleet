@@ -1,12 +1,9 @@
 package com.example.fleet.domain.Models
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.util.Date
+import java.time.LocalDateTime
 
 @Entity(
     tableName = "notifications",
@@ -31,12 +28,9 @@ data class Notification (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val buildingId: Int,//
+    val creatorId: Int, //
     var title: String,
     var text: String,
     var imageResId: Int? = null,
-    var iconResId: ImageVector = Icons.Default.Add,
-    var createdAt: Date = Date(),
-    val creatorId: Int, //
-    var dueTo: Date? = null,
-    var visibleToEveryone: Boolean = true
+    var createdAt: LocalDateTime = LocalDateTime.now(),
 )

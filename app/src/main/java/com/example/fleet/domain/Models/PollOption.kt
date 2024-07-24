@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
 data class PollOption (
     @PrimaryKey (autoGenerate = true)
     val id: Int = 0,
-    val value: String = "NO VALUE",
+    val pollId: Int, //
+    val value: String,
     var votes: List<Int> = emptyList(),
-    val pollId: Int //
 )

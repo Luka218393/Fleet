@@ -16,7 +16,7 @@ import kotlinx.coroutines.runBlocking
 class DisplayViewModel(
     private val db: FleetDatabase,
 ): ViewModel() {
-    fun getTenantById(id: Int) = runBlocking { db.tenantDao().getById(id).first() ?: Tenant(0,"", apartmentId = 1) }
+    private fun getTenantById(id: Int) = runBlocking { db.tenantDao().getById(id).first() }
 
     var tenant by mutableStateOf<Tenant?>(null)
     var name = mutableStateOf("123")
@@ -35,8 +35,7 @@ class DisplayViewModel(
         if (tenant != null) {
             name.value = tenant!!.name
             surname.value = tenant!!.surname
-            age.intValue = tenant!!.age ?: 0
-            description.value = tenant!!.aboutMe ?: ""
+            description.value = tenant!!.description ?: ""
             profession.value = tenant!!.profession ?: ""
             apartmentId.intValue = tenant!!.apartmentId ?: 1
             phoneNumber.value = tenant!!.phoneNumber ?: ""
@@ -51,8 +50,7 @@ class DisplayViewModel(
         val newTenant = tenant!!.copy(
             name = name.value,
             surname = surname.value,
-            age = age.intValue,
-            aboutMe = description.value,
+            description = description.value,
             profession = profession.value,
             phoneNumber = phoneNumber.value,
             email = email.value,

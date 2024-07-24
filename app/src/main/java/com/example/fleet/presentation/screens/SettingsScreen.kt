@@ -60,27 +60,29 @@ class SettingsScreen  : Screen{
             ){
                 SettingsSeparator(text = "Theme")
                 SettingsBar(iconVector = Icons.Default.Create, text = "Color", onClick = {viewModel.toggleColorPalette()})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.animation_24dp_fill0_wght400_grad0_opsz24), text = "Animations", onClick = {})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.contrast_24dp_fill0_wght400_grad0_opsz24), text = "Theme", onClick = {})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.animation_icon), text = "Animations", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.contrast_icon), text = "Theme", onClick = {})
 
                 SettingsSeparator(text = "Edit")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY, nav, componentId = 7)})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.door_front_24dp_fill0_wght400_grad0_opsz24), text = "Edit apartment", onClick = {})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.apartment_24dp_fill0_wght400_grad0_opsz24), text = "Edit building", onClick = {})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.account_icon), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY, nav, componentId = FleetApplication.fleetModule.tenantId)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.door_icon), text = "Edit apartment", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
 
-                SettingsSeparator(text = "Acconut")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.list_alt_24dp_fill0_wght400_grad0_opsz24), text = "Terms of service", onClick = {})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.key_24dp_fill0_wght400_grad0_opsz24), text = "Change account", onClick = {})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.lock_24dp_fill0_wght400_grad0_opsz24), text = "Privacy", onClick = {})
+                SettingsSeparator(text = "Account")
+                SettingsBar(painterIcon = painterResource(id = R.drawable.key_icon), text = "Change account", onClick = { viewModel.changeUserId(4) })//Todo make whole app restart or remake all Jobs
+                SettingsBar(painterIcon = painterResource(id = R.drawable.lock_icon), text = "Privacy", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.list_icon), text = "Terms of service", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
 
                 SettingsSeparator(text = "Help the dev")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.chat_24dp_fill0_wght400_grad0_opsz24), text = "Message the dev", onClick = {})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.quiz_24dp_fill0_wght400_grad0_opsz24), text = "Answer a poll", onClick = {})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.image_24dp_fill0_wght400_grad0_opsz24), text = "Get resources", onClick = {})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.bug_report_24dp_fill0_wght400_grad0_opsz24), text = "Report problem", onClick = {})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.message_icon), text = "Message the dev", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})//Remove ->
+                SettingsBar(painterIcon = painterResource(id = R.drawable.poll_icon), text = "Answer a poll", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.image_icon), text = "Get resources", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.bug_icon), text = "Report problem", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})//Remove <-
+
+
                 if (viewModel.showColorSelector){
                     ColorSelector(
-                        onConfirm = {viewModel.changeSettingsColor(it,systemTheme);viewModel.toggleColorPalette()},
+                        onConfirm = {viewModel.changeSettingsColor(it); viewModel.toggleColorPalette()},
                         onDismiss = {viewModel.toggleColorPalette()},
                     )
                 }
@@ -145,6 +147,7 @@ fun SettingsBar(
     }
 }
 
+//
 @Composable
 fun SettingsSeparator(
     text: String
@@ -154,14 +157,14 @@ fun SettingsSeparator(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ){
-        HorizontalDivider(modifier = Modifier.weight(2f))
+        HorizontalDivider(modifier = Modifier.weight(1f))
         Text(
             text = text ,
-            modifier = Modifier.weight(1f),
             textAlign = TextAlign.Center,
-            color = Color(255,255,255)
+            color = Color(255,255,255),
+            modifier = Modifier.padding(horizontal = 12.dp)
         )
-        HorizontalDivider(modifier = Modifier.weight(2f))
+        HorizontalDivider(modifier = Modifier.weight(1f))
     }
 }
 

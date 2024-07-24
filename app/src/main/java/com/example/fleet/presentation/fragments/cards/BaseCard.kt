@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.fleet.FleetApplication
 import com.example.fleet.presentation.HelperFunctions
-import java.util.Date
+import java.time.LocalDateTime
 
 
 /**
@@ -23,7 +23,7 @@ Base class for event cards and poll cards;
 Other cards must inherit from it
 */
 abstract class BaseCard(//TODo fix empty card
-    val createdAt: Date,
+    val createdAt: LocalDateTime,
     private val createdBy: Int,
     val id: String
 ){

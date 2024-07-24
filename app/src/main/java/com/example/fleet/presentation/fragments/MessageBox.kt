@@ -17,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fleet.FleetApplication
-import com.example.fleet.data.messages
 import com.example.fleet.domain.Models.Message
 import com.example.fleet.presentation.HelperFunctions
 
@@ -71,5 +70,5 @@ fun CreateMessageBox(
 @Preview
 @Composable
 fun MessageBoxPreview(){
-    CreateMessageBox(message = messages[0])
+    //CreateMessageBox(message = messages[0])
 }

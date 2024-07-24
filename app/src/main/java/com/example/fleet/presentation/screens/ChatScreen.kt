@@ -52,7 +52,7 @@ class ChatScreen(
 
                     CreateMessageBox(message = messages[index])
 
-                    if (index + 1 < messages.size && messages[index + 1].sendingTime.day != messages[index].sendingTime.day || index == messages.size - 1) {
+                    if (index + 1 < messages.size && messages[index + 1].sendingTime.dayOfYear != messages[index].sendingTime.dayOfYear || index == messages.size - 1) {
                         DateSeparator(date = messages[index].sendingTime)
                     }
                 }

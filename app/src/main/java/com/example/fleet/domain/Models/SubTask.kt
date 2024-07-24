@@ -3,7 +3,7 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.util.Date
+import java.time.LocalDateTime
 
 @Entity(tableName = "SubTasks",
     foreignKeys = [
@@ -24,9 +24,9 @@ import java.util.Date
 data class SubTask(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val taskId: Int,
     var text: String,
     var completed: Boolean = false,
-    val taskId: Int,
-    var completedAt: Date? = null,
-    var completedBy: Int? = null
+    var completedBy: Int? = null,
+    var completedAt: LocalDateTime? = LocalDateTime.now(),
 )
