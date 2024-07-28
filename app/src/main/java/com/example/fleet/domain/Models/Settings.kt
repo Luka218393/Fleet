@@ -20,7 +20,7 @@ import java.util.UUID
         )
     ],
 )
-data class Settings (
+data class Settings (//Rename to applicationSettings -> move everything to tenant add isOpenedOnStart
     @PrimaryKey(autoGenerate = false)
     val id: String = UUID.randomUUID().toString(),
     val tenantId: String,
@@ -28,7 +28,7 @@ data class Settings (
     var showAnimation: Boolean = true,
     var language: Countries = Countries.ENGLAND,
     var showNotifications: Boolean = true,
-
+    var immersiveMode: Boolean = false,
     var appColor: String = "18444365946022789120"
 
 )

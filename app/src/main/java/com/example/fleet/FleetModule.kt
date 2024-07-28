@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
@@ -37,17 +38,21 @@ class FleetModule(
                 showNotifications = it.showNotifications
                 showAnimation = it.showAnimation
                 language = it.language
+                showSystemUi = it.immersiveMode
             }
         }
     }
     var settings: MutableState<Settings> = mutableStateOf(runBlocking { fleetDatabase.settingsDao().get().first() })
 
+    //Todo make selected screen smarter
+    var selectedScreen by mutableIntStateOf(0)
     var appColor by mutableStateOf(Color(settings.value.appColor.toULong()))
     var tenantId by mutableStateOf(settings.value.tenantId)
     var theme by mutableStateOf(settings.value.theme)
     var showAnimation by mutableStateOf(settings.value.showAnimation)
     var showNotifications by mutableStateOf(settings.value.showNotifications)
     var language by mutableStateOf(settings.value.language)
+    var showSystemUi by mutableStateOf(settings.value.immersiveMode)
 
     val tenant = derivedStateOf { runBlocking { fleetDatabase.tenantDao().getById(tenantId).first() } }
     val apartment = derivedStateOf { runBlocking { fleetDatabase.apartmentDao().getById(tenant.value.apartmentId).first() } }

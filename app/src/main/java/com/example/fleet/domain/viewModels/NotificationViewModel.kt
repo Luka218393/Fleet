@@ -16,10 +16,10 @@ import com.example.fleet.domain.Models.Poll
 import com.example.fleet.domain.Models.PollOption
 import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
-import com.example.fleet.presentation.fragments.cards.BaseCard
-import com.example.fleet.presentation.fragments.cards.NotificationCard
-import com.example.fleet.presentation.fragments.cards.PollCard
-import com.example.fleet.presentation.fragments.cards.TaskCard
+import com.example.fleet.presentation.components.cards.BaseCard
+import com.example.fleet.presentation.components.cards.NotificationCard
+import com.example.fleet.presentation.components.cards.PollCard
+import com.example.fleet.presentation.components.cards.TaskCard
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -49,7 +49,6 @@ class NotificationViewModel (
         pollCollector()
         notificationCollector()
     }
-
     //Todo make this smarter
     private fun changePollOption(pollOptionSelected: PollOption, pollOptionUnselected: PollOption?){
         if (pollOptionUnselected == pollOptionSelected){

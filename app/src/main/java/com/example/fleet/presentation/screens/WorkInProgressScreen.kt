@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.domain.Navigation
-import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
+import com.example.fleet.presentation.components.scaffold_elements.BottomBar
 
 class WorkInProgressScreen: Screen {
 

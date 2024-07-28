@@ -27,4 +27,7 @@ interface MessageDao {
 
     @Query("SELECT text from messages WHERE chatId = :chatId ORDER BY sendingTime DESC LIMIT 1")
     fun getLastMessageFromChat(chatId: String): String?
+
+    @Query("select text from messages where id = :messageId")
+    fun getMessageText(messageId: String): String
 }

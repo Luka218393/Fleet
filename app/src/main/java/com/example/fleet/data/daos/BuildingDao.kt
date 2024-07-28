@@ -21,4 +21,7 @@ interface BuildingDao {
 
     @Query("SELECT * from buildings WHERE id = :id")
     fun getById(id: String): Flow<Building>
+
+    @Query("SELECT EXISTS (SELECT 1 FROM buildings WHERE id = :id)")
+    fun exists(id: String): Boolean
 }

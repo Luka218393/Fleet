@@ -2,14 +2,16 @@ package com.example.fleet.domain
 
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.presentation.screens.ChatCreationScreen
-import com.example.fleet.presentation.screens.ChatScreen
-import com.example.fleet.presentation.screens.ChatSelectionScreen
-import com.example.fleet.presentation.screens.DisplayScreen
+import com.example.fleet.presentation.screens.chat.ChatCreationScreen
+import com.example.fleet.presentation.screens.chat.ChatScreen
+import com.example.fleet.presentation.screens.chat.ChatSelectionScreen
+import com.example.fleet.presentation.screens.settings.DisplayScreen
 import com.example.fleet.presentation.screens.NotificationScreen
-import com.example.fleet.presentation.screens.SettingsScreen
+import com.example.fleet.presentation.screens.settings.SettingsScreen
 import com.example.fleet.presentation.screens.WorkInProgressScreen
-import com.example.fleet.presentation.screens.creation_screens.SignInScreen
+import com.example.fleet.presentation.screens.creation.AddressSelectionScreen
+import com.example.fleet.presentation.screens.creation.LogInScreen
+import com.example.fleet.presentation.screens.creation.SignInScreen
 
 
 object Navigation{
@@ -24,7 +26,10 @@ object Navigation{
             Screens.CHAT_CREATION -> navigator?.push((ChatCreationScreen()))
             Screens.WORK_IN_PROGRESS -> navigator?.push(WorkInProgressScreen())
 
+            Screens.ADDRESS_SELECTION -> navigator?.push(AddressSelectionScreen())
             Screens.SIGN_IN -> navigator?.push(SignInScreen())
+            Screens.LOG_IN -> navigator?.push(LogInScreen())
+
         }
     }
 

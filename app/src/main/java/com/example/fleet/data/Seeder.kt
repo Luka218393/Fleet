@@ -30,30 +30,6 @@ fun seed(db: FleetDatabase){
             db.tenantDao().upsert(i)
         }
         db.settingsDao().upsert(settings1)
-        for (i in notifications) {
-            db.notificationDao().upsert(i)
-        }
-        for (i in polls){
-            db.pollDao().upsert(i)
-        }
-        for (i in pollOptions) {
-            db.pollOptionDao().upsert(i)
-        }
-        for (i in tasks){
-            db.taskDao().upsert(i)
-        }
-        for (i in chats){
-            db.chatDao().upsert(i)
-        }
-        for (i in tenantChat){
-            db.tenantChatDao().upsert(i)
-        }
-        for (i  in messages){
-            db.messageDao().upsert(i)
-        }
-        for (i in subTasks){
-            db.subTaskDao().upsert(i)
-        }
     }
 }
 
@@ -212,13 +188,13 @@ val chats: List<Chat> = listOf(
         id = "3",
         title = "Buy new plants to decorate building",
         profileImageResId = R.drawable.lukinaikona,
-        false
+        isPrivate = true
     ),
     Chat(
         id = "4",
         title = "All tenants",
         profileImageResId = R.drawable.lukinaikona,
-        true
+        isPrivate = false
     )
 )
 

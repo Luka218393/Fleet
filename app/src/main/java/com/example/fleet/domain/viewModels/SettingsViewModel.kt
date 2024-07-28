@@ -6,8 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class SettingsViewModel(
@@ -21,6 +23,16 @@ class SettingsViewModel(
     fun changeSettingsColor(newColor: Color) = runBlocking { db.settingsDao().upsert(FleetApplication.fleetModule.settings.value.copy(appColor = newColor.value.toString())) }
 
     fun changeUserId(newId: String) = runBlocking { db.settingsDao().upsert(FleetApplication.fleetModule.settings.value.copy(tenantId = newId)) }
+
+    fun toggleImmersiveMode() {
+        viewModelScope.launch {
+            db.settingsDao().upsert(
+                FleetApplication.fleetModule.settings.value.copy(
+                    immersiveMode = !FleetApplication.fleetModule.settings.value.immersiveMode
+                )
+            )
+        }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")

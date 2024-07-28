@@ -67,7 +67,7 @@ class TypeConverte {
 
     @TypeConverter
     fun fromString(value: String?): List<String>? {
-        return value?.split(",")?.map { it.trim() }
+        return value?.split(",")?.map { it.trim() }?.filter { it != "" }
     }
 
     @TypeConverter

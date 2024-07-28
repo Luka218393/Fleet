@@ -1,6 +1,5 @@
 package com.example.fleet.domain.viewModels
 
-import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -33,12 +32,16 @@ class ChatViewModel (
     private var _tenants: MutableStateFlow<List<Tenant>> = MutableStateFlow(mutableListOf())
     var tenants = _tenants.asStateFlow()
 
+
     //
     init {
-        Log.i("ChatViewModel", "ChatViewModel init")
         chatsCollector()
     }
 
+    //Todo this slows down a lot make this run on vieModelScope
+    fun getMessageText(messageId: String?):String = if ( messageId!= null) runBlocking(Dispatchers.IO){ db.messageDao().getMessageText(messageId) } else "No messages yet"
+
+    fun getTenantIdFromChat(chatId: String):String = runBlocking { withContext(Dispatchers.IO){ db.tenantChatDao().getTenantIdsFromChat(chatId).first() }}
     //
     fun createChat(tenantIds: List<String>, isPrivate: Boolean, title: String? = null) {
         val chatId = UUID.randomUUID().toString()
@@ -75,6 +78,7 @@ class ChatViewModel (
                 _chats.value = it
             }
         }
+
     }
 
     //
@@ -106,14 +110,21 @@ class ChatViewModel (
     }
 
     //
-    fun sendMessage(text: String, chatId: String){
-        runBlocking {
+    fun sendMessage(text: String, chat: Chat){
+        val messageId = UUID.randomUUID().toString()
+        viewModelScope.launch {
             db.messageDao().upsert(
                 Message(
-                    chatId = chatId,
+                    id = messageId,
+                    chatId = chat.id,
                     senderId = FleetApplication.fleetModule.tenantId,
                     text = text,
                 )
+            )
+        }
+        viewModelScope.launch {
+            db.chatDao().upsert(
+                chat.copy(lastMessageId = messageId )
             )
         }
     }

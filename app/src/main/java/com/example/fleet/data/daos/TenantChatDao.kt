@@ -52,6 +52,13 @@ interface TenantChatDao {
     )           
     """)
     fun getTenantsForNewPersonalChat(tenantId: String): List<Tenant>
+
+    @Query(
+        """
+            select tenantId from tenant_chat where chatId == :chatId
+        """
+    )
+    fun getTenantIdsFromChat(chatId: String): List<String>
 }
 
 

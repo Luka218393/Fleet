@@ -9,5 +9,7 @@ enum class Screens{
     CHAT_CREATION,
     WORK_IN_PROGRESS,
 
+    ADDRESS_SELECTION,
     SIGN_IN,
+    LOG_IN
 }

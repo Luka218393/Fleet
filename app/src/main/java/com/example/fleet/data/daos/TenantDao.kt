@@ -31,6 +31,8 @@ interface TenantDao {
     @Query("SELECT id, name, surname  FROM tenants")
     fun getTenantsIdAndName(): Flow<List<TenantIdAndName>>
 
+    @Query("""select * from tenants where tenants.email == :email""")
+    fun getByEmail(email: String): Tenant
 
 }
 

@@ -65,6 +65,8 @@ dependencies {
     //implementation(libs.androidx.material3)
     implementation(libs.transport.api)
     implementation(libs.androidx.material3.android)
+    implementation(libs.material)
+    implementation(libs.androidx.ui.text.google.fonts)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,6 +88,7 @@ dependencies {
     //Color picker
     implementation("com.github.skydoves:colorpicker-compose:1.1.0")
 
+    //Wheel picker
     implementation ("com.github.zj565061763:compose-wheel-picker:1.0.0-beta05")
 
 }

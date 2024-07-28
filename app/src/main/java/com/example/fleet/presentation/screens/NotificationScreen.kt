@@ -18,12 +18,12 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.example.fleet.FleetApplication
 import com.example.fleet.domain.viewModels.NotificationViewModel
 import com.example.fleet.domain.viewModels.NotificationViewModelFactory
-import com.example.fleet.presentation.fragments.DateSeparator
-import com.example.fleet.presentation.fragments.cards.card_dialogs.NotificationDialog
-import com.example.fleet.presentation.fragments.cards.card_dialogs.PollDialog
-import com.example.fleet.presentation.fragments.cards.card_dialogs.TaskDialog
-import com.example.fleet.presentation.fragments.scaffold_elements.BottomBar
-import com.example.fleet.presentation.fragments.scaffold_elements.FloatingButton
+import com.example.fleet.presentation.components.DateSeparator
+import com.example.fleet.presentation.components.cards.card_dialogs.NotificationDialog
+import com.example.fleet.presentation.components.cards.card_dialogs.PollDialog
+import com.example.fleet.presentation.components.cards.card_dialogs.TaskDialog
+import com.example.fleet.presentation.components.scaffold_elements.BottomBar
+import com.example.fleet.presentation.components.scaffold_elements.FloatingButton
 
 
 class NotificationScreen(
