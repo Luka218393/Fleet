@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,8 +39,11 @@ abstract class BaseCard(//TODo fix empty card
         Card(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 6.dp, horizontal = 8.dp),
-            shape = RoundedCornerShape(2.dp)
+                .padding(vertical = 4.dp, horizontal = 8.dp),
+            shape = RoundedCornerShape(8.dp),
+            colors = CardDefaults.cardColors().copy(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
             ) {
 
             Content()
@@ -53,12 +57,12 @@ abstract class BaseCard(//TODo fix empty card
                 Text(
                     text = FleetApplication.fleetModule.getTenantNameAndSurname(createdBy)?: "Unknown author",
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.tertiary,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
                 Text(
                     text = HelperFunctions.getMinAndHour(createdAt),
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.tertiary
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
         }
@@ -77,13 +81,13 @@ fun Title(title: String, modifier: Modifier = Modifier){
 
         Text(
             text = title,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.headlineSmall.copy(color = MaterialTheme.colorScheme.onPrimaryContainer)
         )
     }
     HorizontalDivider(
         modifier = modifier.fillMaxWidth(),
         thickness = 0.4.dp,
-        color = MaterialTheme.colorScheme.secondary
+        color = MaterialTheme.colorScheme.primary
     )
 }
 

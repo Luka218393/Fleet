@@ -64,8 +64,9 @@ fun PollDialog(
         ){
             Text(
                 text = "Create Poll",
-                modifier = modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
+                modifier = modifier.fillMaxWidth().padding(12.dp),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleMedium
             )
             Card {
                 Column(
@@ -87,7 +88,7 @@ fun PollDialog(
                     HorizontalDivider(
                         modifier = modifier.fillMaxWidth(),
                         thickness = 0.4.dp,
-                        color = MaterialTheme.colorScheme.secondary
+                        color = MaterialTheme.colorScheme.primary
                     )
 
                     LazyColumn{
@@ -103,44 +104,49 @@ fun PollDialog(
                             mutableStateOf(value = "")
                         )
                     }) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "Create option")
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "Create option", tint = MaterialTheme.colorScheme.primary)
+                    }
+                    Row(
+                        modifier = modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Text(
+                            text = "Days till end of the vote:   ",
+                            style = MaterialTheme.typography.bodyMedium
+
+                        )
+                        FVerticalWheelPicker(
+                            modifier = Modifier.width(60.dp),
+                            // Specified item count.
+                            count = 366,
+                            focus = {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .border(width = 1.dp, color = MaterialTheme.colorScheme.tertiary)
+                                )
+                            },
+                            state = endDate
+                        ) { index ->
+                            Text(index.toString())
+                        }
                     }
                 }
 
             }
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(
-                    "Days till end of the vote: "
-                )
-                FVerticalWheelPicker(
-                    modifier = Modifier.width(60.dp),
-                    // Specified item count.
-                    count = 366,
-                    focus = {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .border(width = 1.dp, color = Color.Gray)
-                        )
-                    },
-                    state = endDate
-                ) { index ->
-                    Text(index.toString())
-                }
-            }
+
             IconButton(
                 onClick = {onConfirm(title.value, pollOptions.map {it.optionValue.value}, endDate.currentIndex)},
                 modifier = modifier
                     .padding(12.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(color = if (title.value.isNotEmpty() && pollOptions.isNotEmpty() && endDate.currentIndex != 0) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
+                    .background(color = if (title.value.isNotEmpty() && pollOptions.isNotEmpty() && endDate.currentIndex != 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary),
                 enabled = title.value.isNotEmpty() && pollOptions.isNotEmpty() && endDate.currentIndex != 0
             ) {
-                Icon(imageVector = Icons.Default.Check, contentDescription = "Create Poll")
+                Icon(imageVector = Icons.Default.Check, contentDescription = "Create Poll",
+                    tint = if (title.value.isNotEmpty() && pollOptions.isNotEmpty() && endDate.currentIndex != 0) MaterialTheme.colorScheme.onPrimary else Color.White
+                )
             }
         }
     }
@@ -157,7 +163,7 @@ class PollOptionTab (
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { removePollOption(id) }) {
-                Icon(imageVector = Icons.Default.Clear, contentDescription = "Remove option")
+                Icon(imageVector = Icons.Default.Clear, contentDescription = "Remove option", tint = MaterialTheme.colorScheme.primary)
             }
             InputField(value = optionValue, placeholder = "Option $id"){optionValue.value = it}
 

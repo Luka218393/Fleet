@@ -23,7 +23,7 @@ import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
-import com.example.fleet.presentation.components.Select_ChatBar
+import com.example.fleet.presentation.components.ChatBar
 import com.example.fleet.presentation.components.scaffold_elements.BottomBar
 import com.example.fleet.presentation.components.scaffold_elements.SimpleFloatingButton
 
@@ -31,6 +31,8 @@ import com.example.fleet.presentation.components.scaffold_elements.SimpleFloatin
 class ChatSelectionScreen: Screen{
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
+
+
     @Composable
     override fun Content() {
         val nav = LocalNavigator.current
@@ -62,7 +64,7 @@ class ChatSelectionScreen: Screen{
                 ) {
                     //this could be faster
                     items(chats, key = { it.id }) { chat ->
-                        Select_ChatBar(
+                        ChatBar(
                             navigateToChatScreen = {
                                 Navigation.goTo(Screens.CHAT, nav, chat.id)
                                 viewModel.changeMessageCollectorJob(chat.id)

@@ -67,22 +67,24 @@ class ChatCreationScreen: Screen {
         var isPersonal by remember { mutableStateOf(false) }
         val selectedTenants = remember { mutableStateListOf<String>() }
         var displayChatDialog by remember { mutableStateOf(false) }
+
         LaunchedEffect(key1 = modifier) {
             viewModel.insertTenantsForChatCreation(isPersonal)
         }
 
+
+
         Scaffold(
             modifier = modifier.fillMaxSize(),
             topBar = { SimpleTopBar(text = "New chat", onClick = { Navigation.pop(nav) }) },
-            floatingActionButton = { SimpleFloatingButton(onclick = {if(selectedTenants.isNotEmpty()) displayChatDialog = !displayChatDialog }, icon = Icons.Default.Add) },
-            bottomBar = { },
+            floatingActionButton = { if(selectedTenants.isNotEmpty())SimpleFloatingButton(onclick = { displayChatDialog = !displayChatDialog }, icon = Icons.Default.Add) },
         ) { padding ->
             Column(
                 modifier = modifier.padding(padding)
             ) {
 
                 Row(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = modifier.fillMaxWidth().padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     ChatPrivacyButtons(isPersonal = isPersonal, clearSelectedTenants = { selectedTenants.clear() }, toggleChatPrivacy = {isPersonal = it}){
@@ -138,23 +140,29 @@ fun ChatPrivacyButtons(
 ){
     Button(
         onClick = { toggleChatPrivacy(false); clearSelectedTenants(); updateTenantsToDisplay(false) },
-        colors = if (!isPersonal) ButtonDefaults.buttonColors(
+        colors = if (isPersonal) ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary
         ) else ButtonDefaults.buttonColors()
 
     ) {
-        Text(text = "Group")
+        Text(
+            text = "Group",
+            style = MaterialTheme.typography.titleSmall,
+        )
     }
     Spacer(modifier.width(20.dp))
     Button(
         onClick = { toggleChatPrivacy(true); clearSelectedTenants();updateTenantsToDisplay(true) },
-        colors = if (isPersonal) ButtonDefaults.buttonColors(
+        colors = if (!isPersonal) ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary
         ) else ButtonDefaults.buttonColors()
     ) {
-        Text(text = "Personal")
+        Text(
+            text = "Personal",
+            style = MaterialTheme.typography.titleSmall,
+        )
     }
 }
 
@@ -175,8 +183,9 @@ fun ChatDialog(
             ){
                 Text(
                     text = "Chat title",
-                    modifier = modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
+                    modifier = modifier.fillMaxWidth().padding(12.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleMedium
                 )
 
                 Card {
@@ -190,7 +199,7 @@ fun ChatDialog(
                     modifier = modifier
                         .padding(12.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(color = if (title.value.isNotEmpty()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
+                        .background(color = if (title.value.isNotEmpty()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary),
                     enabled = title.value.isNotEmpty()
                 ) {
                     Icon(imageVector = Icons.Default.Check, contentDescription = "Create Notification")

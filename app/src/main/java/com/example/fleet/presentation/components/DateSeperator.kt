@@ -25,13 +25,13 @@ fun DateSeparator(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ){
-        HorizontalDivider(modifier = Modifier.weight(1f))
+        HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outlineVariant)
         Text(
             text = HelperFunctions.getDayAndMonth(date.toLocalDate()) ,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(horizontal = 12.dp)
         )
-        HorizontalDivider(modifier = Modifier.weight(1f))
+        HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outlineVariant)
     }
 }

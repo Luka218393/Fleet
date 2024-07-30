@@ -32,7 +32,8 @@ class NotificationCard (
             Text(
                 text = notification.text,
                 modifier = modifier.padding(12.dp),
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
     }

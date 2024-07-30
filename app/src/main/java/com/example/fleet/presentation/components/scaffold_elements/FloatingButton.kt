@@ -2,6 +2,7 @@ package com.example.fleet.presentation.components.scaffold_elements
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -17,9 +18,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 
+//Todo add description to each plus
 @Composable
 fun FloatingButton(
     toggleNotificationDialog: () -> Unit,
@@ -33,7 +37,7 @@ fun FloatingButton(
     ){
         if (expanded){
             IconButton(onClick = { toggleNotificationDialog() }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Create notification dialog")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Create event dialog")
             }
             IconButton(onClick = { toggleTaskDialog()}) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Create task dialog")
@@ -45,8 +49,9 @@ fun FloatingButton(
         FloatingActionButton(
             onClick = { expanded = !expanded },
             shape = CircleShape,
-            contentColor = MaterialTheme.colorScheme.secondary,
-            containerColor = MaterialTheme.colorScheme.secondary
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            modifier = Modifier.size(64.dp)
         ) {
             if (expanded) {
                 Icon(
@@ -74,13 +79,15 @@ fun SimpleFloatingButton(
     FloatingActionButton(
         onClick = onclick,
         shape = CircleShape,
-        contentColor = MaterialTheme.colorScheme.secondary,
-        containerColor = MaterialTheme.colorScheme.secondary
+        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        modifier = Modifier.size(64.dp)
     ) {
         Icon(
             imageVector = icon,
             contentDescription = "New Chat",
-            tint = Color.White
+            tint = Color.White,
+            modifier = Modifier.size(28.dp)
         )
     }
 }

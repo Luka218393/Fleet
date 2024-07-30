@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -47,12 +48,12 @@ fun NotificationDialog(
                 horizontalAlignment = Alignment.End
             ){
                 Text(
-                    text = "Create Task",
-                    modifier = modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
+                    text = "Create Event",
+                    modifier = modifier.fillMaxWidth().padding(4.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Card {
-                    Column{
                         //Todo add marks
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -63,7 +64,7 @@ fun NotificationDialog(
                             Icon(
                                 imageVector = Icons.Default.Add,//Todo
                                 contentDescription = "Add icon",
-                                tint = MaterialTheme.colorScheme.secondary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = modifier
                                     .size(32.dp)
                             )
@@ -76,7 +77,7 @@ fun NotificationDialog(
                         HorizontalDivider(
                             modifier = modifier.fillMaxWidth(),
                             thickness = 0.4.dp,
-                            color = MaterialTheme.colorScheme.secondary
+                            color = MaterialTheme.colorScheme.primary
                         )
                         Column (
                             modifier = modifier.padding(12.dp)
@@ -85,19 +86,21 @@ fun NotificationDialog(
                         }
 
                     }
-                }
+
                 IconButton(
                     onClick = {onConfirm(title.value, text.value)},
                     modifier = modifier
                         .padding(12.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(color = if (title.value.isNotEmpty() && text.value.isNotEmpty()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
+                        .background(color = if (title.value.isNotEmpty() && text.value.isNotEmpty()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary),
                     enabled = title.value.isNotEmpty() && text.value.isNotEmpty()
                 ) {
-                    Icon(imageVector = Icons.Default.Check, contentDescription = "Create Notification")
+                    Icon(
+                        imageVector = Icons.Default.Check, contentDescription = "Create Notification",
+                        tint = if (title.value.isNotEmpty() && text.value.isNotEmpty()) MaterialTheme.colorScheme.onPrimary else Color.White
+                    )
                 }
             }
-
         }
     )
 }

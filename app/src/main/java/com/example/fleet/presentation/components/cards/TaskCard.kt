@@ -25,7 +25,7 @@ import com.example.fleet.domain.Models.SubTask
 import com.example.fleet.domain.Models.Task
 
 
-//todo make result hidable
+//todo make result tint in color when finished (make color disabled)
 class TaskCard (
     private val task: Task,
     private val subTasks: List<SubTask>,
@@ -62,12 +62,13 @@ fun SubTaskDisplay(
                 modifier = modifier
                     .padding(12.dp)
                     .weight(8f),
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
                 style = MaterialTheme.typography.bodyMedium
             )
             VerticalDivider(
                 modifier = modifier.fillMaxHeight(),
                 thickness = 0.4.dp,
-                color = MaterialTheme.colorScheme.secondary
+                color = MaterialTheme.colorScheme.primary
             )
             Box(
                 modifier = modifier
@@ -82,7 +83,7 @@ fun SubTaskDisplay(
                     Icon(
                         painter = if(subTask.completed) painterResource(id = R.drawable.check_24dp_e8eaed_fill0_wght400_grad0_opsz24) else painterResource(id = R.drawable.chevron_left_24dp_e8eaed_fill0_wght400_grad0_opsz24),
                         contentDescription = "icon",
-                        tint = MaterialTheme.colorScheme.secondary,
+                        tint = if(subTask.completed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary ,
                         modifier = modifier
                             .size(32.dp)
                     )
@@ -93,7 +94,7 @@ fun SubTaskDisplay(
             modifier = modifier
                 .fillMaxWidth(),
             thickness = 0.4.dp,
-            color = MaterialTheme.colorScheme.secondary
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }

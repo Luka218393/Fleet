@@ -33,6 +33,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
+// UI
 @Composable
 fun <T> InputField(
     value: MutableState<T>,
@@ -46,15 +47,15 @@ fun <T> InputField(
     BasicTextField(
         value = displayValue,
         onValueChange = {onValueChange(it)},
-        modifier = Modifier
-            .fillMaxWidth(1f),
+        modifier = Modifier.fillMaxWidth(1f),
         maxLines = maxLines,
+        textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onBackground),
         decorationBox = {
             Row(
                 modifier = Modifier
                     .padding(4.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.tertiary)
+                    .background(MaterialTheme.colorScheme.background)
                     .heightIn(min = 30.dp)
                 ,
                 verticalAlignment = Alignment.CenterVertically,
@@ -66,7 +67,10 @@ fun <T> InputField(
                     contentAlignment = Alignment.CenterStart
                 ){
                     if(displayValue.isEmpty()){
-                        Text(placeholder)
+                        Text(
+                            placeholder,
+                            color = MaterialTheme.colorScheme.outline
+                        )
                     }
                     it()
                 }

@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -54,8 +55,9 @@ fun TaskDialog(
         ){
             Text(
                 text = "Create Task",
-                modifier = modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
+                modifier = modifier.fillMaxWidth().padding(12.dp),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleMedium
             )
             Card{
                 Column(
@@ -76,7 +78,7 @@ fun TaskDialog(
                     HorizontalDivider(
                         modifier = modifier.fillMaxWidth(),
                         thickness = 0.4.dp,
-                        color = MaterialTheme.colorScheme.secondary
+                        color = MaterialTheme.colorScheme.primary
                     )
 
                     LazyColumn{
@@ -91,7 +93,7 @@ fun TaskDialog(
                             removePollOption = {tabId -> subTasks = subTasks.minus(subTasks.find{it.id == tabId} ?: subTasks[0])},
                         )
                     }) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "Create subtask")
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "Create subtask",tint = MaterialTheme.colorScheme.primary)
                     }
                 }
 
@@ -100,10 +102,12 @@ fun TaskDialog(
                 onClick = {onConfirm(title.value, subTasks.map {it.value.value})},
                 modifier = modifier.padding(12.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(color = if(title.value.isNotEmpty() && subTasks.isNotEmpty()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
+                    .background(color = if(title.value.isNotEmpty() && subTasks.isNotEmpty()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary),
                 enabled = title.value.isNotEmpty() && subTasks.isNotEmpty()
             ) {
-                Icon(imageVector = Icons.Default.Check, contentDescription = "Create Poll")
+                Icon(imageVector = Icons.Default.Check, contentDescription = "Create Poll",
+                    tint = if(title.value.isNotEmpty() && subTasks.isNotEmpty()) MaterialTheme.colorScheme.onPrimary else Color.White
+                )
             }
         }
     }
@@ -120,7 +124,7 @@ class SubTaskTab (
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { removePollOption(id) }) {
-                Icon(imageVector = Icons.Default.Clear, contentDescription = "Remove subtask")
+                Icon(imageVector = Icons.Default.Clear, contentDescription = "Remove subtask", tint = MaterialTheme.colorScheme.primary)
             }
             InputField(value = value, placeholder = "Task $id"){value.value = it}
 

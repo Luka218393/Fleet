@@ -4,18 +4,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,48 +34,39 @@ fun ChatTopBar(
     onBack: () -> Unit,
     onTextPress: () -> Unit,
 ) {
-    TopAppBar(
-        modifier = modifier
-            .fillMaxWidth(),
+    CenterAlignedTopAppBar(
+        modifier = modifier.fillMaxWidth(),
         navigationIcon = {
-            Row(
-                modifier = modifier
-                    .clickable { onBack() }
-                    .fillMaxHeight(),
-                verticalAlignment = Alignment.CenterVertically,
-
-            ){
-                Spacer(modifier = Modifier.width(12.dp))
-
+            IconButton(onClick = { onBack() }, modifier.padding( end = 4.dp)){
                 Icon(
                     Icons.Default.ArrowBack, contentDescription = "Back arrow",
-                    modifier = modifier.size(32.dp)
+                    modifier = modifier.size(32.dp),
+                    tint = MaterialTheme.colorScheme.inverseSurface
                 )
-                Spacer(modifier = Modifier.width(12.dp))
-
             }
+
+        },
+        colors = TopAppBarDefaults.topAppBarColors().copy(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        ),
+        actions = {
+            Image(
+                painter = painterResource(id = R.drawable.lukinaikona),
+                contentDescription = "Logo",
+                modifier = modifier
+                    .size(52.dp)
+                    .clickable { /*Todo enlarge image*/ }
+            )
         },
         title = {
-            Row(
+            Text(
+                text = title,
+                color = MaterialTheme.colorScheme.inverseSurface,
+                style = MaterialTheme.typography.headlineSmall ,
                 modifier = modifier
-                    .fillMaxSize()
-                    .clickable { onTextPress() },
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.lukinaikona),
-                    contentDescription = "Logo",
-                    modifier = modifier.size(52.dp)
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Text(
-                    text = title
-                )
-            }
-        }
+                    .clickable { onTextPress() }
+            )
+        },
     )     //
 }
 
@@ -86,36 +79,24 @@ fun SimpleTopBar(
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        modifier = modifier
-            .fillMaxWidth(),
         navigationIcon = {
-            Row(
-                modifier = modifier
-                    .clickable { onClick() }
-                    .fillMaxHeight(),
-                verticalAlignment = Alignment.CenterVertically,
-
-                ){
-                Spacer(modifier = Modifier.width(12.dp))
-
+            IconButton(onClick = { onClick() },modifier.padding(start = 4.dp, end = 8.dp)) {
                 Icon(
                     Icons.Default.ArrowBack, contentDescription = "Back arrow",
                     modifier = modifier.size(32.dp)
                 )
-                Spacer(modifier = Modifier.width(12.dp))
-
             }
         },
         title = {
             Row(
-                modifier = modifier
-                    .fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Spacer(modifier = modifier.width(12.dp))
                 Text(
-                    text = text
+                    text = text,
+                    color = MaterialTheme.colorScheme.inverseSurface,
+                    style = MaterialTheme.typography.headlineSmall ,
                 )
             }
         }

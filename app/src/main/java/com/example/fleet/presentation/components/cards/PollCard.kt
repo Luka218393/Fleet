@@ -18,7 +18,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.fleet.FleetApplication
 import com.example.fleet.domain.Models.Poll
@@ -41,10 +40,8 @@ class PollCard (
     override fun Content() {
 
         if (options.isEmpty()) {
-            throw error("Poll has no options to display")
+            //throw error("Poll has no options to display")
         }
-
-
 
 
         //People are able to vote
@@ -116,12 +113,14 @@ fun Options(
                     RadioButton(
                         selected = selectedOptionIndex == index,
                         onClick = {onClick(index)},
-                        colors = RadioButtonDefaults.colors(MaterialTheme.colorScheme.secondary),
+                        colors = RadioButtonDefaults.colors(MaterialTheme.colorScheme.primary),
                         modifier = modifier.size(32.dp)
                     )
 
                     Text(
                         text = options[index].value,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
@@ -152,8 +151,9 @@ fun ResultOptions(
 
                 Text(
                     text = options[index].value,
-                    color = if(votes[index] == votes.max()) MaterialTheme.colorScheme.secondary else Color.Unspecified,
-                    modifier = modifier.padding(horizontal = 12.dp)
+                    color = if(votes[index] == votes.max()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSecondaryContainer,
+                    modifier = modifier.padding(horizontal = 12.dp),
+                    style = if(votes[index] == votes.max()) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.bodyMedium,
                 )
 
                 VotesCounter(options = options, index = index)
@@ -178,12 +178,14 @@ fun VotesCounter(
             modifier = modifier
                 .weight(6f)
                 .padding(12.dp),
-            color = MaterialTheme.colorScheme.secondary,
-            trackColor = MaterialTheme.colorScheme.tertiary
+            color = MaterialTheme.colorScheme.primary,
+            trackColor = MaterialTheme.colorScheme.inverseOnSurface
         )
         Text(
             text = options[index].votes.size.toString(),
-            modifier = modifier.weight(1f)
+            modifier = modifier.weight(1f),
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 }

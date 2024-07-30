@@ -28,7 +28,7 @@ import com.example.fleet.presentation.HelperFunctions
 
 
 @Composable
-fun Select_ChatBar(
+fun ChatBar(
     navigateToChatScreen:(String)->Unit,
     chat: Chat,
     lastMessageText: String
@@ -42,7 +42,8 @@ fun Select_ChatBar(
             .height(72.dp)
             .padding(1.dp)
             .clickable { navigateToChatScreen(chat.id) },
-        shape = RoundedCornerShape(2.dp)
+        shape = RoundedCornerShape(2.dp),
+        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.secondaryContainer)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -64,21 +65,20 @@ fun Select_ChatBar(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = chat.title ?: "No title",
+                    text = chat.title,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = modifier.align(Alignment.Start),
                     maxLines = 1,
-                    color = if (chat.isPrivate) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+                    color = if (chat.isPrivate) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.tertiary
                 )
                 Text(
                     text = HelperFunctions.cutString(text = lastMessageText),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = modifier.align(Alignment.Start),
-                    maxLines = 1
+                    maxLines = 1,
+                    color = MaterialTheme.colorScheme.outline //TOdo make message turn color to primary if it is new message
                 )
                 //TODO make this visible when there are new messages in ViewModel
-                //Icon(imageVector = Icons.Default.Star, contentDescription = "New message", tint = MaterialTheme.colorScheme.secondary, modifier = modifier.weight(1f))
-
             }
         }
     }
@@ -98,9 +98,9 @@ fun SimplifiedChatBar(
             .fillMaxWidth()
             .height(72.dp)
             .padding(1.dp)
-            .clickable { if(isBarSelected(tenant.id)) onDismiss(tenant.id) else onClick(tenant.id) },
+            .clickable { if (isBarSelected(tenant.id)) onDismiss(tenant.id) else onClick(tenant.id) },
         shape = RoundedCornerShape(2.dp),
-        colors = if(isBarSelected(tenant.id)) CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary) else CardDefaults.cardColors()
+        colors = CardDefaults.cardColors(containerColor = if(isBarSelected(tenant.id)) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -117,13 +117,13 @@ fun SimplifiedChatBar(
             )
             Spacer(modifier = modifier.weight(0.2f))
             Text(
-                text = tenant.name,
+                text = tenant.name + " " + tenant.surname,
                 style = MaterialTheme.typography.titleLarge,
-                modifier = modifier.padding()
+                modifier = modifier
+                    .padding()
                     .weight(8f),
                 maxLines = 1,
             )
-
         }
     }
 }

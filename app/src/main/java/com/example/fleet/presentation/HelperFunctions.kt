@@ -15,7 +15,7 @@ object HelperFunctions {
 
     fun getDayAndMonth(date: LocalDate): String = "${date.dayOfMonth} ${date.month}"
 
-    fun getMinAndHour(date: LocalDateTime): String = "${date.hour}:${date.minute}"
+    fun getMinAndHour(date: LocalDateTime): String = "${String.format("%02d", date.hour)}:${String.format("%02d", date.minute)}"
 
 
     fun stringToLocalDate(
