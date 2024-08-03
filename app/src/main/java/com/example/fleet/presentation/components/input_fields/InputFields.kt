@@ -13,18 +13,13 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,31 +80,18 @@ fun <T> UnderlinedInputField(
     placeholder: String = "",
     maxLines: Int = 1,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    snackbarHostState: SnackbarHostState? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     enabled: Boolean = true,
     onValueChange: (String) -> Unit,
 ) {
     val displayValue by remember { derivedStateOf{value.value?.toString() ?: ""} }
-    var showSnackbar by remember { mutableStateOf(false) }
-
-    //Todo make this able to display password
-    LaunchedEffect(showSnackbar) {
-        if (showSnackbar) {
-            snackbarHostState?.showSnackbar(
-                message = "Please enter only numbers",
-                duration = SnackbarDuration.Short
-            )
-            showSnackbar = false
-        }
-    }
 
     BasicTextField(
         value = displayValue,
         onValueChange = { onValueChange(it) },
         modifier = Modifier.fillMaxWidth(0.9f),
         maxLines = maxLines,
-        textStyle = textStyle,
+        textStyle = textStyle.copy(color = MaterialTheme.colorScheme.onSurface),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),//Todo
         enabled = enabled,
         decorationBox = {
@@ -122,12 +104,17 @@ fun <T> UnderlinedInputField(
                     contentAlignment = AbsoluteAlignment.CenterLeft
                 ){
                     if(value.value.toString().isEmpty()){
-                        Text(placeholder)
+                        Text(
+                            placeholder,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.outline
+                        )
                     }
                     it()
                 }
                 HorizontalDivider(
-                    thickness = 2.dp,
+                    thickness = 1.dp,
+                    color = MaterialTheme.colorScheme.outline
                 )
             }
         },
@@ -142,7 +129,6 @@ fun <T> EditableTextField(
     placeholder: String,
     maxLines: Int = 1,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    snackbarHostState: SnackbarHostState? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     onValueChange: (String) -> Unit,
 ){
@@ -152,7 +138,6 @@ fun <T> EditableTextField(
             placeholder,
             maxLines,
             textStyle,
-            snackbarHostState,
             keyboardType,
             true,
             onValueChange
@@ -176,7 +161,6 @@ fun <T> AttributeDisplay(
     editMode: Boolean,
     maxLines: Int = 1,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    snackbarHostState: SnackbarHostState? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     onValueChange: (String) -> Unit,
 ){
@@ -199,7 +183,6 @@ fun <T> AttributeDisplay(
                 attribute,
                 maxLines,
                 textStyle,
-                snackbarHostState,
                 keyboardType,
                 onValueChange)
         }

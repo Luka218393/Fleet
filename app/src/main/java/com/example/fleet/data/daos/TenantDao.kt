@@ -34,6 +34,8 @@ interface TenantDao {
     @Query("""select * from tenants where tenants.email == :email""")
     fun getByEmail(email: String): Tenant
 
+    @Query("""select * from tenants where tenants.apartmentId == :apartmentId""")
+    fun getByApartmentId(apartmentId: String): List<Tenant>
 }
 
 data class TenantIdAndName(

@@ -3,6 +3,7 @@ package com.example.fleet.domain.Models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.example.fleet.R
 import java.time.LocalDate
 import java.util.Date
 import java.util.UUID
@@ -27,7 +28,7 @@ data class Tenant(
     val phoneNumber: String? = null,
     var email: String? = null,
     var gender: String? = null,//Make enum and rest
-    var profileImageRes: Int? = null,
+    var profileImageRes: Int = R.drawable.account_icon,
     val birthday: Date? = null,
     var profession: String? = null,
     var description: String? = null,

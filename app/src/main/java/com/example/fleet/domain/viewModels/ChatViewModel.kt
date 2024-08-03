@@ -1,5 +1,6 @@
 package com.example.fleet.domain.viewModels
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +36,7 @@ class ChatViewModel (
 
     //
     init {
+        Log.i("ChatViewModel","INIT")
         chatsCollector()
     }
 
@@ -46,25 +48,27 @@ class ChatViewModel (
     fun createChat(tenantIds: List<String>, isPrivate: Boolean, title: String? = null) {
         val chatId = UUID.randomUUID().toString()
         //Todo check if private chat already exists -> send message
-        runBlocking {
-            db.chatDao().upsert(
-                Chat(
-                    title = title
-                        ?: FleetApplication.fleetModule.getTenantNameAndSurname(tenantIds.first())
-                        ?: "Error",
-                    isPrivate = isPrivate,
-                    id = chatId
-                )
-            )
-
-            for (i in tenantIds + FleetApplication.fleetModule.tenantId) {
-                db.tenantChatDao().upsert(
-                    TenantChat(
-                        tenantId = i,
-                        chatId = chatId,
-                        id = "$i,$chatId"
+        if (tenantIds.isNotEmpty()) {
+            runBlocking {
+                db.chatDao().upsert(
+                    Chat(
+                        title = title
+                            ?: FleetApplication.fleetModule.getTenantNameAndSurname(tenantIds.first())
+                            ?: "Error",
+                        isPrivate = isPrivate,
+                        id = chatId
                     )
                 )
+
+                for (i in tenantIds + FleetApplication.fleetModule.tenantId) {
+                    db.tenantChatDao().upsert(
+                        TenantChat(
+                            tenantId = i,
+                            chatId = chatId,
+                            id = "$i,$chatId"
+                        )
+                    )
+                }
             }
         }
     }
@@ -74,8 +78,8 @@ class ChatViewModel (
     private fun chatsCollector() {
         viewModelScope.launch {
             db.tenantChatDao()
-                .getChatsOfATenant(FleetApplication.fleetModule.tenantId).collect {
-                _chats.value = it
+                .getChatsOfATenant(FleetApplication.fleetModule.tenantId).collect { chats ->
+                _chats.update { chats }
             }
         }
 
@@ -92,6 +96,8 @@ class ChatViewModel (
                 }
                 else{
                     _tenants.value = db.tenantChatDao().getTenantsForNewPersonalChat(FleetApplication.fleetModule.tenantId)
+                        .filterNot { it.id == FleetApplication.fleetModule.tenantId }
+
                 }
             }
         }

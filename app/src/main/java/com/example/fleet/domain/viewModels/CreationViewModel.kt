@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fleet.FleetApplication
+import com.example.fleet.R
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.domain.Models.Apartment
 import com.example.fleet.domain.Models.Tenant
@@ -47,7 +48,7 @@ class CreationViewModel(
                 )
     }
     //Todo validate every field
-
+    //Todo add proper apartment
     fun createTenant(){
         tenantId.value = UUID.randomUUID().toString()
         viewModelScope.launch {
@@ -60,7 +61,7 @@ class CreationViewModel(
                     phoneNumber.value,
                     email.value,
                     gender.value,
-                    null,
+                    R.drawable.account_icon,
                     null,
                     profession.value,
                     description.value,

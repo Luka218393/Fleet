@@ -36,7 +36,7 @@ class ChatSelectionScreen: Screen{
     @Composable
     override fun Content() {
         val nav = LocalNavigator.current
-        val chats = viewModel.chats.collectAsState(emptyList()).value
+        val chats = viewModel.chats.collectAsState().value
 
         Scaffold(
             bottomBar = { BottomBar() },

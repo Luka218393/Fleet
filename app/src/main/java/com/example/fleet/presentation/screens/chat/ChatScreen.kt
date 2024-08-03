@@ -41,7 +41,7 @@ class ChatScreen(
             topBar = {
                 ChatTopBar(title = chat.title,
                     onBack = { Navigation.pop(nav)},
-                    onTextPress = {Navigation.goTo( Screens.DISPLAY, nav, viewModel.getTenantIdFromChat(chatId))} )},
+                    onTextPress = {Navigation.goTo( Screens.DISPLAY_TENANT, nav, viewModel.getTenantIdFromChat(chatId))} )},
             bottomBar = {
                 InputBottomBar( modifier = Modifier,
                     send = {

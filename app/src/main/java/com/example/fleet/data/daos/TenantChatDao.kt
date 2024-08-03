@@ -27,7 +27,8 @@ interface TenantChatDao {
     @Query("SELECT * from chats WHERE id in (SELECT chatId FROM tenant_chat WHERE tenantId = :tenantId)")
     fun getChatsOfATenant(tenantId: String): Flow<List<Chat>>
 
-    //Todo remove tenant that has original Id
+    //Todo remove tenant that has original Id,
+    // query is not good
     @Query("""
     SELECT t.* 
     FROM tenants t

@@ -8,14 +8,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.fleet.FleetApplication
 import com.example.fleet.data.FleetDatabase
+import com.example.fleet.domain.Models.Apartment
 import com.example.fleet.domain.Models.Tenant
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 class DisplayViewModel(
     private val db: FleetDatabase,
 ): ViewModel() {
-    private fun getTenantById(id: String) = runBlocking { db.tenantDao().getById(id).first() }
+    private fun getTenantById(id: String) = runBlocking(Dispatchers.IO) { db.tenantDao().getById(id).first() }
+    private fun getApartmentById(id: String) = runBlocking(Dispatchers.IO) { db.apartmentDao().getById(id).first() }
+
 
     var tenant by mutableStateOf<Tenant?>(null)
     var name = mutableStateOf("123")
@@ -44,6 +48,30 @@ class DisplayViewModel(
         }
     }
 
+    var apartment by mutableStateOf<Apartment?>(null)
+    var buildingId = mutableStateOf("")
+    val floor= mutableStateOf("")
+    val door= mutableStateOf("")
+    val maxCapacity= mutableStateOf("")
+    val areaInMeters2= mutableStateOf("")
+    val numberOfRooms= mutableStateOf("")
+    val hasPets= mutableStateOf(false)
+    var tenants = listOf<Tenant>()//Todo this only needs image res and name
+
+    fun getApartmentAttributes(apartmentId: String){
+        apartment = getApartmentById(apartmentId)
+        if (apartment != null) {
+            buildingId.value = apartment!!.buildingId
+            floor.value = apartment!!.floor.toString()
+            door.value = apartment!!.door
+            maxCapacity.value = (apartment!!.maxCapacity ?: "").toString()
+            areaInMeters2.value = (apartment!!.areaInMeters2 ?: "").toString()
+            numberOfRooms.value = (apartment!!.numberOfRooms ?: "").toString()
+            hasPets.value = apartment!!.hasPets ?: true
+            Log.i("DisplayViewModel", "getApartmentAttributes")
+        }
+        tenants = runBlocking(Dispatchers.IO) { db.tenantDao().getByApartmentId(apartmentId) }
+    }
     fun changeTenant(){
         val newTenant = tenant!!.copy(
             name = name.value,

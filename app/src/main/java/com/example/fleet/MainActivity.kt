@@ -18,6 +18,7 @@ import com.example.fleet.presentation.ui.theme.FleetTheme
 This is the starting point of the app.
 */
 //Todo what is a service???
+//https://yqnn.github.io/svg-path-editor/
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {

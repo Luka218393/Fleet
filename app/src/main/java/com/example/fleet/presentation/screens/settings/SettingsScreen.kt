@@ -24,7 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -70,12 +69,12 @@ class SettingsScreen  : Screen{
                 SettingsBar(painterIcon = painterResource(id = R.drawable.contrast_icon), text = "Theme", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
 
                 SettingsSeparator(text = "Edit")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.account_icon), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY, nav, componentId = FleetApplication.fleetModule.tenantId)})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.door_icon), text = "Edit apartment", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.account_icon), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY_TENANT, nav, componentId = FleetApplication.fleetModule.tenantId)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.door_icon), text = "Edit apartment", onClick = {Navigation.goTo(Screens.DISPLAY_APARTMENT, nav, componentId = FleetApplication.fleetModule.apartment.value.id)})
                 SettingsBar(painterIcon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
 
                 SettingsSeparator(text = "Account")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.key_icon), text = "Change account", onClick = { Navigation.goTo(Screens.LOG_IN, nav) })//Todo make whole app restart or remake all Jobs
+                SettingsBar(painterIcon = painterResource(id = R.drawable.fleet_icon), text = "Change account", onClick = { Navigation.goTo(Screens.LOG_IN, nav) })//Todo make whole app restart or remake all Jobs
                 SettingsBar(painterIcon = painterResource(id = R.drawable.lock_icon), text = "Privacy", onClick = { Navigation.goTo(Screens.WORK_IN_PROGRESS, nav )})
                 SettingsBar(painterIcon = painterResource(id = R.drawable.list_icon), text = "Terms of service", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
 
@@ -124,7 +123,7 @@ fun SettingsBar(
                 Icon(
                     imageVector = iconVector,
                     contentDescription = text,
-                    tint = MaterialTheme.colorScheme.secondary,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = modifier
                         .size(32.dp)
                 )
@@ -133,20 +132,22 @@ fun SettingsBar(
                 Icon(
                     painter = painterIcon!!,
                     contentDescription = text,
-                    tint = MaterialTheme.colorScheme.secondary,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = modifier
                         .size(32.dp)
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = text
+                text = text,
+                style  = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
         Icon(
             imageVector = Icons.Default.ArrowDropDown,
             contentDescription = "More",
-            tint = MaterialTheme.colorScheme.secondary,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = modifier
                 .size(32.dp)
         )
@@ -163,14 +164,14 @@ fun SettingsSeparator(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ){
-        HorizontalDivider(modifier = Modifier.weight(1f))
+        HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outlineVariant)
         Text(
             text = text ,
             textAlign = TextAlign.Center,
-            color = Color(255,255,255),
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(horizontal = 12.dp)
         )
-        HorizontalDivider(modifier = Modifier.weight(1f))
+        HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outlineVariant)
     }
 }
 

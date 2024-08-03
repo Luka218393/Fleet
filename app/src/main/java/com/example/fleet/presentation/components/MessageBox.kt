@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,13 +32,16 @@ fun CreateMessageBox(
     message: Message,
 ){
     Box(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp)),
         contentAlignment = if(FleetApplication.fleetModule.tenantId == message.senderId) Alignment.TopEnd else Alignment.TopStart
     ){
         Card(
-            modifier = modifier.padding(4.dp)
+            modifier = modifier
+                .padding(4.dp)
                 .widthIn(max = 300.dp, min = 100.dp),
+            colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.secondaryContainer, contentColor = MaterialTheme.colorScheme.onSecondaryContainer)
         ){
             Column(
                 horizontalAlignment = Alignment.Start,
