@@ -5,7 +5,6 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.fleet.R
 import java.time.LocalDate
-import java.util.Date
 import java.util.UUID
 
 @Entity(tableName = "tenants",
@@ -29,13 +28,13 @@ data class Tenant(
     var email: String? = null,
     var gender: String? = null,//Make enum and rest
     var profileImageRes: Int = R.drawable.account_icon,
-    val birthday: Date? = null,
+    val birthday: LocalDate? = null,
     var profession: String? = null,
     var description: String? = null,
     var isOnline: Boolean = true,
     var isApartmentHead: Boolean = false,
-    var isTenantLeader: Boolean = false,
     val createdAt: LocalDate = LocalDate.now(),
-    var password: String
+    var password: String,
+    var isTenantLeader: Boolean = false
 )
 //Todo add password

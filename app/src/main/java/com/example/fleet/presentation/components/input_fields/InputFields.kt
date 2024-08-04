@@ -26,7 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import java.time.LocalDate
 
 // UI
 @Composable
@@ -82,6 +84,7 @@ fun <T> UnderlinedInputField(
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     keyboardType: KeyboardType = KeyboardType.Text,
     enabled: Boolean = true,
+    size: Float = 0.9f,
     onValueChange: (String) -> Unit,
 ) {
     val displayValue by remember { derivedStateOf{value.value?.toString() ?: ""} }
@@ -89,7 +92,7 @@ fun <T> UnderlinedInputField(
     BasicTextField(
         value = displayValue,
         onValueChange = { onValueChange(it) },
-        modifier = Modifier.fillMaxWidth(0.9f),
+        modifier = Modifier.fillMaxWidth(size),
         maxLines = maxLines,
         textStyle = textStyle.copy(color = MaterialTheme.colorScheme.onSurface),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),//Todo
@@ -130,6 +133,8 @@ fun <T> EditableTextField(
     maxLines: Int = 1,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     keyboardType: KeyboardType = KeyboardType.Text,
+    size: Float = 0.9f,
+    textAlign: TextAlign = TextAlign.Start,
     onValueChange: (String) -> Unit,
 ){
     if (editMode) {
@@ -140,7 +145,8 @@ fun <T> EditableTextField(
             textStyle,
             keyboardType,
             true,
-            onValueChange
+            size,
+            onValueChange,
         )
     } else {
         Text(
@@ -148,21 +154,26 @@ fun <T> EditableTextField(
             style = textStyle,
             modifier = Modifier
                 .padding(bottom = 2.dp)
-                .fillMaxWidth(0.9f)
+                .fillMaxWidth(size),
+            textAlign = textAlign
         )
     }
 }
 
 //Todo fix placeholders
 @Composable
-fun <T> AttributeDisplay(
+fun <T: Any> AttributeDisplay(
     attribute: String,
     value: MutableState<T>,
     editMode: Boolean,
     maxLines: Int = 1,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     keyboardType: KeyboardType = KeyboardType.Text,
-    onValueChange: (String) -> Unit,
+    size: Float = 0.9f,
+    textAlign: TextAlign = TextAlign.Start,
+    onDateValueChange: (LocalDate) -> Unit = {},
+    onBooleanValueChange: (Boolean)->Unit = {},
+    onValueChange: (String) -> Unit = {},
 ){
     Column(
         horizontalAlignment = Alignment.Start,
@@ -177,14 +188,45 @@ fun <T> AttributeDisplay(
                 .fillMaxWidth()
                 .padding(start = 20.dp)
         ){
-            EditableTextField(
-                editMode,
-                value,
-                attribute,
-                maxLines,
-                textStyle,
-                keyboardType,
-                onValueChange)
+            if (value.value is String || value.value is Int) {
+                EditableTextField(
+                    editMode,
+                    value,
+                    attribute,
+                    maxLines,
+                    textStyle,
+                    keyboardType,
+                    size,
+                    textAlign,
+                    onValueChange
+                )
+            }
+            else if(value.value is LocalDate){
+                EditableDateSelector(editMode = editMode, value = (value.value as? LocalDate)) {
+                    onDateValueChange(it)
+                }
+            }
+            else if(value.value is Boolean){
+                EditableBooleanSelector(editMode = editMode, value = (value.value as Boolean)) {
+                    onBooleanValueChange(it)
+                }
+            }
         }
     }
+}
+
+fun castInputToInt(
+    store: MutableState<String>,
+    stringValue: String
+){
+    if (stringValue.isEmpty()){
+        store.value = stringValue
+        return
+    }
+    try {
+        stringValue.toInt()
+        store.value = stringValue
+        return
+    }
+    catch (e: NumberFormatException){println("Invalid input: $stringValue cannot be converted to an integer.")}
 }

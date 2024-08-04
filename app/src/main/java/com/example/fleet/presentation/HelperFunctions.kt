@@ -1,11 +1,9 @@
 package com.example.fleet.presentation
 
 import android.util.Log
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 object HelperFunctions {
 
@@ -14,6 +12,11 @@ object HelperFunctions {
     }
 
     fun getDayAndMonth(date: LocalDate): String = "${date.dayOfMonth} ${date.month}"
+
+    fun getDayMonthAndYear(date: LocalDate?):String{
+        date?.let {return "${date.dayOfMonth} ${date.month} ${date.year}"}
+        return ""
+    }
 
     fun getMinAndHour(date: LocalDateTime): String = "${String.format("%02d", date.hour)}:${String.format("%02d", date.minute)}"
 
@@ -31,4 +34,6 @@ object HelperFunctions {
         return LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
     }
+
+
 }

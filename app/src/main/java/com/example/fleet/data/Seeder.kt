@@ -1,6 +1,7 @@
 package com.example.fleet.data
 
 import com.example.fleet.R
+import com.example.fleet.domain.Enums.Countries
 import com.example.fleet.domain.Enums.PollType
 import com.example.fleet.domain.Models.Apartment
 import com.example.fleet.domain.Models.Building
@@ -15,7 +16,7 @@ import com.example.fleet.domain.Models.Task
 import com.example.fleet.domain.Models.Tenant
 import com.example.fleet.domain.Models.TenantChat
 import kotlinx.coroutines.runBlocking
-import java.util.Date
+import java.time.LocalDate
 
 
 fun seed(db: FleetDatabase){
@@ -40,7 +41,8 @@ val tenants = listOf(
         name = "Lux",
         apartmentId = "1",
         surname = "Æterna",
-        password = "12345"
+        password = "12345",
+        profileImageRes = R.drawable.color_selector_image
     ),
     Tenant(
         id = "2",
@@ -86,12 +88,11 @@ val tenants = listOf(
         email = "zaskoluusegetu@gmail.com",
         gender = "M",
         profileImageRes = R.drawable.color_selector_image,
-        birthday = Date(),
+        birthday = LocalDate.now(),
         profession = "Programmer",
         description = "My name is Jonnas I am carrying the wheel, I dont care whatt they ll say about us anywhay i dont care about that. Yut taunge is twisting your lips are slick. I dont care about that anymore",
         isOnline = false,
         isApartmentHead = true,
-        isTenantLeader = true,
         password = "12345"
 
     ),
@@ -204,30 +205,45 @@ val tenantChat = emptyList<TenantChat>()
 var buildings = listOf(
     Building(
         id = "1",
-        address = "1"
+        country = Countries.ENGLAND,
+        region = "Cornwall",
+        city = "Bridgerton",
+        address = "Cromwells street 11",
     ),
     Building(
         id = "2",
-        address = "2"
+        country = Countries.CROATIA,
+        region = "Slavonija",
+        city = "Đakovo",
+        address = "Mohorovičićeva 3",
     ),
     Building(
         id = "3",
-        address = "3"
+        country = Countries.ENGLAND,
+        region = "London",
+        city = "London",
+        address = "Abby street 407",
     ),
 )
 
 var apartments = listOf(
     Apartment(
         id = "1",
-        buildingId = "1"
+        buildingId = "1",
+        floor = 1,
+        door = "A"
     ),
     Apartment(
         id = "2",
-        buildingId = "2"
+        buildingId = "2",
+        floor = 2,
+        door = "B"
     ),
     Apartment(
         id = "3",
-        buildingId = "1"
+        buildingId = "1",
+        floor = 2,
+        door = "C"
     )
 
 )

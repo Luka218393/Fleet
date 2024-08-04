@@ -6,11 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,6 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.fleet.presentation.HelperFunctions
 import java.time.LocalDate
+import java.time.Month
 import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -110,6 +114,29 @@ fun <T> CustomListSelector(
         )
     }
 }
+@Composable
+fun EditableDateSelector(
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
+    size: Float = 0.9f,
+    editMode: Boolean,
+    value: LocalDate?,
+    onDateValueChange: (LocalDate) -> Unit
+){
+
+    if (editMode) {
+        DateSelector(date = value?: LocalDate.now(), displayButton = false) {
+            onDateValueChange(it)
+        }
+    } else {
+        Text(
+            text = HelperFunctions.getDayMonthAndYear(value),
+            style = textStyle,
+            modifier = Modifier
+                .padding(bottom = 2.dp)
+                .fillMaxWidth(size),
+        )
+    }
+}
 
 @Composable
 fun DateSelector(
@@ -120,12 +147,12 @@ fun DateSelector(
     var day by remember{mutableStateOf(date.dayOfMonth.toString())}
     var month by remember{ mutableStateOf(date.monthValue.toString())}
     var year by remember { mutableStateOf(date.year.toString()) }
-
+    val months = listOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
     Row{
         CustomListSelector(
             width = 40.dp,
             itemHeight = 30.dp,
-            items = List(LocalDate.now().lengthOfMonth()) { (1+it).toString() },
+            items = List(Month.of(month.toInt()).length(year.toInt() % 4 == 0)) { (1+it).toString() },
             initialItem = day,
             textStyle = MaterialTheme.typography.bodyMedium,
             textColor = MaterialTheme.colorScheme.primary,
@@ -133,9 +160,9 @@ fun DateSelector(
             numberOfDisplayedItems = 3
         ){_,item -> day = item}
         CustomListSelector(
-            width = 100.dp,
+            width = 110.dp,
             itemHeight = 30.dp,
-            items = listOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
+            items = months,
             initialItem = date.month.getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault()),
             textStyle = MaterialTheme.typography.bodyMedium,
             textColor = MaterialTheme.colorScheme.primary,
@@ -143,7 +170,7 @@ fun DateSelector(
             numberOfDisplayedItems = 3
         ){item,_ -> month = (item + 1).toString()}
         CustomListSelector(
-            width = 50.dp,
+            width = 60.dp,
             itemHeight = 30.dp,
             items = List(101) { (it + LocalDate.now().year - 100).toString() },
             initialItem = year,
@@ -167,6 +194,38 @@ fun DateSelector(
     }
 
 }
+
+@Composable
+fun EditableBooleanSelector(
+    editMode: Boolean,
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
+    value: Boolean,
+    size: Float = 0.9f,
+    onValueChange: (Boolean) -> Unit
+){
+    if(editMode) {
+        Switch(
+            checked = value,
+            onCheckedChange = { onValueChange(it) },
+            modifier = Modifier.fillMaxWidth(),
+            colors = SwitchDefaults.colors() // Use default Material 3 colors
+        )
+    }
+    else{
+        Text(
+            text = value.toString(),
+            style = textStyle,
+            modifier = Modifier
+                .padding(bottom = 2.dp)
+                .fillMaxWidth(size),
+        )
+    }
+}
+
+
+
+
+
 
 @Composable
 @Preview

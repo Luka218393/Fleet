@@ -71,7 +71,7 @@ class SettingsScreen  : Screen{
                 SettingsSeparator(text = "Edit")
                 SettingsBar(painterIcon = painterResource(id = R.drawable.account_icon), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY_TENANT, nav, componentId = FleetApplication.fleetModule.tenantId)})
                 SettingsBar(painterIcon = painterResource(id = R.drawable.door_icon), text = "Edit apartment", onClick = {Navigation.goTo(Screens.DISPLAY_APARTMENT, nav, componentId = FleetApplication.fleetModule.apartment.value.id)})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(painterIcon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = {Navigation.goTo(Screens.DISPLAY_BUILDING, nav, componentId = FleetApplication.fleetModule.building.value.id)})
 
                 SettingsSeparator(text = "Account")
                 SettingsBar(painterIcon = painterResource(id = R.drawable.fleet_icon), text = "Change account", onClick = { Navigation.goTo(Screens.LOG_IN, nav) })//Todo make whole app restart or remake all Jobs

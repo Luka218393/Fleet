@@ -1,5 +1,6 @@
 package com.example.fleet.data
 
+import android.location.Location
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -73,6 +74,26 @@ class TypeConverte {
     @TypeConverter
     fun toString(list: List<String>?): String? {
         return list?.joinToString(",")
+    }
+
+    @TypeConverter
+    fun fromLocation(location: Location?): String? {
+        return if (location == null) null else "${location.latitude},${location.longitude}"
+    }
+
+    @TypeConverter
+    fun toLocation(locationString: String?): Location? {
+        if (locationString == null) return null
+
+        val parts = locationString.split(",")
+        if (parts.size != 2) return null
+
+        val latitude = parts[0].toDoubleOrNull() ?: return null
+        val longitude = parts[1].toDoubleOrNull() ?: return null
+
+        val location = Location("Generated") // Provider is not important for storagelocation.latitude = latitude
+        location.longitude = longitude
+        return location
     }
 }
 
