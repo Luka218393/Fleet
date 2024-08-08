@@ -1,5 +1,9 @@
 package com.example.fleet.presentation.components.cards
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,50 +56,67 @@ fun SubTaskDisplay(
     onTaskCompletion: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
-    Column {
 
-        Row (
-            modifier = modifier.height(50.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Text(text = subTask.text,
-                modifier = modifier
-                    .padding(12.dp)
-                    .weight(8f),
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                style = MaterialTheme.typography.bodyMedium
-            )
-            VerticalDivider(
-                modifier = modifier.fillMaxHeight(),
-                thickness = 0.4.dp,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Box(
-                modifier = modifier
-                    .weight(2f)
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                IconButton(
-                    onClick = { onTaskCompletion(subTask.id) }
-                ) {
-                    //TODO Make this draggable
-                    Icon(
-                        painter = if(subTask.completed) painterResource(id = R.drawable.check_24dp_e8eaed_fill0_wght400_grad0_opsz24) else painterResource(id = R.drawable.chevron_left_24dp_e8eaed_fill0_wght400_grad0_opsz24),
-                        contentDescription = "icon",
-                        tint = if(subTask.completed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary ,
-                        modifier = modifier
-                            .size(32.dp)
-                    )
-                }
-            }
-        }
-        HorizontalDivider(
-            modifier = modifier
-                .fillMaxWidth(),
-            thickness = 0.4.dp,
-            color = MaterialTheme.colorScheme.primary
-        )
-    }
+   Column {
+
+       Row (
+           modifier = modifier.height(50.dp),
+           verticalAlignment = Alignment.CenterVertically
+       ){
+           Text(text = subTask.text,
+               modifier = modifier
+                   .padding(12.dp)
+                   .weight(8f),
+               color = MaterialTheme.colorScheme.onSecondaryContainer,
+               style = MaterialTheme.typography.bodyMedium
+           )
+           //TODO Make this draggable
+
+           VerticalDivider(
+               modifier = modifier.fillMaxHeight(),
+               thickness = 0.4.dp,
+               color = MaterialTheme.colorScheme.primary
+           )
+           Box(
+               modifier = modifier
+                   .weight(2f)
+                   .fillMaxSize()
+                   ,
+               contentAlignment = Alignment.Center
+           ){
+               IconButton(
+                   onClick = { onTaskCompletion(subTask.id) }
+               ) {
+                   AnimatedContent(targetState = subTask.completed,
+                       modifier = modifier.size(32.dp),
+                       label = "Task icon animation",
+                       transitionSpec = {
+                           fadeIn() togetherWith fadeOut()
+                       }) {
+                       if (it){
+                           Icon(
+                               painter = painterResource(id = R.drawable.check_icon) ,
+                               contentDescription = "icon",
+                               tint = MaterialTheme.colorScheme.primary,
+                           )
+                       }
+                       else{
+                           Icon(
+                               painter = painterResource(id = R.drawable.arrow_left_icon),
+                               contentDescription = "icon",
+                               tint =  MaterialTheme.colorScheme.secondary ,
+                           )
+                       }
+                   }
+               }
+           }
+       }
+       HorizontalDivider(
+           modifier = modifier
+               .fillMaxWidth(),
+           thickness = 0.4.dp,
+           color = MaterialTheme.colorScheme.primary
+       )
+   }
 }
 

@@ -91,4 +91,6 @@ dependencies {
     //Wheel picker
     implementation ("com.github.zj565061763:compose-wheel-picker:1.0.0-beta05")
 
+    //Constraint layout
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }

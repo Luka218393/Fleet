@@ -20,6 +20,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -33,8 +34,9 @@ import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
 import com.example.fleet.presentation.components.input_fields.InputField
 
+@Stable
 @Composable
-fun BottomBar(
+fun NavigationBottomBar(
     modifier: Modifier = Modifier,
 ) {
     val nav = LocalNavigator.current

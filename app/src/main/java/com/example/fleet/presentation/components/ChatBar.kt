@@ -1,6 +1,7 @@
 package com.example.fleet.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.fleet.R
@@ -34,24 +36,20 @@ fun ChatBar(
     lastMessageText: String
 ) {
     val modifier = Modifier
-    /*TODO add color change based on discussion type -> ViewModel*/
 
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(72.dp)
-            .padding(1.dp)
-            .clickable { navigateToChatScreen(chat.id) },
-        shape = RoundedCornerShape(2.dp),
-        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.secondaryContainer)
-    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxWidth()
+                .height(72.dp)
+                .padding(vertical = 1.dp)
+                .clickable { navigateToChatScreen(chat.id) }
+                .clip(RoundedCornerShape(4.dp))
+                .background(MaterialTheme.colorScheme.secondaryContainer),
         ) {
             Image(
                 painter = painterResource(
-                    chat.profileImageResId ?: R.drawable.lukinaikona
+                    chat.profileImageResId ?: R.drawable.account_icon
                 ),
                 contentDescription = null,
                 modifier = modifier
@@ -81,7 +79,7 @@ fun ChatBar(
                 //TODO make this visible when there are new messages in ViewModel
             }
         }
-    }
+
 }
 
 //

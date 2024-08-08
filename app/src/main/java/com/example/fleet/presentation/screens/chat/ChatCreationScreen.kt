@@ -61,6 +61,7 @@ class ChatCreationScreen: Screen {
     //Todo Add everyone to chat button
     @Composable
     override fun Content() {
+
         val modifier = Modifier
         val nav = LocalNavigator.current
         val tenantsToDisplay = viewModel.tenants.collectAsState(emptyList()).value

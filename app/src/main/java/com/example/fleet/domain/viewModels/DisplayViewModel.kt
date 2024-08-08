@@ -102,6 +102,7 @@ class DisplayViewModel(
         }
     }
 
+
     fun changeTenant(){
         val newTenant = tenant!!.copy(
             name = name.value,
@@ -111,7 +112,7 @@ class DisplayViewModel(
             phoneNumber = phoneNumber.value,
             email = email.value,
         )
-        runBlocking { db.tenantDao().upsert(newTenant) }
+        viewModelScope.launch(Dispatchers.IO) { db.tenantDao().upsert(newTenant) }
         Log.i("DisplayViewModel", "Change Tenant")
 
     }
@@ -137,7 +138,7 @@ class DisplayViewModel(
             numberOfApartments = numberOfApartments.value.toInt(),
             creationYear = creationYear.value.toInt()
         )
-        runBlocking { db.buildingDao().upsert(newBuilding) }
+        viewModelScope.launch(Dispatchers.IO) { db.buildingDao().upsert(newBuilding) }
     }
 }
 

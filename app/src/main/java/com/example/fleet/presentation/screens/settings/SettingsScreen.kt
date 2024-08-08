@@ -1,7 +1,7 @@
 package com.example.fleet.presentation.screens.settings
 
+import android.util.Log
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -40,7 +41,7 @@ import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.SettingsViewModel
 import com.example.fleet.domain.viewModels.SettingsViewModelFactory
 import com.example.fleet.presentation.components.ColorSelector
-import com.example.fleet.presentation.components.scaffold_elements.BottomBar
+import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 
 
 //Todo add scroll
@@ -48,41 +49,46 @@ import com.example.fleet.presentation.components.scaffold_elements.BottomBar
 class SettingsScreen  : Screen{
     @Transient
     private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]
-
+    private val TAG = "SettingsScreen"
+    @Stable
     @Composable
     override fun Content() {
+        var i = 0
         //Todo try this
         viewModel.apply{}
         val nav = LocalNavigator.current
         Scaffold(
-            bottomBar = {BottomBar() },
+            bottomBar = {NavigationBottomBar() },
         ) { padding ->
-            val systemTheme = isSystemInDarkTheme()
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(padding)
+                modifier = Modifier
+                    .padding(padding)
                     .verticalScroll(rememberScrollState())
             ){
+                i++
+
                 SettingsSeparator(text = "Theme")
-                SettingsBar(iconVector = Icons.Default.Create, text = "Color", onClick = {viewModel.toggleColorPalette()})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.four_star_icon), text = "Immersive mode", onClick = {viewModel.toggleImmersiveMode()})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.contrast_icon), text = "Theme", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(icon = Icons.Default.Create, text = "Color", onClick = {viewModel.toggleColorPalette()})
+                SettingsBar(icon = painterResource(id = R.drawable.four_star_icon), text = "Immersive mode", onClick = {viewModel.toggleImmersiveMode()})
+                SettingsBar(icon = painterResource(id = R.drawable.contrast_icon), text = "Theme", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
 
                 SettingsSeparator(text = "Edit")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.account_icon), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY_TENANT, nav, componentId = FleetApplication.fleetModule.tenantId)})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.door_icon), text = "Edit apartment", onClick = {Navigation.goTo(Screens.DISPLAY_APARTMENT, nav, componentId = FleetApplication.fleetModule.apartment.value.id)})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = {Navigation.goTo(Screens.DISPLAY_BUILDING, nav, componentId = FleetApplication.fleetModule.building.value.id)})
+                SettingsBar(icon = painterResource(id = R.drawable.account_icon), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY_TENANT, nav, componentId = FleetApplication.fleetModule.tenantId)})
+                SettingsBar(icon = painterResource(id = R.drawable.door_icon), text = "Edit apartment", onClick = {Navigation.goTo(Screens.DISPLAY_APARTMENT, nav, componentId = FleetApplication.fleetModule.apartment.value.id)})
+                SettingsBar(icon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = {Navigation.goTo(Screens.DISPLAY_BUILDING, nav, componentId = FleetApplication.fleetModule.building.value.id)})
 
                 SettingsSeparator(text = "Account")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.fleet_icon), text = "Change account", onClick = { Navigation.goTo(Screens.LOG_IN, nav) })//Todo make whole app restart or remake all Jobs
-                SettingsBar(painterIcon = painterResource(id = R.drawable.lock_icon), text = "Privacy", onClick = { Navigation.goTo(Screens.WORK_IN_PROGRESS, nav )})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.list_icon), text = "Terms of service", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(icon = painterResource(id = R.drawable.fleet_icon), text = "Change account", onClick = { Navigation.goTo(Screens.LOG_IN, nav) })//Todo make whole app restart or remake all Jobs
+                SettingsBar(icon = painterResource(id = R.drawable.lock_icon), text = "Privacy", onClick = { Navigation.goTo(Screens.WORK_IN_PROGRESS, nav )})
+                SettingsBar(icon = painterResource(id = R.drawable.list_icon), text = "Terms of service", onClick = {            Log.i(TAG, i.toString())
+                })
 
                 SettingsSeparator(text = "Help the dev")
-                SettingsBar(painterIcon = painterResource(id = R.drawable.message_icon), text = "Message the dev", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})//Remove ->
-                SettingsBar(painterIcon = painterResource(id = R.drawable.poll_icon), text = "Answer a poll", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.image_icon), text = "Get resources", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
-                SettingsBar(painterIcon = painterResource(id = R.drawable.bug_icon), text = "Report problem", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})//Remove <-
+                SettingsBar(icon = painterResource(id = R.drawable.message_icon), text = "Message the dev", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})//Remove ->
+                SettingsBar(icon = painterResource(id = R.drawable.poll_icon), text = "Answer a poll", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(icon = painterResource(id = R.drawable.image_icon), text = "Get resources", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(icon = painterResource(id = R.drawable.bug_icon), text = "Report problem", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})//Remove <-
 
 
                 if (viewModel.showColorSelector){
@@ -92,18 +98,17 @@ class SettingsScreen  : Screen{
                     )
                 }
             }
-        }
+        }//https://fonts.google.com/icons
     }
 }
 
 
-//https://fonts.google.com/icons
 
+@Stable
 @Composable
 fun SettingsBar(
     modifier: Modifier = Modifier,
-    iconVector: ImageVector? = null,
-    painterIcon: Painter? = null,
+    icon: Any? = null,
     text: String,
     onClick: () -> Unit
 ){
@@ -119,22 +124,17 @@ fun SettingsBar(
         Row (
             verticalAlignment = Alignment.CenterVertically
         ){
-            if (iconVector != null) {
-                Icon(
-                    imageVector = iconVector,
+            when (icon) {
+                is ImageVector -> Icon(
+                    imageVector = icon,
                     contentDescription = text,
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = modifier
-                        .size(32.dp)
+                    modifier = Modifier.size(32.dp)
                 )
-            }
-            else{
-                Icon(
-                    painter = painterIcon!!,
+                is Painter -> Icon(
+                    painter = icon,
                     contentDescription = text,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = modifier
-                        .size(32.dp)
+                    tint = MaterialTheme.colorScheme.primary,modifier = Modifier.size(32.dp)
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
@@ -155,6 +155,7 @@ fun SettingsBar(
 }
 
 //
+@Stable
 @Composable
 fun SettingsSeparator(
     text: String
@@ -180,7 +181,7 @@ fun SettingsSeparator(
 @Composable
 fun SettingsBarPreview(){
     SettingsBar(
-        iconVector = Icons.Default.Check,
+        icon = Icons.Default.Check,
         text = "More settings",
         onClick = {}
     )

@@ -1,5 +1,6 @@
 package com.example.fleet.presentation.screens.chat
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,22 +25,26 @@ import com.example.fleet.domain.Navigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.components.ChatBar
-import com.example.fleet.presentation.components.scaffold_elements.BottomBar
+import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 import com.example.fleet.presentation.components.scaffold_elements.SimpleFloatingButton
+import kotlin.system.measureTimeMillis
 
 //
 class ChatSelectionScreen: Screen{
+    private val TAG = "ChatSelectionScreen"
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 
 
     @Composable
     override fun Content() {
+        val time = measureTimeMillis {
+
         val nav = LocalNavigator.current
         val chats = viewModel.chats.collectAsState().value
 
         Scaffold(
-            bottomBar = { BottomBar() },
+            bottomBar = { NavigationBottomBar() },
             floatingActionButton = { SimpleFloatingButton ({ Navigation.goTo(Screens.CHAT_CREATION, nav) }, Icons.Default.Add) }
         ) { padding ->
 
@@ -71,11 +76,14 @@ class ChatSelectionScreen: Screen{
                             },
                             chat = chat,
                             viewModel.getMessageText(chat.lastMessageId)
+
                         )
                     }
                 }
             }
         }
+        }
+        Log.i(TAG,"Execution time: $time ms")
     }
 }
 

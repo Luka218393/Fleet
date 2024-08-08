@@ -1,5 +1,8 @@
 package com.example.fleet.presentation.components.cards
 
+import androidx.compose.animation.core.EaseOutExpo
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -170,11 +173,22 @@ fun VotesCounter(
     index: Int,
     modifier: Modifier = Modifier
 ){
+
+    val float by animateFloatAsState(targetValue = (
+            options[index].votes.size.toFloat() /
+            options.maxBy { it.votes.size }.votes.size.toFloat().let { if (it == 0f) 1f else it }),
+        label = "Votes counter animation",
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = EaseOutExpo
+        )
+    )
+
     Row(
         modifier = modifier.fillMaxWidth()
     ) {
         LinearProgressIndicator(
-            progress = { (options[index].votes.size.toFloat() / options.maxBy { it.votes.size }.votes.size.toFloat()) },
+            progress = { float },
             modifier = modifier
                 .weight(6f)
                 .padding(12.dp),

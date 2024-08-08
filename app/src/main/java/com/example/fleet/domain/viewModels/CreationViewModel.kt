@@ -96,7 +96,7 @@ class CreationViewModel(
 
     fun buildingIdIsValid(id: String):Boolean = runBlocking (Dispatchers.IO) { db.buildingDao().exists(id) }
 
-    fun getBuildingsApartments():List<Apartment> = runBlocking(Dispatchers.IO) {
+    fun getBuildingsApartments(): List<Apartment> = runBlocking(Dispatchers.IO) {
         db.apartmentDao().getByBuildingId(buildingId.value)
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.LocalView
@@ -11,6 +12,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import cafe.adriel.voyager.navigator.Navigator
+import com.example.fleet.domain.Navigation
+import com.example.fleet.presentation.animations.CustomScreenTransition
 import com.example.fleet.presentation.screens.NotificationScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
 
@@ -18,7 +21,6 @@ import com.example.fleet.presentation.ui.theme.FleetTheme
 This is the starting point of the app.
 */
 //Todo what is a service???
-//https://yqnn.github.io/svg-path-editor/
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             FleetTheme (
                 content = {
-                    Navigator(NotificationScreen())
+                    Navigator(NotificationScreen()){ navigator ->
+                        BackHandler {
+                            Navigation.pop(navigator)
+                        }
+                        CustomScreenTransition(navigator) { screen ->
+                            screen.Content()
+                        }
+                    }
 
 
                     val insetsController = WindowCompat.getInsetsController(
@@ -46,9 +55,12 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             )
-        }//Todo rename notifications to events
+        } //Todo rename notifications to events
     }
-}//https://stackoverflow.com/questions/69734451/is-there-a-way-to-create-scroll-wheel-in-jetpack-compose
+}
+//https://stackoverflow.com/questions/69734451/is-there-a-way-to-create-scroll-wheel-in-jetpack-compose
 
+//https://developer.android.com/develop/ui/compose/touch-input/pointer-input/drag-swipe-fling
 
+//https://yqnn.github.io/svg-path-editor/
 

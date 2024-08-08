@@ -20,6 +20,7 @@ import com.example.fleet.presentation.components.cards.BaseCard
 import com.example.fleet.presentation.components.cards.NotificationCard
 import com.example.fleet.presentation.components.cards.PollCard
 import com.example.fleet.presentation.components.cards.TaskCard
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -55,14 +56,14 @@ class NotificationViewModel (
             pollOptionSelected.votes -= FleetApplication.fleetModule.tenantId
         }
         pollOptionSelected.votes += FleetApplication.fleetModule.tenantId
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.pollOptionDao().upsert(
                 pollOptionSelected
             )
         }
         if (pollOptionUnselected != null) {
             pollOptionUnselected.votes -= FleetApplication.fleetModule.tenantId
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 db.pollOptionDao().upsert(
                     pollOptionUnselected
                 )
@@ -89,14 +90,14 @@ class NotificationViewModel (
         }
 
         //
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.taskDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect {
                 Log.i("NotificationViewModel", it.map{a-> a.id}.toString() + " Tasks")
                 tasks = it
                 update()
             }
         }
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.subTaskDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect {
                 subTasks = it
                 Log.i("NotificationViewModel", it.map{a ->a.id}.toString() + " SubTasks")
@@ -126,13 +127,13 @@ class NotificationViewModel (
         }
 
         //
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.pollDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect {
                 polls = it
                 update()
             }
         }
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.pollOptionDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect {
                 pollOptions = it
                 update()
@@ -142,7 +143,7 @@ class NotificationViewModel (
 
     private fun notificationCollector(){
         //Todo again same - make update only ones that have changed
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.notificationDao().getByBuildingId(FleetApplication.fleetModule.building.value.id).collect { notifications ->
                 _cards.update {prev -> prev.filterNot{"Notification" in it.id } + notifications.map { NotificationCard(it) }}
                 _cards.update { prev -> prev.sortedByDescending { it.createdAt  } }
@@ -153,12 +154,12 @@ class NotificationViewModel (
     //
     private fun completeSubTask(subTask: SubTask){
         subTask.completed = !subTask.completed
-        viewModelScope.launch { db.subTaskDao().upsert(subTask)}
+        viewModelScope.launch(Dispatchers.IO) { db.subTaskDao().upsert(subTask)}
     }
 
     //
     fun createNotification(title: String, text: String){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.notificationDao().upsert(
                 Notification(
                     buildingId = FleetApplication.fleetModule.building.value.id,
@@ -182,7 +183,7 @@ class NotificationViewModel (
             endDate = LocalDate.now().plusDays(endDate.toLong())
         )
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.pollDao().upsert(poll)
             for (i in options) {
                 db.pollOptionDao().upsert(
@@ -203,7 +204,7 @@ class NotificationViewModel (
             buildingId = FleetApplication.fleetModule.building.value.id,
             title = title,
         )
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             db.taskDao().upsert(task)
             for (i in subTasks) {
                 db.subTaskDao().upsert(
@@ -221,7 +222,7 @@ class NotificationViewModel (
     fun togglePollDialog(){isPollDialogShown = !isPollDialogShown}
     fun scrollToLastNotification(lazyState: LazyListState){
         //Make it scroll to the bottom not top of the last item
-        viewModelScope.launch { lazyState.scrollToItem(0) }
+        viewModelScope.launch (Dispatchers.IO){ lazyState.scrollToItem(0) }
     }
 }
 

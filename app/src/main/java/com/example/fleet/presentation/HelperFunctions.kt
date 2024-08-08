@@ -34,6 +34,13 @@ object HelperFunctions {
         return LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
     }
-
-
 }
+/*
+fun <T> CoroutineScope.launchAndWait(
+    dispatcher: CoroutineDispatcher,
+    block: () -> T
+): T {
+    return async(dispatcher){
+        block()
+    }.await()
+}*/

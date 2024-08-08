@@ -28,7 +28,6 @@ abstract class BaseCard(//TODo fix empty card
     private val createdBy: String,
     val id: String
 ){
-
     //Content of the card
     @Composable
     abstract fun Content()
