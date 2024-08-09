@@ -1,8 +1,7 @@
-package com.example.fleet.domain
+package com.example.fleet.domain.navigation
 
 import android.util.Log
 import cafe.adriel.voyager.navigator.Navigator
-import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.presentation.screens.NotificationScreen
 import com.example.fleet.presentation.screens.WorkInProgressScreen
 import com.example.fleet.presentation.screens.chat.ChatCreationScreen
@@ -17,13 +16,11 @@ import com.example.fleet.presentation.screens.settings.display.DisplayBuilding
 import com.example.fleet.presentation.screens.settings.display.DisplayTenant
 
 
-object Navigation{
+object MainNavigation{
     private var lastScreenKey  =  ""
     private val TAG = "Navigation123"
 
     fun goTo(screen: Screens, navigator: Navigator?, componentId: String = "1"){
-
-        Log.i(TAG, screen.key + " Front")
 
         if (navigator == null || screen.key == lastScreenKey ) return
 

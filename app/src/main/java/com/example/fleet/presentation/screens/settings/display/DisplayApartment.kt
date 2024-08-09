@@ -35,8 +35,8 @@ import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.Screens
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.domain.viewModels.DisplayViewModel
 import com.example.fleet.domain.viewModels.DisplayViewModelFactory
 import com.example.fleet.presentation.components.input_fields.AttributeDisplay
@@ -153,7 +153,7 @@ internal fun TenantButton(
         ){
         FilledIconButton(
             onClick = {
-                Navigation.goTo(Screens.DISPLAY_TENANT, nav, tenantId)
+                MainNavigation.goTo(Screens.DISPLAY_TENANT, nav, tenantId)
             },
             modifier = Modifier
                 .weight(5f)

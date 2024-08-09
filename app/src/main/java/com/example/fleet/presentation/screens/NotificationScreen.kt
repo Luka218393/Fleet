@@ -56,7 +56,7 @@ class NotificationScreen(
                 NavigationBottomBar()
             },
 
-        ) { padding ->
+            ) { padding ->
 
             if (cards.isEmpty()){
                 Box(
@@ -95,7 +95,7 @@ class NotificationScreen(
             if (viewModel.isNotificationDialogShown){ NotificationDialog( onDismiss = {viewModel.toggleNotificationDialog()}, onConfirm = { a,b -> viewModel.createNotification(a,b);viewModel.toggleNotificationDialog() }) }
             if (viewModel.isPollDialogShown){ PollDialog(onDismiss = {viewModel.togglePollDialog()}, onConfirm = { a, b, c-> viewModel.createPoll(a,b,c); viewModel.togglePollDialog()}) }
             if (viewModel.isTaskDialogShown){ TaskDialog(onDismiss = {viewModel.toggleTaskDialog()}, onConfirm = { a, b -> viewModel.createTask(a,b); viewModel.toggleTaskDialog()}) }
-            }
+        }
         }
     }
 

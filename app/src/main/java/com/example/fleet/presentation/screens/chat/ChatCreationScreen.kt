@@ -41,7 +41,7 @@ import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.components.SimplifiedChatBar
@@ -77,7 +77,7 @@ class ChatCreationScreen: Screen {
 
         Scaffold(
             modifier = modifier.fillMaxSize(),
-            topBar = { SimpleTopBar(text = "New chat", onClick = { Navigation.pop(nav) }) },
+            topBar = { SimpleTopBar(text = "New chat", onClick = { MainNavigation.pop(nav) }) },
             floatingActionButton = { if(selectedTenants.isNotEmpty())SimpleFloatingButton(onclick = { displayChatDialog = !displayChatDialog }, icon = Icons.Default.Add) },
         ) { padding ->
             Column(
@@ -118,13 +118,13 @@ class ChatCreationScreen: Screen {
                 }, { title ->
                     viewModel.createChat(selectedTenants, isPersonal, title)
                     selectedTenants.clear()
-                    Navigation.pop(nav)
+                    MainNavigation.pop(nav)
                 })
             }
             else if(displayChatDialog){
                 viewModel.createChat(selectedTenants, true)
                 selectedTenants.clear()
-                Navigation.pop(nav)
+                MainNavigation.pop(nav)
             }
         }
     }

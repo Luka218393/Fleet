@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
 import com.example.fleet.R
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.Screens
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.presentation.components.input_fields.InputField
 
 @Stable
@@ -57,7 +57,7 @@ fun NavigationBottomBar() {
                     modifier = remember {Modifier.size(28.dp)}
                 )
             },
-            onClick = {FleetApplication.fleetModule.selectedScreen = 0; Navigation.goTo(Screens.NOTIFICATION, nav)  },
+            onClick = {FleetApplication.fleetModule.selectedScreen = 0; MainNavigation.goTo(Screens.NOTIFICATION, nav)  },
             selected = FleetApplication.fleetModule.selectedScreen == 0,
             label = {if(!FleetApplication.fleetModule.showSystemUi) Text("Events")}
 
@@ -70,7 +70,7 @@ fun NavigationBottomBar() {
                     modifier = Modifier.size(28.dp)
                 )
             },
-            onClick = { FleetApplication.fleetModule.selectedScreen = 1; Navigation.goTo(Screens.CHAT_SELECTION, nav)},
+            onClick = { FleetApplication.fleetModule.selectedScreen = 1; MainNavigation.goTo(Screens.CHAT_SELECTION, nav)},
             selected = FleetApplication.fleetModule.selectedScreen == 1,
             label = {if(!FleetApplication.fleetModule.showSystemUi) Text("Chat")}
 
@@ -83,7 +83,7 @@ fun NavigationBottomBar() {
                     modifier = Modifier.size(28.dp)
                 )
             },
-            onClick = {FleetApplication.fleetModule.selectedScreen = 2;  Navigation.goTo(Screens.SETTINGS, nav)},
+            onClick = {FleetApplication.fleetModule.selectedScreen = 2;  MainNavigation.goTo(Screens.SETTINGS, nav)},
             selected = FleetApplication.fleetModule.selectedScreen == 2,
             label = {if(!FleetApplication.fleetModule.showSystemUi) Text("Settings")}
 

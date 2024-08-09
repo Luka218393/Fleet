@@ -36,8 +36,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
 import com.example.fleet.R
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.Screens
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.domain.viewModels.SettingsViewModel
 import com.example.fleet.domain.viewModels.SettingsViewModelFactory
 import com.example.fleet.presentation.components.ColorSelector
@@ -46,7 +46,7 @@ import com.example.fleet.presentation.components.scaffold_elements.NavigationBot
 
 //Todo add scroll
 //Todo give this normal icons
-class SettingsScreen  : Screen{
+class SettingsScreen : Screen{
     @Transient
     private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]
     private val TAG = "SettingsScreen"
@@ -71,24 +71,34 @@ class SettingsScreen  : Screen{
                 SettingsSeparator(text = "Theme")
                 SettingsBar(icon = Icons.Default.Create, text = "Color", onClick = {viewModel.toggleColorPalette()})
                 SettingsBar(icon = painterResource(id = R.drawable.four_star_icon), text = "Immersive mode", onClick = {viewModel.toggleImmersiveMode()})
-                SettingsBar(icon = painterResource(id = R.drawable.contrast_icon), text = "Theme", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(icon = painterResource(id = R.drawable.contrast_icon), text = "Theme", onClick = { MainNavigation.goTo(
+                    Screens.WORK_IN_PROGRESS, nav)})
 
                 SettingsSeparator(text = "Edit")
-                SettingsBar(icon = painterResource(id = R.drawable.account_icon), text = "Edit account", onClick = { Navigation.goTo(Screens.DISPLAY_TENANT, nav, componentId = FleetApplication.fleetModule.tenantId)})
-                SettingsBar(icon = painterResource(id = R.drawable.door_icon), text = "Edit apartment", onClick = {Navigation.goTo(Screens.DISPLAY_APARTMENT, nav, componentId = FleetApplication.fleetModule.apartment.value.id)})
-                SettingsBar(icon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = {Navigation.goTo(Screens.DISPLAY_BUILDING, nav, componentId = FleetApplication.fleetModule.building.value.id)})
+                SettingsBar(icon = painterResource(id = R.drawable.account_icon), text = "Edit account", onClick = { MainNavigation.goTo(
+                    Screens.DISPLAY_TENANT, nav, componentId = FleetApplication.fleetModule.tenantId)})
+                SettingsBar(icon = painterResource(id = R.drawable.door_icon), text = "Edit apartment", onClick = { MainNavigation.goTo(
+                    Screens.DISPLAY_APARTMENT, nav, componentId = FleetApplication.fleetModule.apartment.value.id)})
+                SettingsBar(icon = painterResource(id = R.drawable.building_icon), text = "Edit building", onClick = { MainNavigation.goTo(
+                    Screens.DISPLAY_BUILDING, nav, componentId = FleetApplication.fleetModule.building.value.id)})
 
                 SettingsSeparator(text = "Account")
-                SettingsBar(icon = painterResource(id = R.drawable.fleet_icon), text = "Change account", onClick = { Navigation.goTo(Screens.LOG_IN, nav) })//Todo make whole app restart or remake all Jobs
-                SettingsBar(icon = painterResource(id = R.drawable.lock_icon), text = "Privacy", onClick = { Navigation.goTo(Screens.WORK_IN_PROGRESS, nav )})
+                SettingsBar(icon = painterResource(id = R.drawable.fleet_icon), text = "Change account", onClick = { MainNavigation.goTo(
+                    Screens.LOG_IN, nav) })//Todo make whole app restart or remake all Jobs
+                SettingsBar(icon = painterResource(id = R.drawable.lock_icon), text = "Privacy", onClick = { MainNavigation.goTo(
+                    Screens.WORK_IN_PROGRESS, nav )})
                 SettingsBar(icon = painterResource(id = R.drawable.list_icon), text = "Terms of service", onClick = {            Log.i(TAG, i.toString())
                 })
 
                 SettingsSeparator(text = "Help the dev")
-                SettingsBar(icon = painterResource(id = R.drawable.message_icon), text = "Message the dev", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})//Remove ->
-                SettingsBar(icon = painterResource(id = R.drawable.poll_icon), text = "Answer a poll", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
-                SettingsBar(icon = painterResource(id = R.drawable.image_icon), text = "Get resources", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})
-                SettingsBar(icon = painterResource(id = R.drawable.bug_icon), text = "Report problem", onClick = {Navigation.goTo(Screens.WORK_IN_PROGRESS, nav)})//Remove <-
+                SettingsBar(icon = painterResource(id = R.drawable.message_icon), text = "Message the dev", onClick = { MainNavigation.goTo(
+                    Screens.WORK_IN_PROGRESS, nav)})//Remove ->
+                SettingsBar(icon = painterResource(id = R.drawable.poll_icon), text = "Answer a poll", onClick = { MainNavigation.goTo(
+                    Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(icon = painterResource(id = R.drawable.image_icon), text = "Get resources", onClick = { MainNavigation.goTo(
+                    Screens.WORK_IN_PROGRESS, nav)})
+                SettingsBar(icon = painterResource(id = R.drawable.bug_icon), text = "Report problem", onClick = { MainNavigation.goTo(
+                    Screens.WORK_IN_PROGRESS, nav)})//Remove <-
 
 
                 if (viewModel.showColorSelector){

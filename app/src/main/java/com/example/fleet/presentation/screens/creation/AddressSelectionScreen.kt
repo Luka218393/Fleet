@@ -21,8 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.Screens
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.domain.viewModels.CreationViewModel
 import com.example.fleet.domain.viewModels.CreationViewModelFactory
 import com.example.fleet.presentation.components.input_fields.CustomListSelector
@@ -39,7 +39,7 @@ class AddressSelectionScreen: Screen {
         val nav = LocalNavigator.current
 
         Scaffold(
-            topBar = { SimpleTopBar(text = "Building", onClick = { Navigation.pop(nav) })}
+            topBar = { SimpleTopBar(text = "Building", onClick = { MainNavigation.pop(nav) })}
         ){ padding ->
 
             Column (
@@ -78,10 +78,10 @@ class AddressSelectionScreen: Screen {
                     Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ){
-                    Button(onClick = { Navigation.goTo(Screens.LOG_IN, nav) }) {
+                    Button(onClick = { MainNavigation.goTo(Screens.LOG_IN, nav) }) {
                         Text(text = "Log in")
                     }
-                    Button(onClick = { Navigation.goTo(Screens.SIGN_IN, nav) }, enabled = viewModel.apartmentId.value.isNotEmpty()) {
+                    Button(onClick = { MainNavigation.goTo(Screens.SIGN_IN, nav) }, enabled = viewModel.apartmentId.value.isNotEmpty()) {
                         Text(text = "Continue")
                         //Todo make db check if Id exists
                         // Todo make ids somehow shorter

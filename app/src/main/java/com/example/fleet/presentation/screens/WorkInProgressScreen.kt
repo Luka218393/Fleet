@@ -14,8 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.Screens
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 
 class WorkInProgressScreen: Screen {
@@ -35,7 +35,7 @@ class WorkInProgressScreen: Screen {
             Box(
                 modifier = Modifier.padding(padding)
                     .fillMaxSize()
-                    .clickable { Navigation.pop(nav) },
+                    .clickable { MainNavigation.pop(nav) },
                 contentAlignment = Alignment.Center
             ){
                 Text(

@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.ScreenTransition
 import cafe.adriel.voyager.transitions.ScreenTransitionContent
-import com.example.fleet.domain.Enums.Screens
+import com.example.fleet.domain.navigation.Screens
 private val tag = "Screen transition"
 
 @Composable

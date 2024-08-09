@@ -37,48 +37,48 @@ fun ChatBar(
 ) {
     val modifier = Modifier
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(72.dp)
+            .padding(vertical = 1.dp)
+            .clickable { navigateToChatScreen(chat.id) }
+            .clip(RoundedCornerShape(4.dp))
+            .background(MaterialTheme.colorScheme.secondaryContainer),
+    ) {
+        Image(
+            painter = painterResource(
+                chat.profileImageResId ?: R.drawable.account_icon
+            ),
+            contentDescription = null,
             modifier = modifier
-                .fillMaxWidth()
-                .height(72.dp)
-                .padding(vertical = 1.dp)
-                .clickable { navigateToChatScreen(chat.id) }
-                .clip(RoundedCornerShape(4.dp))
-                .background(MaterialTheme.colorScheme.secondaryContainer),
+                .size(60.dp)
+                .weight(2f)
+        )
+        Spacer(modifier = modifier.weight(0.2f))
+        Column(
+            modifier = modifier
+                .weight(8f),
+            verticalArrangement = Arrangement.Center
         ) {
-            Image(
-                painter = painterResource(
-                    chat.profileImageResId ?: R.drawable.account_icon
-                ),
-                contentDescription = null,
-                modifier = modifier
-                    .size(60.dp)
-                    .weight(2f)
+            Text(
+                text = chat.title,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = modifier.align(Alignment.Start),
+                maxLines = 1,
+                color = if (chat.isPrivate) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.tertiary
             )
-            Spacer(modifier = modifier.weight(0.2f))
-            Column(
-                modifier = modifier
-                    .weight(8f),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = chat.title,
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = modifier.align(Alignment.Start),
-                    maxLines = 1,
-                    color = if (chat.isPrivate) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.tertiary
-                )
-                Text(
-                    text = HelperFunctions.cutString(text = lastMessageText),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = modifier.align(Alignment.Start),
-                    maxLines = 1,
-                    color = MaterialTheme.colorScheme.outline //TOdo make message turn color to primary if it is new message
-                )
-                //TODO make this visible when there are new messages in ViewModel
-            }
+            Text(
+                text = HelperFunctions.cutString(text = lastMessageText),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = modifier.align(Alignment.Start),
+                maxLines = 1,
+                color = MaterialTheme.colorScheme.outline //TOdo make message turn color to primary if it is new message
+            )
+            //TODO make this visible when there are new messages in ViewModel
         }
+    }
 
 }
 

@@ -18,10 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.Screens
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.components.ChatBar
@@ -35,53 +36,59 @@ class ChatSelectionScreen: Screen{
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 
+    override val key: ScreenKey
+        get() = Screens.CHAT_SELECTION.key
 
     @Composable
     override fun Content() {
         val time = measureTimeMillis {
 
-        val nav = LocalNavigator.current
-        val chats = viewModel.chats.collectAsState().value
+            val nav = LocalNavigator.current
+            val chats = viewModel.chats.collectAsState().value
 
-        Scaffold(
-            bottomBar = { NavigationBottomBar() },
-            floatingActionButton = { SimpleFloatingButton ({ Navigation.goTo(Screens.CHAT_CREATION, nav) }, Icons.Default.Add) }
-        ) { padding ->
 
-            if (chats.isEmpty()) {
-                Box(
-                    modifier = Modifier.padding(padding)
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "No chats yet",
-                        style = MaterialTheme.typography.displaySmall
-                    )
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    //this could be faster
-                    items(chats, key = { it.id }) { chat ->
-                        ChatBar(
-                            navigateToChatScreen = {
-                                Navigation.goTo(Screens.CHAT, nav, chat.id)
-                                viewModel.changeMessageCollectorJob(chat.id)
-                            },
-                            chat = chat,
-                            viewModel.getMessageText(chat.lastMessageId)
 
+
+
+            Scaffold(
+                bottomBar = { NavigationBottomBar() },
+                floatingActionButton = { SimpleFloatingButton ({ MainNavigation.goTo(Screens.CHAT_CREATION, nav) }, Icons.Default.Add) }
+            ) { padding ->
+
+                if (chats.isEmpty()) {
+                    Box(
+                        modifier = Modifier.padding(padding)
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "No chats yet",
+                            style = MaterialTheme.typography.displaySmall
                         )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        //this could be faster
+                        items(chats, key = { it.id }) { chat ->
+                            ChatBar(
+                                navigateToChatScreen = {
+                                    MainNavigation.goTo(Screens.CHAT, nav, chat.id)
+                                    viewModel.changeMessageCollectorJob(chat.id)
+                                },
+                                chat = chat,
+                                viewModel.getMessageText(chat.lastMessageId)
+
+                            )
+                        }
                     }
                 }
             }
-        }
         }
         Log.i(TAG,"Execution time: $time ms")
     }

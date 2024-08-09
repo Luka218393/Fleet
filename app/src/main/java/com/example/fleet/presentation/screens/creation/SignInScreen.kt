@@ -21,8 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.Enums.Screens
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.Screens
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.domain.viewModels.CreationViewModel
 import com.example.fleet.domain.viewModels.CreationViewModelFactory
 import com.example.fleet.presentation.components.input_fields.UnderlinedInputField
@@ -38,7 +38,7 @@ class SignInScreen: Screen {
     override fun Content() {
         val nav = LocalNavigator.current
         Scaffold(
-            topBar = { SimpleTopBar(text = "Sign in", onClick = { Navigation.pop(nav) }) }
+            topBar = { SimpleTopBar(text = "Sign in", onClick = { MainNavigation.pop(nav) }) }
         ){ padding ->
 
             Column (
@@ -57,7 +57,7 @@ class SignInScreen: Screen {
                 Button(
                     enabled = viewModel.areFieldsFilled(),
                     onClick = {
-                        Navigation.goTo(Screens.SETTINGS, nav)
+                        MainNavigation.goTo(Screens.SETTINGS, nav)
                         viewModel.createTenant()
                     }
                 ) {

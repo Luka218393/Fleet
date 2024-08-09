@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.Enums.Screens
+import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.Models.Chat
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.components.CreateMessageBox
@@ -40,8 +40,8 @@ class ChatScreen(
         Scaffold(
             topBar = {
                 ChatTopBar(title = chat.title,
-                    onBack = { Navigation.pop(nav)},
-                    onTextPress = {Navigation.goTo( Screens.DISPLAY_TENANT, nav, viewModel.getTenantIdFromChat(chatId))} )},
+                    onBack = { MainNavigation.pop(nav)},
+                    onTextPress = { MainNavigation.goTo( Screens.DISPLAY_TENANT, nav, viewModel.getTenantIdFromChat(chatId))} )},
             bottomBar = {
                 InputBottomBar( modifier = Modifier,
                     send = {

@@ -1,6 +1,7 @@
 package com.example.fleet
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,7 +13,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import cafe.adriel.voyager.navigator.Navigator
-import com.example.fleet.domain.Navigation
+import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.presentation.animations.CustomScreenTransition
 import com.example.fleet.presentation.screens.NotificationScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
@@ -26,16 +27,26 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            fun moveToBackground() {
+                val startMain = Intent(Intent.ACTION_MAIN)
+                startMain.addCategory(Intent.CATEGORY_HOME)
+                startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(startMain)
+            }
+
             FleetTheme (
                 content = {
                     Navigator(NotificationScreen()){ navigator ->
                         BackHandler {
-                            Navigation.pop(navigator)
+                            if (navigator.canPop) MainNavigation.pop(navigator)
+                            else moveToBackground()
                         }
                         CustomScreenTransition(navigator) { screen ->
                             screen.Content()
                         }
                     }
+
+
 
 
                     val insetsController = WindowCompat.getInsetsController(
