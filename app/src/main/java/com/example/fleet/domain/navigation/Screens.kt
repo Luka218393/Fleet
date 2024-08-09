@@ -1,6 +1,5 @@
 package com.example.fleet.domain.navigation
 
-import cafe.adriel.voyager.core.registry.ScreenProvider
 import cafe.adriel.voyager.core.screen.ScreenKey
 
 enum class Screens(val key: ScreenKey){
@@ -19,13 +18,3 @@ enum class Screens(val key: ScreenKey){
     LOG_IN("com.example.fleet.presentation.screens.creation.LogInScreen")
 }
 
-sealed class ChatScreens : ScreenProvider {
-    object ChatCreationScreen : ChatScreens()
-    data class ChatScreen(val chatId: String) : ChatScreens()
-}
-
-sealed class MainScreens{
-    object NotificationScreen : MainScreens()
-    object ChatsSelectionScreen : MainScreens()
-    object SettingsScreens : MainScreens()
-}

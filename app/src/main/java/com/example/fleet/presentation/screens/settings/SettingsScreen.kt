@@ -33,23 +33,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
 import com.example.fleet.R
-import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.navigation.MainNavigation
+import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.viewModels.SettingsViewModel
 import com.example.fleet.domain.viewModels.SettingsViewModelFactory
 import com.example.fleet.presentation.components.ColorSelector
-import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 
 
 //Todo add scroll
 //Todo give this normal icons
 class SettingsScreen : Screen{
+
     @Transient
     private val viewModel: SettingsViewModel = ViewModelProvider(FleetApplication.viewModelStore, SettingsViewModelFactory())[SettingsViewModel::class.java]
+
     private val TAG = "SettingsScreen"
+
+    override val key: ScreenKey
+        get() = Screens.SETTINGS.key
+
     @Stable
     @Composable
     override fun Content() {
@@ -57,9 +63,7 @@ class SettingsScreen : Screen{
         //Todo try this
         viewModel.apply{}
         val nav = LocalNavigator.current
-        Scaffold(
-            bottomBar = {NavigationBottomBar() },
-        ) { padding ->
+        Scaffold{ padding ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier

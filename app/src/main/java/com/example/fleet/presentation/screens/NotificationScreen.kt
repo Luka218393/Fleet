@@ -16,7 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import com.example.fleet.FleetApplication
+import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.viewModels.NotificationViewModel
 import com.example.fleet.domain.viewModels.NotificationViewModelFactory
 import com.example.fleet.presentation.components.DateSeparator
@@ -25,7 +27,6 @@ import com.example.fleet.presentation.components.cards.card_dialogs.PollDialog
 import com.example.fleet.presentation.components.cards.card_dialogs.TaskDialog
 import com.example.fleet.presentation.components.scaffold_elements.FloatingButton
 import com.example.fleet.presentation.components.scaffold_elements.FloatingButtonState
-import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 
 
 class NotificationScreen(
@@ -34,7 +35,12 @@ class NotificationScreen(
     @Transient
     private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
 ): Screen{
+
     private val tag = "NotificationScreen"
+
+    override val key: ScreenKey
+        get() = Screens.NOTIFICATION.key
+
     @Composable
     override fun Content() {
         //
@@ -52,11 +58,8 @@ class NotificationScreen(
                         )
                     }
                 )
-            },bottomBar = {
-                NavigationBottomBar()
             },
-
-            ) { padding ->
+        ) { padding ->
 
             if (cards.isEmpty()){
                 Box(

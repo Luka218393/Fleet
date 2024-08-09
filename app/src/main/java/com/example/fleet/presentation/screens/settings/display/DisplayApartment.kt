@@ -33,15 +33,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.navigation.MainNavigation
+import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.viewModels.DisplayViewModel
 import com.example.fleet.domain.viewModels.DisplayViewModelFactory
 import com.example.fleet.presentation.components.input_fields.AttributeDisplay
 import com.example.fleet.presentation.components.input_fields.castInputToInt
-import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 import com.example.fleet.presentation.components.scaffold_elements.SimpleFloatingButton
 
 data class DisplayApartment(
@@ -53,6 +53,12 @@ data class DisplayApartment(
     private val apartmentId: String = "",
 ): Screen {
 
+
+    private val tag = "DisplayApartmentScreen"
+
+    override val key: ScreenKey
+        get() = Screens.DISPLAY_APARTMENT.key
+
     @Composable
     override fun Content() {
         var editMode by remember { mutableStateOf(false) }
@@ -60,7 +66,6 @@ data class DisplayApartment(
             editMode = false
         }
         Scaffold(
-            bottomBar = { NavigationBottomBar() },
             floatingActionButton = {
                 SimpleFloatingButton(
                     onclick = {
@@ -78,7 +83,6 @@ data class DisplayApartment(
                 )
             }
         ) { padding ->
-
             Box(modifier = Modifier.padding(padding)) {
                 DisplayApartment(apartmentId, editMode, viewModel, modifier)
             }

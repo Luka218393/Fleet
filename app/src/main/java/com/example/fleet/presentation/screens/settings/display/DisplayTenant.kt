@@ -31,14 +31,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import com.example.fleet.FleetApplication
 import com.example.fleet.R
+import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.viewModels.DisplayViewModel
 import com.example.fleet.domain.viewModels.DisplayViewModelFactory
 import com.example.fleet.presentation.components.input_fields.AttributeDisplay
 import com.example.fleet.presentation.components.input_fields.EditableTextField
 import com.example.fleet.presentation.components.input_fields.castInputToInt
-import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 import com.example.fleet.presentation.components.scaffold_elements.SimpleFloatingButton
 
 data class DisplayTenant(
@@ -51,6 +52,9 @@ data class DisplayTenant(
 
 ): Screen {
 
+    override val key: ScreenKey
+        get() = Screens.DISPLAY_TENANT.key
+
     @Composable
     override fun Content() {
         var editMode by remember { mutableStateOf(false) }
@@ -58,7 +62,6 @@ data class DisplayTenant(
             editMode = false
         }
         Scaffold(
-            bottomBar = { NavigationBottomBar() },
             floatingActionButton = {
                 SimpleFloatingButton(
                     onclick = {

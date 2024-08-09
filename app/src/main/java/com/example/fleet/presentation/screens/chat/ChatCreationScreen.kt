@@ -39,9 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
 import com.example.fleet.domain.navigation.MainNavigation
+import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.viewModels.ChatViewModel
 import com.example.fleet.domain.viewModels.ChatViewModelFactory
 import com.example.fleet.presentation.components.SimplifiedChatBar
@@ -54,6 +56,8 @@ class ChatCreationScreen: Screen {
     @Transient
     private val viewModel: ChatViewModel = ViewModelProvider(FleetApplication.viewModelStore, ChatViewModelFactory())[ChatViewModel::class.java]
 
+    override val key: ScreenKey
+        get() = Screens.CHAT_CREATION.key
     //Todo rename all chat types to is personal / group
     //Todo add filter
     //Todo make floating button change color if no chats are selected

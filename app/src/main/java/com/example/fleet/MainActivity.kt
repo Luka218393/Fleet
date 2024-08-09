@@ -1,20 +1,22 @@
 package com.example.fleet
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import cafe.adriel.voyager.navigator.Navigator
-import com.example.fleet.domain.navigation.MainNavigation
 import com.example.fleet.presentation.animations.CustomScreenTransition
+import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 import com.example.fleet.presentation.screens.NotificationScreen
 import com.example.fleet.presentation.ui.theme.FleetTheme
 
@@ -27,22 +29,24 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            fun moveToBackground() {
-                val startMain = Intent(Intent.ACTION_MAIN)
-                startMain.addCategory(Intent.CATEGORY_HOME)
-                startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(startMain)
-            }
-
             FleetTheme (
                 content = {
-                    Navigator(NotificationScreen()){ navigator ->
-                        BackHandler {
-                            if (navigator.canPop) MainNavigation.pop(navigator)
-                            else moveToBackground()
-                        }
-                        CustomScreenTransition(navigator) { screen ->
-                            screen.Content()
+
+
+                    Navigator(
+                        NotificationScreen(),
+                        onBackPressed = { true }
+                    ){ navigator ->
+
+                        Scaffold(
+                            bottomBar = { NavigationBottomBar()},
+                        ) { padding ->
+
+                            Box(modifier = Modifier.padding(padding)) {
+                                CustomScreenTransition(navigator) { screen ->
+                                    screen.Content()
+                                }
+                            }
                         }
                     }
 

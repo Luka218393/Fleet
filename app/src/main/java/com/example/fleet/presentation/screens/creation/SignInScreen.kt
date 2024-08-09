@@ -19,10 +19,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.fleet.FleetApplication
-import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.navigation.MainNavigation
+import com.example.fleet.domain.navigation.Screens
 import com.example.fleet.domain.viewModels.CreationViewModel
 import com.example.fleet.domain.viewModels.CreationViewModelFactory
 import com.example.fleet.presentation.components.input_fields.UnderlinedInputField
@@ -33,6 +34,9 @@ class SignInScreen: Screen {
 
     @Transient
     private val viewModel: CreationViewModel = ViewModelProvider(FleetApplication.viewModelStore, CreationViewModelFactory())[CreationViewModel::class.java]
+
+    override val key: ScreenKey
+        get() = Screens.SIGN_IN.key
 
     @Composable
     override fun Content() {

@@ -57,6 +57,8 @@ object MainNavigation{
 }
 
 
+fun showNavigationBottomBar(navigator: Navigator):Boolean =
+    navigator.lastItemOrNull?.key in listOf(Screens.CHAT.key, Screens.LOG_IN.key, Screens.SIGN_IN.key, Screens.ADDRESS_SELECTION.key)
 
 
 //https://www.youtube.com/watch?v=HdXpTXHUTu0&ab_channel=AhmedGuedmioui
