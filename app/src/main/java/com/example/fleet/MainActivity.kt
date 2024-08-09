@@ -9,12 +9,16 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import cafe.adriel.voyager.navigator.Navigator
+import com.example.fleet.domain.navigation.showNavigationBottomBar
 import com.example.fleet.presentation.animations.CustomScreenTransition
 import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 import com.example.fleet.presentation.screens.NotificationScreen
@@ -37,9 +41,9 @@ class MainActivity : ComponentActivity() {
                         NotificationScreen(),
                         onBackPressed = { true }
                     ){ navigator ->
-
+                        val showNavigationBar by remember{ derivedStateOf { showNavigationBottomBar(navigator) }}
                         Scaffold(
-                            bottomBar = { NavigationBottomBar()},
+                            bottomBar = { NavigationBottomBar(showNavigationBar)},
                         ) { padding ->
 
                             Box(modifier = Modifier.padding(padding)) {
@@ -49,7 +53,6 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
-
 
 
 

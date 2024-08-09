@@ -17,10 +17,12 @@ import com.example.fleet.presentation.screens.settings.display.DisplayTenant
 
 
 object MainNavigation{
-    private var lastScreenKey  =  ""
-    private val TAG = "Navigation123"
+    private var lastScreenKey  =  Screens.NOTIFICATION.key
+    private const val TAG = "Navigation123"
 
     fun goTo(screen: Screens, navigator: Navigator?, componentId: String = "1"){
+
+        Log.i(TAG, (screen.key + "  " + lastScreenKey).toString())
 
         if (navigator == null || screen.key == lastScreenKey ) return
 
@@ -50,7 +52,7 @@ object MainNavigation{
 
             lastScreenKey = navigator.lastItem.key
 
-            Log.i(TAG, lastScreenKey + " Back")
+            Log.i(TAG, "$lastScreenKey Back")
 
         }
     }
@@ -58,7 +60,7 @@ object MainNavigation{
 
 
 fun showNavigationBottomBar(navigator: Navigator):Boolean =
-    navigator.lastItemOrNull?.key in listOf(Screens.CHAT.key, Screens.LOG_IN.key, Screens.SIGN_IN.key, Screens.ADDRESS_SELECTION.key)
+    navigator.lastItemOrNull?.key !in listOf(Screens.CHAT.key, Screens.LOG_IN.key, Screens.SIGN_IN.key, Screens.ADDRESS_SELECTION.key)
 
 
 //https://www.youtube.com/watch?v=HdXpTXHUTu0&ab_channel=AhmedGuedmioui
