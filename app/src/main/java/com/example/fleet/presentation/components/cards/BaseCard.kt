@@ -11,6 +11,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,7 @@ abstract class BaseCard(//TODo fix empty card
     abstract fun Content()
 
     //Creates the card composable
+    @Stable
     @Composable
     fun Create(modifier: Modifier = Modifier){
         Card(

@@ -12,17 +12,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.example.fleet.domain.Enums.Screens
 import com.example.fleet.domain.Navigation
-import com.example.fleet.presentation.components.scaffold_elements.BottomBar
+import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 
 class WorkInProgressScreen: Screen {
+
+    private val tag = "WorkInProgressScreen"
+    override val key: ScreenKey
+        get() = Screens.WORK_IN_PROGRESS.key
+
 
     @Composable
     override fun Content() {
         val nav = LocalNavigator.current
         Scaffold(
-            bottomBar = { BottomBar()}
+            bottomBar = { NavigationBottomBar()}
         ){ padding ->
 
             Box(

@@ -43,7 +43,7 @@ import com.example.fleet.domain.Models.TenantChat
     TenantChat::class,
     Tenant::class,
     SubTask::class],
-    version = 35,
+    version = 36,
     exportSchema = false,
 )
 @TypeConverters(TypeConverte::class)

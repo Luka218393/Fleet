@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
@@ -22,8 +23,9 @@ import com.example.fleet.presentation.components.DateSeparator
 import com.example.fleet.presentation.components.cards.card_dialogs.NotificationDialog
 import com.example.fleet.presentation.components.cards.card_dialogs.PollDialog
 import com.example.fleet.presentation.components.cards.card_dialogs.TaskDialog
-import com.example.fleet.presentation.components.scaffold_elements.BottomBar
 import com.example.fleet.presentation.components.scaffold_elements.FloatingButton
+import com.example.fleet.presentation.components.scaffold_elements.FloatingButtonState
+import com.example.fleet.presentation.components.scaffold_elements.NavigationBottomBar
 
 
 class NotificationScreen(
@@ -32,28 +34,34 @@ class NotificationScreen(
     @Transient
     private val viewModel: NotificationViewModel = ViewModelProvider(FleetApplication.viewModelStore, NotificationViewModelFactory())[NotificationViewModel::class.java]
 ): Screen{
-
+    private val tag = "NotificationScreen"
     @Composable
     override fun Content() {
-
         //
         val cards = viewModel.cards.collectAsState().value
         val lazyState = rememberLazyListState()
 
         Scaffold(
-            bottomBar = {BottomBar()},
             floatingActionButton = {
-                    FloatingButton(
-                        toggleNotificationDialog = { viewModel.toggleNotificationDialog() },
-                        toggleTaskDialog =  { viewModel.toggleTaskDialog() } ,
-                        togglePollDialog =  { viewModel.togglePollDialog() }
-                    )
-                },
+                FloatingButton(
+                    remember {
+                        FloatingButtonState(
+                            toggleNotificationDialog = { viewModel.toggleNotificationDialog() },
+                            toggleTaskDialog =  { viewModel.toggleTaskDialog() } ,
+                            togglePollDialog =  { viewModel.togglePollDialog() }
+                        )
+                    }
+                )
+            },bottomBar = {
+                NavigationBottomBar()
+            },
+
         ) { padding ->
 
             if (cards.isEmpty()){
                 Box(
-                    modifier = Modifier.padding(padding)
+                    modifier = Modifier
+                        .padding(padding)
                         .fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ){

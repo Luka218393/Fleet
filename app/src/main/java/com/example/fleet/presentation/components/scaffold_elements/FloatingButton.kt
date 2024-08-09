@@ -24,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,30 +38,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
-//Todo add description to each plus
+@Immutable
+data class FloatingButtonState(
+    val toggleNotificationDialog: () -> Unit,
+    val toggleTaskDialog: () -> Unit,
+    val togglePollDialog:() -> Unit
+)
+
 @Stable
 @Composable
 fun FloatingButton(
-    toggleNotificationDialog: () -> Unit,
-    toggleTaskDialog: () -> Unit,
-    togglePollDialog:() -> Unit
+    floatingButtonState: FloatingButtonState
 ) {
     var expanded by remember { mutableStateOf(false) }
+
     Column(
         horizontalAlignment = Alignment.End,
         ){
+
         AnimatedVisibility(
             visible = expanded,
         ) {
             Column {
                 IconChip(icon = Icons.Default.Add, text = "Event" ) {
-                    toggleNotificationDialog()
+                    floatingButtonState.toggleNotificationDialog()
                 }
                 IconChip(icon = Icons.Default.Add, text = "Poll" ) {
-                    togglePollDialog()
+                    floatingButtonState.togglePollDialog()
                 }
                 IconChip(icon = Icons.Default.Add, text = "Task" ) {
-                    toggleTaskDialog()
+                    floatingButtonState.toggleTaskDialog()
                 }
             }
         }
@@ -100,7 +107,7 @@ fun FloatingButton(
 internal fun IconChip(
     icon: ImageVector,
     text: String,
-    onClick: ()->Unit
+    onClick: () -> Unit
 ){
     Row(
         horizontalArrangement = Arrangement.Center,

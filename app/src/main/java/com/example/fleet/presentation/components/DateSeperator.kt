@@ -8,6 +8,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -15,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.fleet.presentation.HelperFunctions
 import java.time.LocalDateTime
 
-
+@Stable
 @Composable
 fun DateSeparator(
     date: LocalDateTime
@@ -25,6 +26,7 @@ fun DateSeparator(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ){
+        
         HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outlineVariant)
         Text(
             text = HelperFunctions.getDayAndMonth(date.toLocalDate()) ,
