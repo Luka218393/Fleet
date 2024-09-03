@@ -72,12 +72,10 @@ data class DisplayApartment(
                         //Todo make button enabled only if all fields are filled
                         if (!editMode) editMode = true
 
-                            else if(apartmentId != ""){
-                                viewModel.changeApartment()
-                            }
-
+                        else {
+                            viewModel.changeApartment()
                             editMode = !editMode
-
+                        }
                     },
                     icon = Icons.Default.Create
                 )

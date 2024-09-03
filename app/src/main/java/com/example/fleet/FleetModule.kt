@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fleet.data.FleetDatabase
 import com.example.fleet.data.daos.TenantIdAndName
+import com.example.fleet.data.seed
 import com.example.fleet.domain.Models.Settings
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ class FleetModule(
     val fleetDatabase: FleetDatabase = FleetDatabase.getDatabase(context)
 
     init{
-        //seed(fleetDatabase)
+        seed(fleetDatabase)
 
         viewModelScope.launch {
             fleetDatabase.settingsDao().get().collect{

@@ -63,9 +63,11 @@ data class DisplayBuilding(
                     onclick = {
                         //Todo make button enabled only if all fields are filled
                         if (!editMode) editMode = true
-                        viewModel.changeBuilding()
+                        else {
+                            viewModel.changeBuilding()
 
-                        editMode = !editMode
+                            editMode = !editMode
+                        }
                     },
                     icon = Icons.Default.Create
                 )

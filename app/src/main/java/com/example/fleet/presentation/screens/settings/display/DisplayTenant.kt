@@ -67,8 +67,10 @@ data class DisplayTenant(
                     onclick = {
                         //Todo make button enabled only if all fields are filled
                         if (!editMode) editMode = true
-                        viewModel.changeTenant()
-                        editMode = !editMode
+                        else {
+                            viewModel.changeTenant()
+                            editMode = !editMode
+                        }
                     },
                     icon = Icons.Default.Create
                 )

@@ -42,6 +42,7 @@ class MainActivity : ComponentActivity() {
                         onBackPressed = { true }
                     ){ navigator ->
                         val showNavigationBar by remember{ derivedStateOf { showNavigationBottomBar(navigator) }}
+
                         Scaffold(
                             bottomBar = { NavigationBottomBar(showNavigationBar)},
                         ) { padding ->
